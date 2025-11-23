@@ -91,7 +91,7 @@ python scripts/run_data_preparation.py --categories "Chinh tri Xa hoi"
 
 ### 3. Run Extraction Pipelines
 
-#### Prompt Engineering
+#### 3.1. Prompt Engineering
 
 ```bash
 python scripts/run_prompt_engineering_pipeline.py
@@ -99,7 +99,7 @@ python scripts/run_prompt_engineering_pipeline.py
 
 **[Full Documentation](docs/run_prompt_engineering_pipeline.md)**
 
-#### RAG Pipeline
+#### 3.2. RAG Pipeline
 
 ```bash
 python scripts/run_rag_pipeline.py
@@ -107,7 +107,7 @@ python scripts/run_rag_pipeline.py
 
 **[Full Documentation](docs/run_rag_pipeline.md)**
 
-#### Fine-Tuning
+#### 3.3. Fine-Tuning
 
 ```bash
 python scripts/run_finetuning_pipeline.py
@@ -116,7 +116,7 @@ python scripts/run_finetuning_pipeline.py
 **[Full Documentation](docs/run_finetuning_pipeline.md)**
 
 ---
-
+<!-- 
 ## Benchmark Results
 
 ### Performance Comparison
@@ -135,7 +135,7 @@ python scripts/run_finetuning_pipeline.py
 |-------------|-----------|--------|----------|
 | Person | 0.74 | 0.66 | 0.69 |
 | Organizations | 0.67 | 0.55 | 0.61 |
-| Address | 0.62 | 0.39 | 0.48 |
+| Address | 0.62 | 0.39 | 0.48 | -->
 
 ### Configuration Used
 
@@ -274,6 +274,7 @@ Each pipeline has comprehensive documentation:
 ## Evaluation
 
 Metrics calculated:
+- **Accuracy:** Correct predictions / Total samples
 - **Precision:** Correct predictions / Total predictions
 - **Recall:** Correct predictions / Total ground truth
 - **F1 Score:** Harmonic mean of precision & recall
