@@ -95,6 +95,7 @@ if __name__ == "__main__":
     logger.info(f"Avg time per sample: {avg_time:.2f}s")
     logger.info("")
     logger.info("OVERALL METRICS:")
+    logger.info(f"  Accuracy: {metrics['overall']['accuracy']:.4f}")
     logger.info(f"  Precision: {metrics['overall']['precision']:.4f}")
     logger.info(f"  Recall   : {metrics['overall']['recall']:.4f}")
     logger.info(f"  F1 Score : {metrics['overall']['f1']:.4f}")
@@ -103,6 +104,7 @@ if __name__ == "__main__":
     for entity_type in ["person", "organizations", "address"]:
         m = metrics[entity_type]
         logger.info(f"  {entity_type.upper()}:")
+        logger.info(f"    Accuracy: {m['accuracy']:.4f}")
         logger.info(f"    Precision: {m['precision']:.4f}")
         logger.info(f"    Recall   : {m['recall']:.4f}")
         logger.info(f"    F1 Score : {m['f1']:.4f}")
