@@ -14,7 +14,7 @@ from src.config import (
     NERPromptEngineeringConfig,
 )
 from src.data_processor import DataProcessor
-from src.prompt_engineering import PromptNERExtractor
+from src.pipeline.prompt_engineering import PromptNERExtractor
 from src.utils import calculate_metrics
 
 if __name__ == "__main__":
@@ -22,12 +22,10 @@ if __name__ == "__main__":
     logger.info("Prompt Engineering NER Evaluation - RAW Chat Mode")
     logger.info("=" * 80)
 
-    # Configuration
     test_dataset_path = PROCESSED_DATA_DIR / "test.json"
     output_dir = RESULTS_DIR / "prompt_engineering_eval"
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # Check test dataset
     if not test_dataset_path.exists():
         logger.error(f"Test dataset not found: {test_dataset_path}")
         raise ValueError("Please run data preparation script first")

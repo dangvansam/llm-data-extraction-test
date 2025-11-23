@@ -6,6 +6,7 @@ import langextract as lx
 from tqdm import tqdm
 
 sys.path.append(".")
+
 from src.config import NERLangExtractConfig
 from src.data_processor import DataProcessor
 

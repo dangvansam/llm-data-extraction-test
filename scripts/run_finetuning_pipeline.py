@@ -6,18 +6,16 @@ sys.path.append(".")
 
 from src.config import (
     CHECKPOINTS_DIR,
-    OUTPUTS_DIR,
     PROCESSED_DATA_DIR,
-    RESULTS_DIR,
     NERFineTuningConfig,
 )
-from src.finetuning_pipeline import FineTunedNERExtractor
+from src.pipeline.finetuning_pipeline import FineTunedNERExtractor
 
 if __name__ == "__main__":
     
     config = NERFineTuningConfig(
         # Model settings
-        model_name="Qwen/Qwen3-4B",
+        model_name="Qwen/Qwen3-4B-Instruct-2507",
         max_seq_length=2048,
         load_in_4bit=True,
         load_in_8bit=False,
@@ -27,29 +25,29 @@ if __name__ == "__main__":
         add_schema=False,
 
         # Training settings
-        max_steps=100000,
-        num_epochs=3,
+        max_steps=3000,
+        num_train_epochs=1,
         batch_size=4,
-        learning_rate=1e-4,
-        warmup_steps=100,
-        gradient_accumulation_steps=4,
+        learning_rate=2e-5,
+        warmup_steps=10,
+        gradient_accumulation_steps=1,
         lr_scheduler_type="linear",
         weight_decay=0.01,
         optim="adamw_torch_fused",  # adamw_8bit
 
         # LoRA settings (only used if full_finetuning=False)
-        lora_r=16,
-        lora_alpha=32,
-        lora_dropout=0.05,
+        lora_r=8,
+        lora_alpha=16,
+        lora_dropout=0.02,
 
         # Logging and checkpointing
         logging_steps=10,
-        save_steps=100,
+        save_steps=500,
         save_total_limit=3,
-        eval_steps=100,
+        eval_steps=500,
 
         # Output directory
-        output_dir=CHECKPOINTS_DIR / "Qwen3-4B_finetuned_2048_lora_r16_a32_drop0.05_lr1e-4_warmup100_decay0.01_acc4_bs4",
+        output_dir=CHECKPOINTS_DIR / "Qwen3-4B_finetuned_2048_lora_r8_a16_drop0.05_lr2e-5_warmup10_decay0.01_acc1_bs4",
 
         # Data paths
         train_data_path=PROCESSED_DATA_DIR / "train_finetuning_chat.jsonl",
@@ -76,7 +74,7 @@ if __name__ == "__main__":
     logger.info(f"Enable thinking: {config.enable_thinking}")
     logger.info(f"Quantization: {'4-bit' if config.load_in_4bit else '8-bit' if config.load_in_8bit else 'None'}")
     logger.info(f"Training mode: {'Full finetuning' if config.full_finetuning else 'LoRA'}")
-    logger.info(f"Epochs: {config.num_epochs}")
+    logger.info(f"Epochs: {config.num_train_epochs}")
     logger.info(f"Batch size: {config.batch_size}")
     logger.info(f"Learning rate: {config.learning_rate}")
     logger.info(f"Output: {config.output_dir}")

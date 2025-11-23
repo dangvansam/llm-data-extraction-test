@@ -13,10 +13,10 @@ from vllm import LLM, SamplingParams
 from vllm.config import StructuredOutputsConfig
 from vllm.sampling_params import StructuredOutputsParams
 
-from .config import NERRagConfig
-from .data_processor import DataProcessor
-from .schema import NEREntities
-from .utils import parse_response
+from src.config import NERRagConfig
+from src.data_processor import DataProcessor
+from src.schema import NEREntities
+from src.utils import parse_response
 
 
 class RAGNERExtractor:

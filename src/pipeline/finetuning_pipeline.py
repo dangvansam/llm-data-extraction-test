@@ -12,9 +12,9 @@ from transformers import (
 )
 from trl import SFTConfig, SFTTrainer
 
-from .config import NERFineTuningConfig
-from .data_processor import DataProcessor
-from .utils import parse_response
+from src.config import NERFineTuningConfig
+from src.data_processor import DataProcessor
+from src.utils import parse_response
 
 
 class FineTunedNERExtractor:

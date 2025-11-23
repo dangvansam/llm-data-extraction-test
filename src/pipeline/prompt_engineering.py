@@ -9,10 +9,10 @@ from vllm import LLM, SamplingParams
 from vllm.config import StructuredOutputsConfig
 from vllm.sampling_params import StructuredOutputsParams
 
-from .config import NERPromptEngineeringConfig
-from .data_processor import DataProcessor
-from .schema import ExtractionMode, NEREntities
-from .utils import parse_response
+from src.config import NERPromptEngineeringConfig
+from src.data_processor import DataProcessor
+from src.schema import ExtractionMode, NEREntities
+from src.utils import parse_response
 
 
 class PromptNERExtractor:
@@ -41,6 +41,7 @@ class PromptNERExtractor:
         logger.info(f"Temperature: {self.config.temperature}")
         logger.info(f"Top-p: {self.config.top_p}")
         logger.info(f"Add schema: {self.config.add_schema}")
+        logger.info(f"Thinking: {self.config.enable_thinking}")
         logger.info(f"Entity types: {self.config.entity_types}")
 
         mode = self.config.extraction_mode
@@ -49,39 +50,6 @@ class PromptNERExtractor:
             self._load_vllm_model()
         else:
             self._load_local_model()
-
-    def cleanup(self):
-        """Clean up models and free GPU memory."""
-        logger.info("Cleaning up models and freeing memory")
-
-        try:
-            if self.vllm_model is not None:
-                self.vllm_model.llm_engine.engine_core.shutdown()
-                if hasattr(self.vllm_model, 'llm_engine') and hasattr(self.vllm_model.llm_engine, 'model_executor'):
-                    if hasattr(self.vllm_model.llm_engine.model_executor, 'driver_worker'):
-                        del self.vllm_model.llm_engine.model_executor.driver_worker
-                del self.vllm_model
-                self.vllm_model = None
-
-            if self.model is not None:
-                del self.model
-                self.model = None
-
-            if self.tokenizer is not None:
-                del self.tokenizer
-                self.tokenizer = None
-
-            gc.collect()
-            torch.cuda.empty_cache()
-
-            logger.success("Memory cleanup completed")
-
-        except Exception as e:
-            logger.error(f"Error during cleanup: {e}")
-
-    def __del__(self):
-        """Destructor to ensure cleanup when object is destroyed."""
-        self.cleanup()
 
     def _load_local_model(self):
         """Load local LLM model."""
@@ -193,3 +161,36 @@ class PromptNERExtractor:
         response = outputs[0].outputs[0].text
         logger.debug(f"vLLM response: {response}")
         return response
+
+    def cleanup(self):
+        """Clean up models and free GPU memory."""
+        logger.info("Cleaning up models and freeing memory")
+
+        try:
+            if self.vllm_model is not None:
+                self.vllm_model.llm_engine.engine_core.shutdown()
+                if hasattr(self.vllm_model, 'llm_engine') and hasattr(self.vllm_model.llm_engine, 'model_executor'):
+                    if hasattr(self.vllm_model.llm_engine.model_executor, 'driver_worker'):
+                        del self.vllm_model.llm_engine.model_executor.driver_worker
+                del self.vllm_model
+                self.vllm_model = None
+
+            if self.model is not None:
+                del self.model
+                self.model = None
+
+            if self.tokenizer is not None:
+                del self.tokenizer
+                self.tokenizer = None
+
+            gc.collect()
+            torch.cuda.empty_cache()
+
+            logger.success("Memory cleanup completed")
+
+        except Exception as e:
+            logger.error(f"Error during cleanup: {e}")
+
+    def __del__(self):
+        """Destructor to ensure cleanup when object is destroyed."""
+        self.cleanup()

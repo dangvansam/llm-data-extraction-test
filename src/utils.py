@@ -12,7 +12,7 @@ from src.config import RESULTS_DIR
 
 def calculate_metrics(predictions: List[Dict], ground_truth: List[Dict]) -> Dict:
     """
-    Calculate precision, recall, and F1 score.
+    Calculate precision, recall, F1 score, and accuracy.
 
     Args:
         predictions: List of predicted entities
@@ -27,15 +27,22 @@ def calculate_metrics(predictions: List[Dict], ground_truth: List[Dict]) -> Dict
         tp = 0  # True positives
         fp = 0  # False positives
         fn = 0  # False negatives
+        tn = 0  # True negatives (for accuracy calculation)
 
         for pred, truth in zip(predictions, ground_truth):
             pred_entities = set(pred.get(entity_type, []))
             truth_entities = set(truth.get(entity_type, []))
 
+            # Calculate TP, FP, FN
             tp += len(pred_entities & truth_entities)
             fp += len(pred_entities - truth_entities)
             fn += len(truth_entities - pred_entities)
 
+            # Calculate TN: both predicted and actual have no entities for this type
+            if len(pred_entities) == 0 and len(truth_entities) == 0:
+                tn += 1
+
+        # Calculate metrics
         precision = tp / (tp + fp) if (tp + fp) > 0 else 0
         recall = tp / (tp + fn) if (tp + fn) > 0 else 0
         f1 = (
@@ -43,20 +50,24 @@ def calculate_metrics(predictions: List[Dict], ground_truth: List[Dict]) -> Dict
             if (precision + recall) > 0
             else 0
         )
+        accuracy = (tp + tn) / (tp + tn + fp + fn) if (tp + tn + fp + fn) > 0 else 0
 
         metrics[entity_type] = {
             "precision": round(precision, 4),
             "recall": round(recall, 4),
             "f1": round(f1, 4),
+            "accuracy": round(accuracy, 4),
             "tp": tp,
             "fp": fp,
             "fn": fn,
+            "tn": tn,
         }
 
     # Overall metrics
     total_tp = sum(metrics[et]["tp"] for et in ["person", "organizations", "address"])
     total_fp = sum(metrics[et]["fp"] for et in ["person", "organizations", "address"])
     total_fn = sum(metrics[et]["fn"] for et in ["person", "organizations", "address"])
+    total_tn = sum(metrics[et]["tn"] for et in ["person", "organizations", "address"])
 
     overall_precision = total_tp / (total_tp + total_fp) if (total_tp + total_fp) > 0 else 0
     overall_recall = total_tp / (total_tp + total_fn) if (total_tp + total_fn) > 0 else 0
@@ -65,14 +76,17 @@ def calculate_metrics(predictions: List[Dict], ground_truth: List[Dict]) -> Dict
         if (overall_precision + overall_recall) > 0
         else 0
     )
+    overall_accuracy = (total_tp + total_tn) / (total_tp + total_tn + total_fp + total_fn) if (total_tp + total_tn + total_fp + total_fn) > 0 else 0
 
     metrics["overall"] = {
         "precision": round(overall_precision, 4),
         "recall": round(overall_recall, 4),
         "f1": round(overall_f1, 4),
+        "accuracy": round(overall_accuracy, 4),
         "tp": total_tp,
         "fp": total_fp,
         "fn": total_fn,
+        "tn": total_tn,
     }
 
     return metrics
@@ -87,7 +101,8 @@ def display_metrics(metrics: Dict, title: str = "EVALUATION METRICS"):
     print(f"  Precision: {metrics['overall']['precision']:.4f}")
     print(f"  Recall   : {metrics['overall']['recall']:.4f}")
     print(f"  F1 Score : {metrics['overall']['f1']:.4f}")
-    print(f"  TP: {metrics['overall']['tp']}, FP: {metrics['overall']['fp']}, FN: {metrics['overall']['fn']}")
+    print(f"  Accuracy : {metrics['overall']['accuracy']:.4f}")
+    print(f"  TP: {metrics['overall']['tp']}, FP: {metrics['overall']['fp']}, FN: {metrics['overall']['fn']}, TN: {metrics['overall']['tn']}")
     print("\nPER-ENTITY METRICS:")
     for entity_type in ["person", "organizations", "address"]:
         m = metrics[entity_type]
@@ -95,7 +110,8 @@ def display_metrics(metrics: Dict, title: str = "EVALUATION METRICS"):
         print(f"    Precision: {m['precision']:.4f}")
         print(f"    Recall   : {m['recall']:.4f}")
         print(f"    F1 Score : {m['f1']:.4f}")
-        print(f"    TP: {m['tp']}, FP: {m['fp']}, FN: {m['fn']}")
+        print(f"    Accuracy : {m['accuracy']:.4f}")
+        print(f"    TP: {m['tp']}, FP: {m['fp']}, FN: {m['fn']}, TN: {m['tn']}")
     print("=" * 80)
 
 

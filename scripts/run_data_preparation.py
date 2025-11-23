@@ -11,7 +11,7 @@ from tqdm import tqdm
 sys.path.append(".")
 
 from src.config import PROCESSED_DATA_DIR, RAW_DATA_DIR, NERLangExtractConfig
-from src.langextract_pipeline import LangExtractNERExtractor
+from src.pipeline.langextract_pipeline import LangExtractNERExtractor
 from src.data_processor import DataProcessor
 
 

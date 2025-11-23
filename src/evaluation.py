@@ -1,5 +1,3 @@
-"""Evaluation metrics for NER extraction."""
-
 import json
 from typing import Dict, List
 

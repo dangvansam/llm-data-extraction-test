@@ -37,7 +37,7 @@ class BaseNERConfig:
     max_length: int = 2048
     max_new_tokens: int = 1024
     do_sample: bool = True
-    enable_thinking: bool = True
+    enable_thinking: bool = False
 
     data_dir: Path = field(default=PROCESSED_DATA_DIR)
     results_dir: Path = field(default=RESULTS_DIR)
@@ -50,7 +50,7 @@ class NERPromptEngineeringConfig(BaseNERConfig):
 
     # Model settings
     model_name: str = "Qwen/Qwen3-4B-Instruct-2507"
-    tokenizer_name: str = None
+    tokenizer_name: str = "Qwen/Qwen3-4B"
 
     # Extraction mode
     extraction_mode: ExtractionMode = ExtractionMode.RAW
@@ -120,8 +120,8 @@ class NERFineTuningConfig(BaseNERConfig):
     add_schema: bool = False  # Include JSON schema in system instruction
 
     # Training settings
-    learning_rate: float = 1e-4
-    num_train_epochs: int = 2
+    learning_rate: float = 2e-5
+    num_train_epochs: int = 1
     max_steps: int = 0
     batch_size: int = 4
     gradient_accumulation_steps: int = 1

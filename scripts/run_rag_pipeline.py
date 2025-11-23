@@ -9,7 +9,7 @@ sys.path.append(".")
 
 from src.config import PROCESSED_DATA_DIR, RESULTS_DIR, NERRagConfig
 from src.data_processor import DataProcessor
-from src.rag_pipeline import RAGNERExtractor
+from src.pipeline.rag_pipeline import RAGNERExtractor
 from src.utils import calculate_metrics
 
 
