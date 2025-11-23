@@ -12,7 +12,7 @@ sys.path.append(".")
 
 from src.config import PROCESSED_DATA_DIR, RAW_DATA_DIR, NERLangExtractConfig
 from src.langextract_pipeline import LangExtractNERExtractor
-from src.services.data_processor import DataProcessorService
+from src.data_processor import DataProcessor
 
 
 def get_available_categories(split: str) -> List[str]:
@@ -138,7 +138,7 @@ def process_category(
 
     logger.info(f"Processing category: {category_name} ({split})")
 
-    articles = DataProcessorService.load_articles_from_folder(category_path)
+    articles = DataProcessor.load_articles_from_folder(category_path)
 
     if not articles:
         logger.warning(f"No valid articles found in {category_name}")
@@ -230,33 +230,33 @@ def process_split(
         logger.error(f"No samples extracted for {split} split")
         return {"samples": [], "statistics": {}}
 
-    all_samples = DataProcessorService.deduplicate_entities(all_samples)
+    all_samples = DataProcessor.deduplicate_entities(all_samples)
 
-    valid_samples, invalid_samples = DataProcessorService.validate_samples(all_samples)
+    valid_samples, invalid_samples = DataProcessor.validate_samples(all_samples)
 
     if invalid_samples:
         logger.warning(f"Found {len(invalid_samples)} invalid samples")
 
     output_path = output_dir / f"{split}.json"
-    DataProcessorService.save_dataset(valid_samples, output_path)
+    DataProcessor.save_dataset(valid_samples, output_path)
 
     jsonl_path = output_dir / f"{split}.jsonl"
-    DataProcessorService.save_jsonl(valid_samples, jsonl_path)
+    DataProcessor.save_jsonl(valid_samples, jsonl_path)
 
     finetuning_chat_path = output_dir / f"{split}_finetuning_chat.jsonl"
-    DataProcessorService.export_for_finetuning(
+    DataProcessor.export_for_finetuning(
         valid_samples,
         finetuning_chat_path,
         format="chat"
     )
     
     finetuning_instruction_path = output_dir / f"{split}_finetuning_instruction.jsonl"
-    DataProcessorService.export_for_finetuning(
+    DataProcessor.export_for_finetuning(
         valid_samples,
         finetuning_instruction_path
     )
 
-    statistics = DataProcessorService.compute_statistics(valid_samples)
+    statistics = DataProcessor.compute_statistics(valid_samples)
 
     logger.info(f"\n{split.upper()} Statistics:")
     logger.info(json.dumps(statistics, indent=2, ensure_ascii=False))
@@ -373,7 +373,7 @@ def main():
 
         all_results[split] = result
 
-    combined_stats_path = output_dir / "langextract_statistics.json"
+    combined_stats_path = output_dir / "statistics.json"
     combined_stats = {
         split: result["statistics"]
         for split, result in all_results.items()
@@ -397,8 +397,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
-
     """
     Extract entities from raw article data using Langextract pipeline.
 
@@ -407,15 +405,14 @@ if __name__ == "__main__":
     and creates labeled datasets for LLM evaluation and finetuning.
 
     Usage:
-        # Process all categories for both train and test
-        python scripts/extract_entities_from_raw.py --all
-
         # Process specific categories
-        python scripts/extract_entities_from_raw.py --categories "Doi song" "Van hoa"
+        python scripts/data_preparation.py --categories "Doi song"
 
         # Process only train split
-        python scripts/extract_entities_from_raw.py --split train --all
+        python scripts/data_preparation.py --split train --all
 
         # Process with custom settings
-        python scripts/extract_entities_from_raw.py --all --passes 3 --workers 6
+        python scripts/data_preparation.py --all --passes 3 --workers 6
     """
+
+    main()

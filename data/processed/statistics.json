@@ -1,0 +1,32 @@
+{
+  "train": {
+    "total_samples": 1000,
+    "samples_with_entities": 991,
+    "samples_without_entities": 9,
+    "entity_counts": {
+      "person": 2687,
+      "organizations": 5642,
+      "address": 6283
+    },
+    "total_entities": 14612,
+    "avg_entities_per_sample": 14.61,
+    "avg_text_length": 2189.59,
+    "min_text_length": 253,
+    "max_text_length": 49368
+  },
+  "test": {
+    "total_samples": 100,
+    "samples_with_entities": 99,
+    "samples_without_entities": 1,
+    "entity_counts": {
+      "person": 267,
+      "organizations": 513,
+      "address": 638
+    },
+    "total_entities": 1418,
+    "avg_entities_per_sample": 14.18,
+    "avg_text_length": 2232.77,
+    "min_text_length": 274,
+    "max_text_length": 8526
+  }
+}

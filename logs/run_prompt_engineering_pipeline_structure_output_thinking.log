@@ -1,0 +1,1564 @@
+2025-11-24 02:19:30.509 | INFO     | __main__:run_evaluation:24 - ================================================================================
+2025-11-24 02:19:30.509 | INFO     | __main__:run_evaluation:25 - Prompt Engineering NER Evaluation - RAW Chat Mode
+2025-11-24 02:19:30.509 | INFO     | __main__:run_evaluation:26 - ================================================================================
+2025-11-24 02:19:30.509 | INFO     | __main__:run_evaluation:40 - Loading test dataset from /data2/samdv/test/data/processed/test.json
+2025-11-24 02:19:30.511 | INFO     | __main__:run_evaluation:42 - Loaded 100 test samples
+2025-11-24 02:19:30.511 | INFO     | __main__:run_evaluation:73 - Model: Qwen/Qwen3-4B
+2025-11-24 02:19:30.511 | INFO     | __main__:run_evaluation:74 - Extraction mode: structured_output
+2025-11-24 02:19:30.511 | INFO     | __main__:run_evaluation:75 - Add schema: False
+2025-11-24 02:19:30.511 | INFO     | __main__:run_evaluation:76 - 
+2025-11-24 02:19:31.719 | INFO     | src.prompt_engineering:__init__:35 - Initializing PromptNERExtractor
+2025-11-24 02:19:31.719 | INFO     | src.prompt_engineering:__init__:36 - Model: Qwen/Qwen3-4B
+2025-11-24 02:19:31.719 | INFO     | src.prompt_engineering:__init__:37 - Tokenizer: Qwen/Qwen3-4B
+2025-11-24 02:19:31.719 | INFO     | src.prompt_engineering:__init__:38 - Extraction mode: structured_output
+2025-11-24 02:19:31.719 | INFO     | src.prompt_engineering:__init__:39 - Max length: 4096
+2025-11-24 02:19:31.719 | INFO     | src.prompt_engineering:__init__:40 - Max new tokens: 1024
+2025-11-24 02:19:31.719 | INFO     | src.prompt_engineering:__init__:41 - Temperature: 0.1
+2025-11-24 02:19:31.719 | INFO     | src.prompt_engineering:__init__:42 - Top-p: 0.9
+2025-11-24 02:19:31.719 | INFO     | src.prompt_engineering:__init__:43 - Add schema: False
+2025-11-24 02:19:31.719 | INFO     | src.prompt_engineering:__init__:44 - Entity types: ['person', 'organizations', 'address']
+2025-11-24 02:19:31.719 | INFO     | src.prompt_engineering:_load_vllm_model:102 - Loading vLLM model: Qwen/Qwen3-4B
+INFO 11-24 02:19:31 [utils.py:253] non-default args: {'max_model_len': 4096, 'gpu_memory_utilization': 0.3, 'kv_cache_memory_bytes': 1073741824, 'disable_log_stats': True, 'model': 'Qwen/Qwen3-4B'}
+INFO 11-24 02:19:33 [model.py:631] Resolved architecture: Qwen3ForCausalLM
+INFO 11-24 02:19:33 [model.py:1745] Using max model len 4096
+INFO 11-24 02:19:34 [scheduler.py:216] Chunked prefill is enabled with max_num_batched_tokens=8192.
+(EngineCore_DP0 pid=1786629) INFO 11-24 02:19:35 [core.py:93] Initializing a V1 LLM engine (v0.11.2) with config: model='Qwen/Qwen3-4B', speculative_config=None, tokenizer='Qwen/Qwen3-4B', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None), seed=0, served_model_name=Qwen/Qwen3-4B, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer'], 'compile_mm_encoder': False, 'use_inductor': None, 'compile_sizes': [], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {}, 'max_cudagraph_capture_size': 512, 'local_cache_dir': None}
+(EngineCore_DP0 pid=1786629) INFO 11-24 02:19:36 [parallel_state.py:1208] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://192.168.1.3:56389 backend=nccl
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+(EngineCore_DP0 pid=1786629) INFO 11-24 02:19:36 [parallel_state.py:1394] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, TP rank 0, EP rank 0
+(EngineCore_DP0 pid=1786629) INFO 11-24 02:19:37 [gpu_model_runner.py:3259] Starting to load model Qwen/Qwen3-4B...
+(EngineCore_DP0 pid=1786629) INFO 11-24 02:19:38 [cuda.py:418] Valid backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION']
+(EngineCore_DP0 pid=1786629) INFO 11-24 02:19:38 [cuda.py:427] Using FLASH_ATTN backend.
+Loading safetensors checkpoint shards:   0% Completed | 0/3 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards:  33% Completed | 1/3 [00:00<00:01,  1.29it/s]
+Loading safetensors checkpoint shards:  67% Completed | 2/3 [00:01<00:00,  1.30it/s]
+Loading safetensors checkpoint shards: 100% Completed | 3/3 [00:01<00:00,  2.15it/s]
+Loading safetensors checkpoint shards: 100% Completed | 3/3 [00:01<00:00,  1.82it/s]
+(EngineCore_DP0 pid=1786629) 
+(EngineCore_DP0 pid=1786629) INFO 11-24 02:19:41 [default_loader.py:314] Loading weights took 1.65 seconds
+(EngineCore_DP0 pid=1786629) INFO 11-24 02:19:42 [gpu_model_runner.py:3338] Model loading took 7.5552 GiB memory and 3.736096 seconds
+(EngineCore_DP0 pid=1786629) INFO 11-24 02:19:47 [backends.py:631] Using cache directory: /home/samdv/.cache/vllm/torch_compile_cache/41f4760370/rank_0_0/backbone for vLLM's torch.compile
+(EngineCore_DP0 pid=1786629) INFO 11-24 02:19:47 [backends.py:647] Dynamo bytecode transform time: 5.01 s
+(EngineCore_DP0 pid=1786629) INFO 11-24 02:19:50 [backends.py:210] Directly load the compiled graph(s) for dynamic shape from the cache, took 2.887 s
+(EngineCore_DP0 pid=1786629) INFO 11-24 02:19:51 [monitor.py:34] torch.compile takes 7.90 s in total
+(EngineCore_DP0 pid=1786629) INFO 11-24 02:19:53 [gpu_worker.py:312] Initial free memory 17.76 GiB, reserved 1.00 GiB memory for KV Cache as specified by kv_cache_memory_bytes config and skipped memory profiling. This does not respect the gpu_memory_utilization config. Only use kv_cache_memory_bytes config when you want manual control of KV cache memory size. If OOM'ed, check the difference of initial free memory between the current run and the previous run where kv_cache_memory_bytes is suggested and update it correspondingly.
+(EngineCore_DP0 pid=1786629) INFO 11-24 02:19:53 [kv_cache_utils.py:1229] GPU KV cache size: 7,280 tokens
+(EngineCore_DP0 pid=1786629) INFO 11-24 02:19:53 [kv_cache_utils.py:1234] Maximum concurrency for 4,096 tokens per request: 1.78x
+Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|████████████████████████████████████| 51/51 [00:07<00:00,  7.22it/s]
+Capturing CUDA graphs (decode, FULL): 100%|███████████████████████████████████████████████████████| 35/35 [00:02<00:00, 16.45it/s]
+(EngineCore_DP0 pid=1786629) INFO 11-24 02:20:02 [gpu_model_runner.py:4244] Graph capturing finished in 10 secs, took 0.18 GiB
+(EngineCore_DP0 pid=1786629) INFO 11-24 02:20:02 [core.py:250] init engine (profile, create kv cache, warmup model) took 20.92 seconds
+INFO 11-24 02:20:04 [llm.py:352] Supported tasks: ['generate']
+2025-11-24 02:20:04.400 | SUCCESS  | src.prompt_engineering:_load_vllm_model:114 - vLLM model loaded successfully
+2025-11-24 02:20:04.400 | INFO     | __main__:run_evaluation:86 - Starting extraction...
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 167.93it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:00<00:00,  1.04it/s, est. speed input: 441.55 toks/s, output: 18.66 toks/s]
+2025-11-24 02:20:05.388 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 18.66 toks/s]
+  "person": [],
+  "organizations": [],
+  "address": []
+}
+2025-11-24 02:20:05.388 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 0.99s
+2025-11-24 02:20:05.389 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Thủ tướng'], 'organizations': ['UBND cấp huyện'], 'address': []}
+2025-11-24 02:20:05.389 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': [], 'organizations': [], 'address': []}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 380.23it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:01<00:00,  1.31s/it, est. speed input: 249.13 toks/s, output: 31.33 toks/s]
+2025-11-24 02:20:06.701 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.33 toks/s]
+  "person": [],
+  "organizations": ["Đoàn Thanh tra liên ngành tỉnh Gia Lai", "NLĐ"],
+  "address": ["Gia Lai"]
+}
+2025-11-24 02:20:06.701 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 1.31s
+2025-11-24 02:20:06.701 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': [], 'organizations': ['Đoàn Thanh tra liên ngành tỉnh Gia Lai', 'NLĐ'], 'address': ['Gia Lai']}
+2025-11-24 02:20:06.701 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': [], 'organizations': ['Đoàn Thanh tra liên ngành tỉnh Gia Lai', 'NLĐ'], 'address': ['Gia Lai']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 168.58it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:04<00:00,  4.66s/it, est. speed input: 305.26 toks/s, output: 30.48 toks/s]
+2025-11-24 02:20:11.367 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.48 toks/s]
+  "person": ["Thanh", "Thủy", "Diễm", "Cường", "ông Sáu", "chị Thuỳ Vân"],
+  "organizations": ["Phòng Công chứng số 2, TP HCM", "Phòng Công chứng số 5 (đường Nguyễn Văn Nghi, quân Gò Vấp)", "Phòng Công chứng số 1", "Phòng Công chứng số 4"],
+  "address": ["phường Tây Thạnh, quận Tân Phú", "phường Tân Chánh Hiệp, quận 12", "Gò Vấp", "đường Nguyễn Văn Nghi, quân Gò Vấp"]
+}
+2025-11-24 02:20:11.367 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 4.67s
+2025-11-24 02:20:11.367 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Diễm', 'ông Sáu', 'Vân', 'Thuỳ Vân', 'Thanh', 'Thủy', 'Cường'], 'organizations': ['Phòng Công chứng số 5', 'Phòng Công chứng số 4', 'Phòng Công chứng số 2', 'Phòng Công chứng số 1'], 'address': ['Gò Vấp', 'đường Nguyễn Văn Nghi', 'quân Gò Vấp', 'phường Tân Chánh Hiệp', 'quận 12', 'phường Tây Thạnh', 'khu phố 4', 'quận Tân Phú', 'TP HCM']}
+2025-11-24 02:20:11.367 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Thanh', 'Thủy', 'Diễm', 'Cường', 'ông Sáu', 'chị Thuỳ Vân'], 'organizations': ['Phòng Công chứng số 2, TP HCM', 'Phòng Công chứng số 5 (đường Nguyễn Văn Nghi, quân Gò Vấp)', 'Phòng Công chứng số 1', 'Phòng Công chứng số 4'], 'address': ['phường Tây Thạnh, quận Tân Phú', 'phường Tân Chánh Hiệp, quận 12', 'Gò Vấp', 'đường Nguyễn Văn Nghi, quân Gò Vấp']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 469.95it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:00<00:00,  1.44it/s, est. speed input: 274.39 toks/s, output: 31.60 toks/s]
+2025-11-24 02:20:12.066 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.60 toks/s]
+  "person": [],
+  "organizations": [],
+  "address": ["Hà Nội"]
+}
+2025-11-24 02:20:12.067 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 0.70s
+2025-11-24 02:20:12.067 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': [], 'organizations': [], 'address': ['Hà Nội']}
+2025-11-24 02:20:12.067 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': [], 'organizations': [], 'address': ['Hà Nội']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 281.67it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:03<00:00,  3.11s/it, est. speed input: 266.36 toks/s, output: 30.92 toks/s]
+2025-11-24 02:20:15.176 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.92 toks/s]
+  "person": ["Vũ Nam Trung", "Đặng Minh Đạt"],
+  "organizations": ["UBND TP HCM", "UBND phường 17", "UBND phường Đa Kao", "UBND quận Bình Thạnh", "UBND quận 1"],
+  "address": ["phường 17", "quận Bình Thạnh", "phường Đa Kao", "quận 1"]
+}
+2025-11-24 02:20:15.176 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 3.11s
+2025-11-24 02:20:15.176 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Đặng Minh Đạt', 'Vũ Nam Trung'], 'organizations': ['UBND phường 17', 'UBND TP HCM', 'UBND phường', 'phòng công chứng', 'UBND phường Đa Kao', 'UBND thành phố'], 'address': ['quận', 'huyện', 'quận 1', 'quận Bình Thạnh', 'thành phố']}
+2025-11-24 02:20:15.176 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Vũ Nam Trung', 'Đặng Minh Đạt'], 'organizations': ['UBND TP HCM', 'UBND phường 17', 'UBND phường Đa Kao', 'UBND quận Bình Thạnh', 'UBND quận 1'], 'address': ['phường 17', 'quận Bình Thạnh', 'phường Đa Kao', 'quận 1']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 241.25it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:03<00:00,  3.06s/it, est. speed input: 338.26 toks/s, output: 30.39 toks/s]
+2025-11-24 02:20:18.242 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.39 toks/s]
+  "person": ["Nguyễn Văn Cường", "Nguyễn Văn Lang"],
+  "organizations": ["Viettravel", "Exotissimo Travel Việt Nam", "Saigontourist", "Thái Dương", "Việt Âu", "Cửu Long", "Mỹ Hà"],
+  "address": ["Đà Lạt", "Nha Trang", "Phan Thiết", "Phú Quốc"]
+}
+2025-11-24 02:20:18.242 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 3.07s
+2025-11-24 02:20:18.242 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Nguyễn Văn Cường', 'Nguyễn Văn Lang'], 'organizations': ['Viettravel', 'Saigontourist', 'Exotissimo Travel Việt Nam', 'Việt Âu', 'Thái Dương', 'Công ty Mỹ Hà', 'Exotissimo', 'công ty Dịch vụ Lữ hành Saigontourist', 'Cửu Long'], 'address': ['Đà Lạt', 'Phú Quốc', 'Nha Trang', 'Italy', 'Phan Thiết', 'Tây Ban Nha', 'TP HCM', 'Nha Trang - Đà Lạt']}
+2025-11-24 02:20:18.242 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Nguyễn Văn Cường', 'Nguyễn Văn Lang'], 'organizations': ['Viettravel', 'Exotissimo Travel Việt Nam', 'Saigontourist', 'Thái Dương', 'Việt Âu', 'Cửu Long', 'Mỹ Hà'], 'address': ['Đà Lạt', 'Nha Trang', 'Phan Thiết', 'Phú Quốc']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 265.14it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.57s/it, est. speed input: 343.97 toks/s, output: 30.70 toks/s]
+2025-11-24 02:20:20.820 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.70 toks/s]
+  "person": ["Vũ Hiền", "Phó Chủ tịch kiêm Tổng thư ký Hội nhà báo Việt Nam"],
+  "organizations": ["Hội nhà báo Việt Nam", "Hội Nhà báo Việt Nam", "Liên chi hội", "Hội nhà báo cơ sở"],
+  "address": ["Hà Nội", "Hội trường Ba Đình"]
+}
+2025-11-24 02:20:20.820 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.58s
+2025-11-24 02:20:20.820 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Vũ Hiền'], 'organizations': ['Ban chấp hành Hội nhà báo Việt Nam', 'Hội nhà báo cơ sở', 'Liên chi hội', 'Ban chấp hành', 'Ban chấp hành Hội Nhà Báo Việt Nam', 'Đảng Cộng sản Việt Nam', 'Hội nhà báo Việt Nam', 'Hội Nhà báo Việt Nam'], 'address': ['Hội trường Ba Đình', 'Hà Nội', 'Việt Nam']}
+2025-11-24 02:20:20.820 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Vũ Hiền', 'Phó Chủ tịch kiêm Tổng thư ký Hội nhà báo Việt Nam'], 'organizations': ['Hội nhà báo Việt Nam', 'Hội Nhà báo Việt Nam', 'Liên chi hội', 'Hội nhà báo cơ sở'], 'address': ['Hà Nội', 'Hội trường Ba Đình']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 385.01it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.57s/it, est. speed input: 157.46 toks/s, output: 31.57 toks/s]
+2025-11-24 02:20:23.389 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.57 toks/s]
+  "person": ["Prof. Alan Wheatley", "Janine Murray"],
+  "organizations": ["Wellstream International Ltd", "ĐH Sunderland", "School of Computing, Technology St Peter's Way Sunderland, Tyne Wear, SR6 0DD, UK"],
+  "address": ["St Peter's Way Sunderland, Tyne Wear, SR6 0DD, UK"]
+}
+2025-11-24 02:20:23.390 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.57s
+2025-11-24 02:20:23.390 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Alan Wheatley', 'Janine Murray'], 'organizations': ['Informatics Centre School of Computing, Technology', 'Khoa Máy tính và Công nghệ thông tin, ĐH Sunderland', 'Wellstream International Ltd'], 'address': ['UK', "St Peter's Way", 'Anh', 'Sunderland, Tyne Wear']}
+2025-11-24 02:20:23.390 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Prof. Alan Wheatley', 'Janine Murray'], 'organizations': ['Wellstream International Ltd', 'ĐH Sunderland', "School of Computing, Technology St Peter's Way Sunderland, Tyne Wear, SR6 0DD, UK"], 'address': ["St Peter's Way Sunderland, Tyne Wear, SR6 0DD, UK"]}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 208.28it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:03<00:00,  3.17s/it, est. speed input: 379.99 toks/s, output: 30.27 toks/s]
+2025-11-24 02:20:26.567 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.27 toks/s]
+  "person": ["anh Bình", "chị Loan", "chị Minh", "anh Quang", "bà Mình"],
+  "organizations": ["Bộ Nông nghiệp Phát triển nông thôn", "UBND các cấp", "UBND phường"],
+  "address": ["đầu phố Ngô Tất Tố (Hà Nội)", "chợ Hàng Da", "chợ", "vùng ngoại thành", "Hà Nội"]
+}
+2025-11-24 02:20:26.567 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 3.18s
+2025-11-24 02:20:26.567 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Chị Minh', 'Loan', 'bà Mình', 'Bình', 'Anh Bình', 'anh Bình', 'Chị Loan', 'chị Loan', 'Anh Quang'], 'organizations': ['phường', 'nhà nước', 'cơ quan chức năng', 'UBND', 'Bộ Nông nghiệp Phát triển nông thôn'], 'address': ['Ngô Tất Tố', 'Hà Nội', 'thành phố', 'chợ', 'chợ Hàng Da', 'vùng ngoại thành']}
+2025-11-24 02:20:26.567 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['anh Bình', 'chị Loan', 'chị Minh', 'anh Quang', 'bà Mình'], 'organizations': ['Bộ Nông nghiệp Phát triển nông thôn', 'UBND các cấp', 'UBND phường'], 'address': ['đầu phố Ngô Tất Tố (Hà Nội)', 'chợ Hàng Da', 'chợ', 'vùng ngoại thành', 'Hà Nội']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 434.64it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.35s/it, est. speed input: 181.84 toks/s, output: 31.86 toks/s]
+2025-11-24 02:20:28.924 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.86 toks/s]
+  "person": ["Nguyễn Hữu Quế"],
+  "organizations": ["Công ty Quản lý đường sắt Bình Trị Thiên", "VnExpress", "Cơ quan chức năng"],
+  "address": ["Huế", "TP HCM", "Hà Nội", "Lăng Cô", "thành phố Huế"]
+}
+2025-11-24 02:20:28.925 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.36s
+2025-11-24 02:20:28.925 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Nguyễn Hữu Quế'], 'organizations': ['VnExpress', 'Công ty Quản lý đường sắt Bình Trị Thiên'], 'address': ['đường sắt Bắc - Nam', 'Lăng Cô', 'Hà Nội', 'thành phố Huế', 'TP HCM', 'ga Huế']}
+2025-11-24 02:20:28.925 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Nguyễn Hữu Quế'], 'organizations': ['Công ty Quản lý đường sắt Bình Trị Thiên', 'VnExpress', 'Cơ quan chức năng'], 'address': ['Huế', 'TP HCM', 'Hà Nội', 'Lăng Cô', 'thành phố Huế']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 422.47it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.50s/it, est. speed input: 147.90 toks/s, output: 31.26 toks/s]
+2025-11-24 02:20:31.423 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.26 toks/s]
+  "person": ["Lê Huy Ngọ", "Cao Đức Phát", "Lã Thị Kim Oanh"],
+  "organizations": ["Bộ Nông nghiệp và Phát triển nông thôn", "Quốc hội", "Chính phủ", "Trưởng ban chỉ đạo phòng chống lụt bão trung ương"],
+  "address": []
+}
+2025-11-24 02:20:31.423 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.50s
+2025-11-24 02:20:31.423 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Cao Đức Phát', 'Lê Huy Ngọ', 'Lã Thị Kim Oanh'], 'organizations': ['Nhà nước', 'Quốc hội', 'Chính phủ', 'ban chỉ đạo phòng chống lụt bão trung ương', 'Bộ Nông nghiệp và Phát triển nông thôn', 'Đảng'], 'address': []}
+2025-11-24 02:20:31.423 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Lê Huy Ngọ', 'Cao Đức Phát', 'Lã Thị Kim Oanh'], 'organizations': ['Bộ Nông nghiệp và Phát triển nông thôn', 'Quốc hội', 'Chính phủ', 'Trưởng ban chỉ đạo phòng chống lụt bão trung ương'], 'address': []}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 411.73it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.55s/it, est. speed input: 162.92 toks/s, output: 31.41 toks/s]
+2025-11-24 02:20:33.974 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.41 toks/s]
+  "person": ["Ông Lê Truyền", "Ủy ban Trung ương MTTQ VN"],
+  "organizations": ["MTTQ VN", "Ban Vận động “Ngày vì người nghèo” Trung ương", "Ủy ban Trung ương MTTQ VN", "TPHCM"],
+  "address": ["TPHCM"]
+}
+2025-11-24 02:20:33.974 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.55s
+2025-11-24 02:20:33.974 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Lê Truyền'], 'organizations': ['Mặt trận Trung ương', 'Ban Vận động “Ngày vì người nghèo” Trung ương', 'Quỹ “Vì người nghèo”', 'Ủy ban Trung ương MTTQ VN'], 'address': ['miền Nam', 'cả nước', 'TPHCM']}
+2025-11-24 02:20:33.974 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Ông Lê Truyền', 'Ủy ban Trung ương MTTQ VN'], 'organizations': ['MTTQ VN', 'Ban Vận động “Ngày vì người nghèo” Trung ương', 'Ủy ban Trung ương MTTQ VN', 'TPHCM'], 'address': ['TPHCM']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 349.53it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.16s/it, est. speed input: 234.20 toks/s, output: 31.01 toks/s]
+2025-11-24 02:20:36.139 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.01 toks/s]
+  "person": ["Caroline"],
+  "organizations": ["Hội bảo trợ trẻ em TP HCM", "Quỹ Cathalyst", "Little Red"],
+  "address": ["Nha Trang", "Đà Lạt", "TP HCM", "Tam Bình", "TP HCM"]
+}
+2025-11-24 02:20:36.139 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.16s
+2025-11-24 02:20:36.139 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Caroline'], 'organizations': ['Quỹ Cathalyst', 'mái ấm Tam Bình', 'trường tiểu học Đa Lợi', 'công ty Little Red', 'Hội bảo trợ trẻ em thành phố', 'Hội bảo trợ trẻ em TP HCM'], 'address': ['Đà Lạt', 'Nha Trang', 'Mỹ', 'Việt Nam', 'TP HCM']}
+2025-11-24 02:20:36.139 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Caroline'], 'organizations': ['Hội bảo trợ trẻ em TP HCM', 'Quỹ Cathalyst', 'Little Red'], 'address': ['Nha Trang', 'Đà Lạt', 'TP HCM', 'Tam Bình', 'TP HCM']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 360.52it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.11s/it, est. speed input: 261.15 toks/s, output: 31.22 toks/s]
+2025-11-24 02:20:38.256 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.22 toks/s]
+  "person": [],
+  "organizations": ["Cty Dịch vụ Lữ hành Saigontourist"],
+  "address": ["Úc", "New Zealand", "Melbourne", "Wellington", "Auckland", "Sydney", "49 Lê Thánh Tôn - Quận 1"]
+}
+2025-11-24 02:20:38.257 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.12s
+2025-11-24 02:20:38.257 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Cook'], 'organizations': ['Cty Dịch vụ Lữ hành Saigontourist', 'Hội chợ AIME'], 'address': ['hồ Taupo', 'Công viên Thú hoang dã', 'vịnh Sydney', 'Cầu Cảng Sydney', 'Vườn Fitzroy', 'bảo tàng Te Papa', 'nhà Hát Con Sò', 'Sydney', 'Ballarat', 'Melbourne', 'Auckland', 'khu bảo tồn Te Whakarewarewa', 'châu Úc', '49 Lê Thánh Tôn - Quận 1', 'Wellington', 'núi lửa Eden', 'Sky Tower', 'Úc', 'New Zealand', 'Thiên Đàng Thung Lũng Mùa Xuân', 'Sở thú Taronga']}
+2025-11-24 02:20:38.257 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': [], 'organizations': ['Cty Dịch vụ Lữ hành Saigontourist'], 'address': ['Úc', 'New Zealand', 'Melbourne', 'Wellington', 'Auckland', 'Sydney', '49 Lê Thánh Tôn - Quận 1']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 447.54it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:01<00:00,  1.92s/it, est. speed input: 167.43 toks/s, output: 31.29 toks/s]
+2025-11-24 02:20:40.177 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.29 toks/s]
+  "person": [],
+  "organizations": [],
+  "address": [
+    "Trà Vinh",
+    "huyện Duyên Hải",
+    "xã Đông Hải",
+    "huyện Trà Cú",
+    "xã An Quãng Hữu"
+  ]
+}
+2025-11-24 02:20:40.177 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 1.92s
+2025-11-24 02:20:40.177 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': [], 'organizations': ['Cơ quan chức năng địa phương', 'ngành chức năng địa phương', 'ngành chức năng'], 'address': ['xã An Quãng Hữu', 'huyện Duyên Hải', 'huyện Trà Cú', 'xã Đông Hải', 'Trà Vinh']}
+2025-11-24 02:20:40.177 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': [], 'organizations': [], 'address': ['Trà Vinh', 'huyện Duyên Hải', 'xã Đông Hải', 'huyện Trà Cú', 'xã An Quãng Hữu']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 361.52it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:01<00:00,  1.56s/it, est. speed input: 388.21 toks/s, output: 30.70 toks/s]
+2025-11-24 02:20:41.745 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.70 toks/s]
+  "person": ["Nguyễn Đình Liêu"],
+  "organizations": ["Bộ Lao động Thương binh và Xã hội", "Quỹ quốc gia hỗ trợ việc làm"],
+  "address": []
+}
+2025-11-24 02:20:41.745 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 1.57s
+2025-11-24 02:20:41.745 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Nguyễn Đình Liêu'], 'organizations': ['Bộ Lao động Thương binh và Xã hội', 'Quỹ quốc gia hỗ trợ việc làm', 'Quỹ hỗ trợ việc làm'], 'address': ['ven biển miền Trung', 'đồng bằng Bắc Bộ', 'miền núi phía Bắc', 'đồng bằng sông Cửu Long', 'Tây Nguyên', 'trung du Bắc Bộ']}
+2025-11-24 02:20:41.745 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Nguyễn Đình Liêu'], 'organizations': ['Bộ Lao động Thương binh và Xã hội', 'Quỹ quốc gia hỗ trợ việc làm'], 'address': []}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 382.06it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:01<00:00,  1.65s/it, est. speed input: 259.82 toks/s, output: 31.57 toks/s]
+2025-11-24 02:20:43.396 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.57 toks/s]
+  "person": ["Ông Ngô Trần Ái"],
+  "organizations": ["Nhà Xuất bản Giáo dục", "Hội nghệ sĩ Nhiếp ảnh Việt Nam", "Báo Giáo dục Thời đại"],
+  "address": []
+}
+2025-11-24 02:20:43.396 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 1.65s
+2025-11-24 02:20:43.396 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Ngô Trần Ái'], 'organizations': ['Báo Giáo dục Thời đại', 'Hội nghệ sĩ Nhiếp ảnh Việt Nam', 'Nhà Xuất bản Giáo dục', 'Nhà xuất bản Giáo dục'], 'address': []}
+2025-11-24 02:20:43.396 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Ông Ngô Trần Ái'], 'organizations': ['Nhà Xuất bản Giáo dục', 'Hội nghệ sĩ Nhiếp ảnh Việt Nam', 'Báo Giáo dục Thời đại'], 'address': []}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 424.31it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:03<00:00,  3.38s/it, est. speed input: 130.45 toks/s, output: 31.65 toks/s]
+2025-11-24 02:20:46.780 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.65 toks/s]
+  "person": ["Nguyễn Văn Lạng", "Ông M.Mc Goun"],
+  "organizations": ["New Zealand", "Thụy Sĩ", "Canada", "Na Uy", "Hội thánh Tin lành Đăk Lăk", "Tòa giám mục Buôn Ma Thuột"],
+  "address": ["Đăk Lăk", "Văn phòng đại diện Hội thánh Tin lành Đăk Lăk", "Buôn Ma Thuột"]
+}
+2025-11-24 02:20:46.780 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 3.38s
+2025-11-24 02:20:46.781 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Nguyễn Văn Lạng', 'M.Mc Goun'], 'organizations': ['Văn phòng đại diện Hội thánh Tin lành Đăk Lăk', 'UBND tỉnh', 'Tòa giám mục Buôn Ma Thuột'], 'address': ['Đăk Lăk', 'New Zealand', 'Canada', 'Na Uy', 'Thụy Sĩ']}
+2025-11-24 02:20:46.781 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Nguyễn Văn Lạng', 'Ông M.Mc Goun'], 'organizations': ['New Zealand', 'Thụy Sĩ', 'Canada', 'Na Uy', 'Hội thánh Tin lành Đăk Lăk', 'Tòa giám mục Buôn Ma Thuột'], 'address': ['Đăk Lăk', 'Văn phòng đại diện Hội thánh Tin lành Đăk Lăk', 'Buôn Ma Thuột']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 222.79it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:03<00:00,  3.70s/it, est. speed input: 319.08 toks/s, output: 30.58 toks/s]
+2025-11-24 02:20:50.482 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.58 toks/s]
+  "person": [
+    "Bùi Bá Bổng",
+    "Phó Thủ tướng Nguyễn Tấn Dũng",
+    "HLV Thành Vinh"
+  ],
+  "organizations": [
+    "Ban chỉ đạo Quốc gia phòng chống dịch cúm gà",
+    "Bộ Y tế",
+    "Cục Thú y",
+    "Bộ Công an",
+    "Chính phủ"
+  ],
+  "address": [
+    "Hà Nội",
+    "TP HCM",
+    "Bình Dương"
+  ]
+}
+2025-11-24 02:20:50.482 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 3.70s
+2025-11-24 02:20:50.482 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Bùi Bá Bổng', 'Nguyễn Tấn Dũng', 'Thành Vinh'], 'organizations': ['Ban chỉ đạo Quốc gia phòng chống dịch cúm gà', 'OIE', 'Bộ Công an', 'VnExpress', 'UBND', 'Chính phủ', 'Bộ Y tế', 'Cục Thú y'], 'address': ['Hà Nội', 'TP HCM', 'Bình Dương', 'Việt Nam']}
+2025-11-24 02:20:50.482 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Bùi Bá Bổng', 'Phó Thủ tướng Nguyễn Tấn Dũng', 'HLV Thành Vinh'], 'organizations': ['Ban chỉ đạo Quốc gia phòng chống dịch cúm gà', 'Bộ Y tế', 'Cục Thú y', 'Bộ Công an', 'Chính phủ'], 'address': ['Hà Nội', 'TP HCM', 'Bình Dương']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 222.70it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:05<00:00,  5.45s/it, est. speed input: 235.22 toks/s, output: 30.67 toks/s]
+2025-11-24 02:20:55.934 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.67 toks/s]
+  "person": [
+    "Nguyễn Kim Thanh",
+    "Nguyễn Phương Mai"
+  ],
+  "organizations": [
+    "Saigontourist",
+    "Du lịch Việt Nam tại Hà Nội",
+    "Sở Du lịch",
+    "Sở Du lịch và các ngành chức năng",
+    "Hãng lữ hành ở Hà Nội",
+    "Khách sạn Hương Giang",
+    "Khách sạn Morin",
+    "Khách sạn Century",
+    "Khách sạn Hương Giang",
+    "Khách sạn Thuận Hóa",
+    "Khách sạn Hương Giang"
+  ],
+  "address": [
+    "Festival Huế 2004",
+    "quảng trường Ngọ Môn",
+    "Huế"
+  ]
+}
+2025-11-24 02:20:55.934 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 5.45s
+2025-11-24 02:20:55.934 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Nguyễn Kim Thanh', 'Nguyễn Phương Mai'], 'organizations': ['Hương Giang', 'Sở Du lịch', 'Du lịch Việt Nam tại Hà Nội', 'Thuận Hóa', 'Saigontourist', 'Vietravel', 'khách sạn Morin', 'UBND thành phố Huế', 'Khách sạn Hương Giang', 'Century'], 'address': ['Đà Nẵng', 'Việt Nam', 'Hà Nội', 'cố đô', 'Bồ Đào Nha', 'quảng trường Ngọ Môn', 'châu Mỹ', 'châu Âu', 'Hội An', 'Huế']}
+2025-11-24 02:20:55.934 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Nguyễn Kim Thanh', 'Nguyễn Phương Mai'], 'organizations': ['Saigontourist', 'Du lịch Việt Nam tại Hà Nội', 'Sở Du lịch', 'Sở Du lịch và các ngành chức năng', 'Hãng lữ hành ở Hà Nội', 'Khách sạn Hương Giang', 'Khách sạn Morin', 'Khách sạn Century', 'Khách sạn Hương Giang', 'Khách sạn Thuận Hóa', 'Khách sạn Hương Giang'], 'address': ['Festival Huế 2004', 'quảng trường Ngọ Môn', 'Huế']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 313.87it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.65s/it, est. speed input: 289.47 toks/s, output: 30.91 toks/s]
+2025-11-24 02:20:58.591 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.91 toks/s]
+  "person": ["Phạm Thế Hiển", "Tô Hiến Thành", "Nguyễn Duy", "Nguyễn Xuân Bảng"],
+  "organizations": ["Sở Giao thông công chính TP HCM", "VnExperss", "tổ công tác nghiên cứu đào và tái lập mặt đường"],
+  "address": ["TP HCM"]
+}
+2025-11-24 02:20:58.591 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.66s
+2025-11-24 02:20:58.591 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Bảng', 'Nguyễn Xuân Bảng'], 'organizations': ['VnExperss', 'Sở Giao thông công chính TP HCM'], 'address': ['TP HCM', 'Tô Hiến Thành', 'Phạm Thế Hiển', 'Nguyễn Duy']}
+2025-11-24 02:20:58.592 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Phạm Thế Hiển', 'Tô Hiến Thành', 'Nguyễn Duy', 'Nguyễn Xuân Bảng'], 'organizations': ['Sở Giao thông công chính TP HCM', 'VnExperss', 'tổ công tác nghiên cứu đào và tái lập mặt đường'], 'address': ['TP HCM']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 369.41it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:03<00:00,  3.19s/it, est. speed input: 181.32 toks/s, output: 31.06 toks/s]
+2025-11-24 02:21:01.783 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.06 toks/s]
+  "person": ["Nguyễn Hữu Hải"],
+  "organizations": ["Trung tâm Dự báo khí tượng thuỷ văn"],
+  "address": ["Nho Quan (Ninh Bình)", "Sơn Tây (Hà Tây)", "Hà Nội", "Hưng Yên", "Nam Định", "Bắc Ninh", "Vĩnh Yên", "Sơn Tây (Hà Tây)", "Tĩnh Gia (Thanh Hoá)"]
+}
+2025-11-24 02:21:01.783 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 3.19s
+2025-11-24 02:21:01.783 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Hải', 'Nguyễn Hữu Hải'], 'organizations': ['Trung tâm Dự báo khí tượng thuỷ văn'], 'address': ['Nam Định', 'Bắc Ninh', 'Hưng Yên', 'Thanh Hoá', 'Hà Nội', 'Vĩnh Yên', 'Trung du Bắc Bộ', 'Ninh Bình', 'Hà Tây', 'Tĩnh Gia', 'Sơn Tây', 'Bắc Bộ', 'Nho Quan', 'Bắc và Trung Trung Bộ']}
+2025-11-24 02:21:01.783 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Nguyễn Hữu Hải'], 'organizations': ['Trung tâm Dự báo khí tượng thuỷ văn'], 'address': ['Nho Quan (Ninh Bình)', 'Sơn Tây (Hà Tây)', 'Hà Nội', 'Hưng Yên', 'Nam Định', 'Bắc Ninh', 'Vĩnh Yên', 'Sơn Tây (Hà Tây)', 'Tĩnh Gia (Thanh Hoá)']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 266.81it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:03<00:00,  3.29s/it, est. speed input: 274.64 toks/s, output: 31.02 toks/s]
+2025-11-24 02:21:05.077 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.02 toks/s]
+  "person": ["Ông Võ Văn Cương", "Ông Võ Văn Cương"],
+  "organizations": ["Ủy ban Mặt trận Tổ quốc TP HCM", "Ủy ban Mặt trận Tổ quốc Việt Nam", "UBND cùng cấp", "Hội đồng bầu cử TP HCM", "Hội đồng bầu cử"],
+  "address": ["TP HCM", "Nhà Bè", "Cần Giờ", "quận 7"]
+}
+2025-11-24 02:21:05.077 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 3.29s
+2025-11-24 02:21:05.077 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Võ Văn Cương'], 'organizations': ['HĐND TP HCM', 'HĐND', 'Ủy ban Mặt trận Tổ quốc TP HCM', 'Hội đồng bầu cử', 'UBND', 'Uỷ ban Mặt trận Tổ quốc', 'Hội đồng bầu cử TP HCM', 'Ủy ban Mặt trận Tổ quốc Việt Nam'], 'address': ['TP HCM', 'Nhà Bè', 'quận 7', 'Cần Giờ']}
+2025-11-24 02:21:05.077 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Ông Võ Văn Cương', 'Ông Võ Văn Cương'], 'organizations': ['Ủy ban Mặt trận Tổ quốc TP HCM', 'Ủy ban Mặt trận Tổ quốc Việt Nam', 'UBND cùng cấp', 'Hội đồng bầu cử TP HCM', 'Hội đồng bầu cử'], 'address': ['TP HCM', 'Nhà Bè', 'Cần Giờ', 'quận 7']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 340.72it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:04<00:00,  4.55s/it, est. speed input: 152.60 toks/s, output: 31.18 toks/s]
+2025-11-24 02:21:09.635 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.18 toks/s]
+  "person": ["Hoàng Chí Trung", "Lê Quốc Dũng", "Bùi Nhật Thắng", "Hoa", "Người này"],
+  "organizations": ["Đội Quản lý thị trường số 1", "Đội Quản lý thị trường số 2", "Cơ quan chức năng", "Lực lượng cảnh sát hình sự quận Hoàn Kiếm", "Đội quản lý thị trường số 2"],
+  "address": ["bến xe Long Biên", "chợ Đồng Xuân", "số nhà 12, Đồng Xuân", "đường Yên Phụ", "Quảng Ninh", "Hải Phòng"]
+}
+2025-11-24 02:21:09.635 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 4.56s
+2025-11-24 02:21:09.636 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Lê Quốc Dũng', 'Hoàng Chí Trung', 'Hoa', 'Bùi Nhật Thắng'], 'organizations': ['Đội Quản lý thị trường số 1', 'Đội Quản lý thị trường số 2', 'lực lượng cảnh sát hình sự quận Hoàn Kiếm'], 'address': ['bến xe Long Biên', 'đường Yên Phụ', 'Hà Nội', 'chợ Đồng Xuân', 'Quảng Ninh', 'Trung Quốc', 'Hải Phòng', 'số nhà 12, Đồng Xuân']}
+2025-11-24 02:21:09.636 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Hoàng Chí Trung', 'Lê Quốc Dũng', 'Bùi Nhật Thắng', 'Hoa', 'Người này'], 'organizations': ['Đội Quản lý thị trường số 1', 'Đội Quản lý thị trường số 2', 'Cơ quan chức năng', 'Lực lượng cảnh sát hình sự quận Hoàn Kiếm', 'Đội quản lý thị trường số 2'], 'address': ['bến xe Long Biên', 'chợ Đồng Xuân', 'số nhà 12, Đồng Xuân', 'đường Yên Phụ', 'Quảng Ninh', 'Hải Phòng']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 307.23it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:03<00:00,  3.07s/it, est. speed input: 277.97 toks/s, output: 30.92 toks/s]
+2025-11-24 02:21:12.712 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.92 toks/s]
+  "person": [],
+  "organizations": [
+    "RV Centre Hà Nội",
+    "Đại học RMIT – úc",
+    "Đại học SIM – Singapore",
+    "Đại học Tổng hợp London – Anh",
+    "Đại học Buffalo – Mỹ",
+    "FPT"
+  ],
+  "address": [
+    "86 Phạm Ngọc Thạch, Quận Đống Đa, Tp Hà Nội"
+  ]
+}
+2025-11-24 02:21:12.712 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 3.08s
+2025-11-24 02:21:12.712 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': [], 'organizations': ['RV Centre Hà Nội', 'rvgroup', 'Đại học Buffalo', 'fpt', 'SIM', 'ĐH Tổng hợp London', 'Đại học SIM', 'Polytechnic', 'Học viện - Đại học SIM', 'Đại học RMIT'], 'address': ['Anh', 'Mỹ', 'úc', 'RV Centre Hà Nội – 86 Phạm Ngọc Thạch, Quận Đống Đa, Tp Hà Nội', '86 Phạm Ngọc Thạch, Quận Đống Đa, Tp Hà Nội', 'Singapore']}
+2025-11-24 02:21:12.713 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': [], 'organizations': ['RV Centre Hà Nội', 'Đại học RMIT – úc', 'Đại học SIM – Singapore', 'Đại học Tổng hợp London – Anh', 'Đại học Buffalo – Mỹ', 'FPT'], 'address': ['86 Phạm Ngọc Thạch, Quận Đống Đa, Tp Hà Nội']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 371.31it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:01<00:00,  1.84s/it, est. speed input: 267.80 toks/s, output: 30.90 toks/s]
+2025-11-24 02:21:14.561 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.90 toks/s]
+  "person": ["Đỗ Hoàng Ân", "UBND thành phố"],
+  "organizations": ["UBND thành phố", "Sở Quy hoạch kiến trúc Hà Nội"],
+  "address": ["Hà Nội", "Cửa ô phía nam"]
+}
+2025-11-24 02:21:14.561 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 1.85s
+2025-11-24 02:21:14.561 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Đỗ Hoàng Ân'], 'organizations': ['Sở Quy hoạch kiến trúc Hà Nội', 'UBND thành phố'], 'address': ['Thăng Long Hà Nội', 'Việt Nam', 'Hà Nội', 'Cửa ô phía nam', 'thủ đô', 'Đài Chiến thắng', 'Cửa ô phía nam Hà Nội']}
+2025-11-24 02:21:14.561 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Đỗ Hoàng Ân', 'UBND thành phố'], 'organizations': ['UBND thành phố', 'Sở Quy hoạch kiến trúc Hà Nội'], 'address': ['Hà Nội', 'Cửa ô phía nam']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 461.98it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:01<00:00,  1.35s/it, est. speed input: 249.54 toks/s, output: 31.75 toks/s]
+2025-11-24 02:21:15.919 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.75 toks/s]
+  "person": [],
+  "organizations": [],
+  "address": ["Nam Kinh", "hồ Xuanwu", "hồ Kunlun", "cửa Jiefang"]
+}
+2025-11-24 02:21:15.919 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 1.36s
+2025-11-24 02:21:15.919 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': [], 'organizations': ['nhà Thanh'], 'address': ['Nam Kinh', 'Xuanwu', 'Trung Quốc', 'Kunlun', 'Yến Sơn', 'Jiefang', 'thành phố Nam Kinh', 'Kunning']}
+2025-11-24 02:21:15.919 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': [], 'organizations': [], 'address': ['Nam Kinh', 'hồ Xuanwu', 'hồ Kunlun', 'cửa Jiefang']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 380.40it/s]
+Processed prompts: 100%|██████████████████████| 1/1 [00:06<00:00,  6.09s/it, est. speed input: 85.09 toks/s, output: 31.38 toks/s]
+2025-11-24 02:21:22.010 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.38 toks/s]
+  "person": ["Lê Công Minh", "Trần Quang Phượng"],
+  "organizations": ["Cảng Sài Gòn", "Sở Kế hoạch Đầu tư", "Quy hoạch Kiến trúc", "GTCC", "Tài nguyên và Môi trường", "Sở Tài nguyên và môi trường TP HCM", "Sở Giao thông công chính TP HCM"],
+  "address": ["Hiệp Phước (Nhà Bè - TP HCM)", "Cái Mép (Thị Vải - Bà Rịa - Vũng Tàu)", "Thủ Thiêm", "phường 22 (Bình Thạnh)", "cầu Tôn Đức Thắng (giáp đường Tôn Đức Thắng và cầu Bến Nghé (còn có tên là Trần Não) từ phường Tân Thuận Đông, quận 7 qua quận 2)"]
+}
+2025-11-24 02:21:22.010 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 6.09s
+2025-11-24 02:21:22.011 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Trần Quang Phượng', 'Lê Công Minh'], 'organizations': ['bảo tàng hàng hải', 'GTCC', 'Tài nguyên và Môi trường', 'Sở Kế hoạch Đầu tư', 'Sở Giao thông công chính TP HCM', 'Cảng Sài Gòn', 'Sở Tài nguyên và môi trường TP HCM', 'Quy hoạch Kiến trúc'], 'address': ['Bình Thạnh', 'phường 22', 'cầu Bến Nghé', 'Bà Rịa - Vũng Tàu', 'Trần Não', 'phường Tân Thuận Đông', 'Thủ Thiêm', 'Thị Vải', 'cầu Tôn Đức Thắng', 'Nhà Bè', 'quận 2', 'quận 7', 'Cái Mép', 'TP HCM', 'đường Tôn Đức Thắng', 'Hiệp Phước']}
+2025-11-24 02:21:22.011 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Lê Công Minh', 'Trần Quang Phượng'], 'organizations': ['Cảng Sài Gòn', 'Sở Kế hoạch Đầu tư', 'Quy hoạch Kiến trúc', 'GTCC', 'Tài nguyên và Môi trường', 'Sở Tài nguyên và môi trường TP HCM', 'Sở Giao thông công chính TP HCM'], 'address': ['Hiệp Phước (Nhà Bè - TP HCM)', 'Cái Mép (Thị Vải - Bà Rịa - Vũng Tàu)', 'Thủ Thiêm', 'phường 22 (Bình Thạnh)', 'cầu Tôn Đức Thắng (giáp đường Tôn Đức Thắng và cầu Bến Nghé (còn có tên là Trần Não) từ phường Tân Thuận Đông, quận 7 qua quận 2)']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 225.34it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:01<00:00,  1.76s/it, est. speed input: 667.76 toks/s, output: 29.63 toks/s]
+2025-11-24 02:21:23.771 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 29.63 toks/s]
+  "person": ["Hưng", "Trang", "Cẩm Thanh", "Việt Phong"],
+  "organizations": ["Đại học UEA", "trường UEA"],
+  "address": ["Norwich"]
+}
+2025-11-24 02:21:23.771 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 1.76s
+2025-11-24 02:21:23.771 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Cẩm Thanh', 'Hưng', 'Việt Phong', 'Trang'], 'organizations': ['Đại học UEA', 'UEA'], 'address': ['Norwich', 'Anh', 'Anh quốc', 'VN', 'Trung Quốc', 'châu Á']}
+2025-11-24 02:21:23.771 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Hưng', 'Trang', 'Cẩm Thanh', 'Việt Phong'], 'organizations': ['Đại học UEA', 'trường UEA'], 'address': ['Norwich']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 374.76it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:01<00:00,  1.20s/it, est. speed input: 368.01 toks/s, output: 30.95 toks/s]
+2025-11-24 02:21:24.971 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.95 toks/s]
+  "person": [],
+  "organizations": ["NLĐ", "TTXVN", "MTTQ tỉnh"],
+  "address": ["Cà Mau"]
+}
+2025-11-24 02:21:24.971 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 1.20s
+2025-11-24 02:21:24.971 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': [], 'organizations': ['Nhà nước', 'NLĐ', 'MTTQ tỉnh', 'TTXVN'], 'address': ['Cà Mau']}
+2025-11-24 02:21:24.971 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': [], 'organizations': ['NLĐ', 'TTXVN', 'MTTQ tỉnh'], 'address': ['Cà Mau']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 478.42it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:01<00:00,  1.45s/it, est. speed input: 237.16 toks/s, output: 31.71 toks/s]
+2025-11-24 02:21:26.425 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.71 toks/s]
+  "person": [],
+  "organizations": [],
+  "address": ["Trại Bò", "xã Yên Hợp", "huyện Quỳ Hợp", "Nghệ An"]
+}
+2025-11-24 02:21:26.425 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 1.45s
+2025-11-24 02:21:26.425 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': [], 'organizations': [], 'address': ['xã Yên Hợp', 'Nghệ An', 'huyện Quỳ Hợp', 'Trại Bò']}
+2025-11-24 02:21:26.425 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': [], 'organizations': [], 'address': ['Trại Bò', 'xã Yên Hợp', 'huyện Quỳ Hợp', 'Nghệ An']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 275.45it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:04<00:00,  4.11s/it, est. speed input: 231.16 toks/s, output: 30.87 toks/s]
+2025-11-24 02:21:30.544 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.87 toks/s]
+  "person": ["Nguyễn Thị Thu", "Chị Thảo", "Trương Quốc Hùng", "Nguyễn Văn Tưởng"],
+  "organizations": ["Mường Thanh", "Hà Nội Startour", "Saigontourist", "Vietravel", "Đầu tư và xuất nhập khẩu Hồ Gươm", "Sở Du lịch thương mại Điện Biên"],
+  "address": ["Điện Biên Phủ", "thành phố Điện Biên Phủ", "tỉnh Điện Biên", "Hà Nội", "Điện Biên"]
+}
+2025-11-24 02:21:30.544 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 4.12s
+2025-11-24 02:21:30.544 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Nguyễn Văn Tưởng', 'Thảo', 'Trương Quốc Hùng', 'Nguyễn Thị Thu'], 'organizations': ['Sở Du lịch thương mại Điện Biên', 'Saigontourist', 'Đầu tư và xuất nhập khẩu Hồ Gươm', 'Điện Biên', 'Vietravel', 'Startour', 'Năm du lịch Điện Biên', 'Tổng cục Du lịch', 'Hương Thảo', 'Hà Nội Startour', 'Mường Thanh'], 'address': ['Điện Biên Phủ', 'Việt Nam', 'Hà Nội', 'Điện Biên', 'Pháp', 'thành phố Điện Biên Phủ', 'TP HCM']}
+2025-11-24 02:21:30.544 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Nguyễn Thị Thu', 'Chị Thảo', 'Trương Quốc Hùng', 'Nguyễn Văn Tưởng'], 'organizations': ['Mường Thanh', 'Hà Nội Startour', 'Saigontourist', 'Vietravel', 'Đầu tư và xuất nhập khẩu Hồ Gươm', 'Sở Du lịch thương mại Điện Biên'], 'address': ['Điện Biên Phủ', 'thành phố Điện Biên Phủ', 'tỉnh Điện Biên', 'Hà Nội', 'Điện Biên']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 232.31it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:07<00:00,  7.35s/it, est. speed input: 167.43 toks/s, output: 30.76 toks/s]
+2025-11-24 02:21:37.896 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.76 toks/s]
+  "person": [
+    "Bà Lê Tuyết",
+    "ông Dũng",
+    "ông Lê Hoài Xum",
+    "ông Trần Anh Dũng",
+    "ông Tư Sul (tên thật là Phạm Ngọc Tuấn)",
+    "ông Huỳnh Công Khanh"
+  ],
+  "organizations": [
+    "UBND quận Bình Thủy",
+    "phòng chống cúm gia cầm",
+    "UBND xã Thành Lợi",
+    "chính quyền xã Thành Lợi",
+    "cơ quan chức năng môi trường và y tế"
+  ],
+  "address": [
+    "quận Bình Thủy, Ninh Kiều (thành phố Cần Thơ)",
+    "phường An Thới",
+    "phường Trà Nóc",
+    "phường Cái Khế",
+    "ấp Tân Đông, xã Tân Qưới, huyện Bình Minh (Vĩnh Long)",
+    "xã Thành Lợi (Bình Minh, Vĩnh Long)",
+    "sông Hậu",
+    "sông Trà Mơn"
+  ]
+}
+2025-11-24 02:21:37.896 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 7.35s
+2025-11-24 02:21:37.896 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Lê Tuyết', 'Nguyễn Đức Chính', 'Tư Sul', 'Lê Hoài Xum', 'Trần Anh Dũng', 'Phạm Ngọc Tuấn', 'Dũng', 'Huỳnh Công Khanh'], 'organizations': ['Ban phòng chống dịch cúm gia cầm quận Bình Thủy', 'UBND xã Thành Lợi', 'Trại cá Tư Sul', 'UBND quận Bình Thủy'], 'address': ['phà Cần Thơ', 'phường An Thới', 'sông Hậu', 'xã Tân Qưới', 'thành phố Cần Thơ', 'huyện Bình Minh', 'phường Bình Thủy', 'phường Cái Khế', 'sông Trà Mơn', 'quận Bình Thủy', 'ấp Tân Đông', 'xã Thành Lợi', 'Chợ Đình', 'Ninh Kiều', 'Vĩnh Long', 'Bình Minh', 'phường Trà Nóc']}
+2025-11-24 02:21:37.896 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Bà Lê Tuyết', 'ông Dũng', 'ông Lê Hoài Xum', 'ông Trần Anh Dũng', 'ông Tư Sul (tên thật là Phạm Ngọc Tuấn)', 'ông Huỳnh Công Khanh'], 'organizations': ['UBND quận Bình Thủy', 'phòng chống cúm gia cầm', 'UBND xã Thành Lợi', 'chính quyền xã Thành Lợi', 'cơ quan chức năng môi trường và y tế'], 'address': ['quận Bình Thủy, Ninh Kiều (thành phố Cần Thơ)', 'phường An Thới', 'phường Trà Nóc', 'phường Cái Khế', 'ấp Tân Đông, xã Tân Qưới, huyện Bình Minh (Vĩnh Long)', 'xã Thành Lợi (Bình Minh, Vĩnh Long)', 'sông Hậu', 'sông Trà Mơn']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 245.91it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:03<00:00,  3.23s/it, est. speed input: 299.64 toks/s, output: 30.92 toks/s]
+2025-11-24 02:21:41.135 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.92 toks/s]
+  "person": [
+    "Nguyễn Văn Xuân",
+    "Nguyễn Đức Thắng",
+    "Sáu Huyến",
+    "Mộng Thu"
+  ],
+  "organizations": [],
+  "address": [
+    "làng Lương Hội",
+    "xã Hố Nai 3",
+    "huyện Trảng Bom",
+    "tỉnh Đồng Nai",
+    "miền Trung",
+    "Mỹ"
+  ]
+}
+2025-11-24 02:21:41.135 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 3.24s
+2025-11-24 02:21:41.135 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Mộng Thu', 'Nguyễn Đức Thắng', 'Nguyễn Văn Xuân', 'Sáu Huyến'], 'organizations': ['Olympia'], 'address': ['Mỹ', 'huyện Trảng Bom', 'tỉnh Đồng Nai', 'xã Hố Nai 3', 'Làng Lương Hội', 'trời Tây', 'làng Lương Hội', 'miền Trung']}
+2025-11-24 02:21:41.135 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Nguyễn Văn Xuân', 'Nguyễn Đức Thắng', 'Sáu Huyến', 'Mộng Thu'], 'organizations': [], 'address': ['làng Lương Hội', 'xã Hố Nai 3', 'huyện Trảng Bom', 'tỉnh Đồng Nai', 'miền Trung', 'Mỹ']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 359.41it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.65s/it, est. speed input: 227.58 toks/s, output: 31.00 toks/s]
+2025-11-24 02:21:43.784 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.00 toks/s]
+  "person": [],
+  "organizations": ["Cát Tường"],
+  "address": [
+    "TP HCM: 557-559 Sư Vạn Hạnh (nối dài), P.13, quận 10",
+    "Hà Nội: 66 - Ngô Thì Nhậm, quận Hai Bà Trưng"
+  ]
+}
+2025-11-24 02:21:43.785 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.65s
+2025-11-24 02:21:43.785 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': [], 'organizations': ['IELTS', 'công ty tư vấn quốc tế Cát Tường', 'TOEFL'], 'address': ['Hà Nội', '66 - Ngô Thì Nhậm, quận Hai Bà Trưng', 'TP HCM', 'Thụy Sĩ', '557-559 Sư Vạn Hạnh (nối dài), P.13, quận 10']}
+2025-11-24 02:21:43.785 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': [], 'organizations': ['Cát Tường'], 'address': ['TP HCM: 557-559 Sư Vạn Hạnh (nối dài), P.13, quận 10', 'Hà Nội: 66 - Ngô Thì Nhậm, quận Hai Bà Trưng']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 378.34it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.22s/it, est. speed input: 201.83 toks/s, output: 31.47 toks/s]
+2025-11-24 02:21:46.013 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.47 toks/s]
+  "person": ["Jean Francois Blarel"],
+  "organizations": ["Trung tâm đào tạo bảo dưỡng công nghiệp (CFMI)", "ĐH Bách Khoa Hà Nội", "Cenformi", "Pháp"],
+  "address": ["ĐH Bách Khoa Hà Nội", "TP HCM"]
+}
+2025-11-24 02:21:46.013 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.23s
+2025-11-24 02:21:46.013 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Jean Francois Blarel'], 'organizations': ['Trung tâm đào tạo bảo dưỡng công nghiệp (CFMI)', 'ĐH Bách Khoa Hà Nội', 'Cenformi', 'IUT'], 'address': ['Pháp', 'TP HCM', 'Việt Nam']}
+2025-11-24 02:21:46.013 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Jean Francois Blarel'], 'organizations': ['Trung tâm đào tạo bảo dưỡng công nghiệp (CFMI)', 'ĐH Bách Khoa Hà Nội', 'Cenformi', 'Pháp'], 'address': ['ĐH Bách Khoa Hà Nội', 'TP HCM']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 314.65it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:04<00:00,  4.96s/it, est. speed input: 154.90 toks/s, output: 31.06 toks/s]
+2025-11-24 02:21:50.976 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.06 toks/s]
+  "person": ["Ông Trần Cảnh Đào"],
+  "organizations": ["Sở Văn hóa Thông tin Lâm Đồng"],
+  "address": ["Đà Lạt", "công viên Đà Lạt", "khu thao trường Lâm Viên", "công viên Yersin (thành phố Đà Lạt)", "thung lũng Tình Yêu", "hồ Xuân Hương", "hồ Than Thở", "hồ Dankia - suối Vàng", "thác Pongour", "Cam Ly", "đèo Ngoạn Mục", "nhà thờ Đà Lạt", "Tu viện Domain de Marie", "biệt điện Bảo Đại", "dinh Toàn quyền"]
+}
+2025-11-24 02:21:50.976 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 4.96s
+2025-11-24 02:21:50.976 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Yersin', 'Trần Cảnh Đào', 'Bảo Đại'], 'organizations': ['Sở Văn hóa Thông tin Lâm Đồng', 'Tu viện Domain de Marie', 'Festival hoa Đà Lạt'], 'address': ['công viên Đà Lạt', 'nhà thờ Đà Lạt', 'Trần Quốc Toản', 'dinh Toàn quyền', 'Lê Đại Hành', 'công viên Yersin', 'cao nguyên', 'khu thao trường Lâm Viên', 'Yersin', 'thác Pongour', 'Cam Ly', 'khu Hòa Bình', 'Đà Lạt', 'thung lũng Tình Yêu', 'hồ Than Thở', 'hồ Dankia - suối Vàng', 'biệt điện Bảo Đại', 'Lâm Đồng', 'đèo Ngoạn Mục', 'thành phố Đà Lạt', 'hồ Xuân Hương', 'quảng trường Đà Lạt']}
+2025-11-24 02:21:50.976 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Ông Trần Cảnh Đào'], 'organizations': ['Sở Văn hóa Thông tin Lâm Đồng'], 'address': ['Đà Lạt', 'công viên Đà Lạt', 'khu thao trường Lâm Viên', 'công viên Yersin (thành phố Đà Lạt)', 'thung lũng Tình Yêu', 'hồ Xuân Hương', 'hồ Than Thở', 'hồ Dankia - suối Vàng', 'thác Pongour', 'Cam Ly', 'đèo Ngoạn Mục', 'nhà thờ Đà Lạt', 'Tu viện Domain de Marie', 'biệt điện Bảo Đại', 'dinh Toàn quyền']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 238.41it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:03<00:00,  3.50s/it, est. speed input: 340.59 toks/s, output: 30.31 toks/s]
+2025-11-24 02:21:54.478 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.31 toks/s]
+  "person": [
+    "Anh Nguyễn Văn Đức",
+    "Thiếu tá Trần Trung",
+    "Ông Tô Mạnh Cường"
+  ],
+  "organizations": [
+    "Bưu điện Hà Nội",
+    "Công an"
+  ],
+  "address": [
+    "Hà Nội",
+    "Quán Sứ",
+    "Nguyễn Văn Cừ",
+    "Bến xe Gia Lâm",
+    "Bến xe khách Mỹ Đình"
+  ]
+}
+2025-11-24 02:21:54.478 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 3.50s
+2025-11-24 02:21:54.478 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Trần Trung', 'Nguyễn Văn Đức', 'Tô Mạnh Cường'], 'organizations': ['thanh tra ngành bưu điện', 'Bệnh viện K', 'Bưu điện Hà Nội'], 'address': ['Nguyễn Văn Cừ', 'Hà Nội', 'Gia Lâm', 'Trung Quốc', 'bến xe Mỹ Đình', 'Quán Sứ', 'Mỹ Đình', 'Hải Phòng', 'Thủy Nguyên']}
+2025-11-24 02:21:54.478 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Anh Nguyễn Văn Đức', 'Thiếu tá Trần Trung', 'Ông Tô Mạnh Cường'], 'organizations': ['Bưu điện Hà Nội', 'Công an'], 'address': ['Hà Nội', 'Quán Sứ', 'Nguyễn Văn Cừ', 'Bến xe Gia Lâm', 'Bến xe khách Mỹ Đình']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 265.70it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.87s/it, est. speed input: 348.58 toks/s, output: 30.67 toks/s]
+2025-11-24 02:21:57.352 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.67 toks/s]
+  "person": ["Lê Chinh", "Hoàng Sĩ Sơn"],
+  "organizations": [],
+  "address": ["Đà Lạt", "Lâm Đồng", "Tỉnh Lâm Đồng", "Đà Lạt", "Đà Lạt", "Đà Lạt", "Đà Lạt", "Đà Lạt", "Đà Lạt", "Đà Lạt"]
+}
+2025-11-24 02:21:57.352 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.87s
+2025-11-24 02:21:57.352 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Lê Chinh', 'Hoàng Sĩ Sơn'], 'organizations': ['UBND thành phố Đà Lạt', 'UBND tỉnh Lâm Đồng'], 'address': ['Đà Lạt', 'đường Phan Bội Châu', 'Tỉnh Lâm Đồng', 'Pháp', 'Bùi Thị Xuân', 'Đinh Tiên Hoàng', 'Phan Bội Châu', 'Hoà Bình', 'chợ Đà Lạt', 'Nguyễn Thị Minh Khai', 'Lâm Đồng']}
+2025-11-24 02:21:57.352 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Lê Chinh', 'Hoàng Sĩ Sơn'], 'organizations': [], 'address': ['Đà Lạt', 'Lâm Đồng', 'Tỉnh Lâm Đồng', 'Đà Lạt', 'Đà Lạt', 'Đà Lạt', 'Đà Lạt', 'Đà Lạt', 'Đà Lạt', 'Đà Lạt']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 248.60it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:04<00:00,  4.86s/it, est. speed input: 215.44 toks/s, output: 30.86 toks/s]
+2025-11-24 02:22:02.218 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.86 toks/s]
+  "person": [
+    "Đào Ngọc Nghiêm",
+    "Đỗ Hoàng Ân",
+    "Tổng công ty Thiết kế giao thông vận tải"
+  ],
+  "organizations": [
+    "Tổng công ty Thiết kế giao thông vận tải",
+    "Sở Quy hoạch kiến trúc Hà Nội",
+    "UBND thành phố Hà Nội",
+    "Đường 5 kéo dài"
+  ],
+  "address": [
+    "phường Phú Thượng (quận Tây Hồ)",
+    "xã Vĩnh Ngọc (huyện Đông Anh)",
+    "xã Kim Nỗ, Đông Anh",
+    "nút giao thông cầu Chui"
+  ]
+}
+2025-11-24 02:22:02.218 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 4.87s
+2025-11-24 02:22:02.218 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Đào Ngọc Nghiêm', 'Đỗ Hoàng Ân'], 'organizations': ['Sở Quy hoạch kiến trúc Hà Nội', 'Tổng công ty Thiết kế giao thông vận tải', 'UBND thành phố'], 'address': ['cầu Mỹ Thuận', 'cầu Rạch Miễu', 'Đông Anh', 'quận Tây Hồ', 'cầu Bính', 'cầu Chui', 'sông Hồng', 'cầu Thuận Phước', 'xã Vĩnh Ngọc', 'Bắc sông Hồng', 'cầu Kiền', 'Đà Nẵng', 'Cầu Nhật Tân', 'Bắc Thăng Long - Vân Trì', 'Tầm Xá', 'Hà Nội', 'thành phố Hà Nội', 'phường Phú Thượng', 'Kim Nỗ', 'huyện Đông Anh', 'Long Biên']}
+2025-11-24 02:22:02.218 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Đào Ngọc Nghiêm', 'Đỗ Hoàng Ân', 'Tổng công ty Thiết kế giao thông vận tải'], 'organizations': ['Tổng công ty Thiết kế giao thông vận tải', 'Sở Quy hoạch kiến trúc Hà Nội', 'UBND thành phố Hà Nội', 'Đường 5 kéo dài'], 'address': ['phường Phú Thượng (quận Tây Hồ)', 'xã Vĩnh Ngọc (huyện Đông Anh)', 'xã Kim Nỗ, Đông Anh', 'nút giao thông cầu Chui']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 450.03it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:03<00:00,  3.74s/it, est. speed input: 103.72 toks/s, output: 31.54 toks/s]
+2025-11-24 02:22:05.962 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.54 toks/s]
+  "person": ["Đỗ Đăng Ký", "Đào Thị Hoàng Dung", "Đoàn Trung Dũng"],
+  "organizations": ["trường Nguyễn Gia Thiều", "trường Gò Vấp 2", "trường Lê Văn Tám"],
+  "address": ["TP HCM", "huyện Nhà Bè", "quận Gò Vấp", "quận 4", "quận 12", "huyện Củ Chi", "quận Tân Bình", "quận Bình Thạnh"]
+}
+2025-11-24 02:22:05.962 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 3.74s
+2025-11-24 02:22:05.962 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Đào Thị Hoàng Dung', 'Đỗ Đăng Ký', 'Đoàn Trung Dũng'], 'organizations': ['trường Nguyễn Gia Thiều', 'trường Lê Văn Tám', 'trường Gò Vấp 2', 'Hội đồng chấm thi THCS'], 'address': ['quận Gò Vấp', 'quận 12', 'quận Bình Thạnh', 'quận 4', 'quận Tân Bình', 'huyện Củ Chi', 'huyện Nhà Bè', 'TP HCM']}
+2025-11-24 02:22:05.962 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Đỗ Đăng Ký', 'Đào Thị Hoàng Dung', 'Đoàn Trung Dũng'], 'organizations': ['trường Nguyễn Gia Thiều', 'trường Gò Vấp 2', 'trường Lê Văn Tám'], 'address': ['TP HCM', 'huyện Nhà Bè', 'quận Gò Vấp', 'quận 4', 'quận 12', 'huyện Củ Chi', 'quận Tân Bình', 'quận Bình Thạnh']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 171.93it/s]
+Processed prompts: 100%|████████████████████| 1/1 [00:01<00:00,  1.43s/it, est. speed input: 1028.95 toks/s, output: 28.66 toks/s]
+2025-11-24 02:22:07.400 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 28.66 toks/s]
+  "person": ["Trần Văn Tá"],
+  "organizations": ["Bộ Tài chính", "Chính phủ", "Văn phòng Quốc hội"],
+  "address": []
+}
+2025-11-24 02:22:07.400 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 1.44s
+2025-11-24 02:22:07.400 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Thủ tướng Chính phủ', 'Trần Văn Tá'], 'organizations': ['Nhà nước', 'Chính phủ', 'Bộ Tài chính', 'Văn phòng Quốc hội'], 'address': ['toàn quốc']}
+2025-11-24 02:22:07.400 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Trần Văn Tá'], 'organizations': ['Bộ Tài chính', 'Chính phủ', 'Văn phòng Quốc hội'], 'address': []}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 487.43it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.33s/it, est. speed input: 123.40 toks/s, output: 31.28 toks/s]
+2025-11-24 02:22:09.737 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.28 toks/s]
+  "person": ["Jennifer Stephens"],
+  "organizations": ["trường CĐ Bosworth", "Hội đồng Anh", "Hội đồng Anh Hà Nội", "British Council", "educationUK-vietnam.org"],
+  "address": ["Hội đồng Anh, 40 Cát Linh, Hà Nội"]
+}
+2025-11-24 02:22:09.737 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.34s
+2025-11-24 02:22:09.737 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Jennifer Stephens'], 'organizations': ['Hội đồng Anh', 'Hội đồng Anh Hà Nội', 'CĐ Bosworth'], 'address': ['40 Cát Linh, Hà Nội']}
+2025-11-24 02:22:09.737 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Jennifer Stephens'], 'organizations': ['trường CĐ Bosworth', 'Hội đồng Anh', 'Hội đồng Anh Hà Nội', 'British Council', 'educationUK-vietnam.org'], 'address': ['Hội đồng Anh, 40 Cát Linh, Hà Nội']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 298.65it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:03<00:00,  3.75s/it, est. speed input: 213.78 toks/s, output: 30.96 toks/s]
+2025-11-24 02:22:13.488 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.96 toks/s]
+  "person": [
+    "Thủ tướng",
+    "Thủ tướng Phan Văn Khải",
+    "GS. Trần Văn Khê",
+    "Chủ tịch UBND TP HCM Lê Thanh Hải"
+  ],
+  "organizations": [
+    "Dinh Độc Lập",
+    "TP HCM",
+    "Chính phủ",
+    "Nhà nước",
+    "Việt kiều tại Pháp"
+  ],
+  "address": [
+    "Dinh Độc Lập",
+    "TP HCM"
+  ]
+}
+2025-11-24 02:22:13.488 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 3.75s
+2025-11-24 02:22:13.488 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Thủ tướng Phan Văn Khải', 'GS. Trần Văn Khê', 'Thiền sư Thích Nhất Hạnh', 'Lê Thanh Hải'], 'organizations': ['Nhà nước', 'Chính phủ', 'UBND TP HCM'], 'address': ['Việt Nam', 'Pháp', 'Dinh Độc Lập', 'TP HCM', 'nước ngoài']}
+2025-11-24 02:22:13.488 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Thủ tướng', 'Thủ tướng Phan Văn Khải', 'GS. Trần Văn Khê', 'Chủ tịch UBND TP HCM Lê Thanh Hải'], 'organizations': ['Dinh Độc Lập', 'TP HCM', 'Chính phủ', 'Nhà nước', 'Việt kiều tại Pháp'], 'address': ['Dinh Độc Lập', 'TP HCM']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 133.79it/s]
+Processed prompts: 100%|██████████████████████| 1/1 [00:33<00:00, 33.49s/it, est. speed input: 74.24 toks/s, output: 30.58 toks/s]
+2025-11-24 02:22:46.984 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.58 toks/s]
+  "person": [
+    "Trần Thế Ngọc",
+    "Nguyễn Văn Đua",
+    "Nguyễn Văn Chiến",
+    "Phan Minh Tân",
+    "Ngọc Mai",
+    "Roderich Haire"
+  ],
+  "organizations": [
+    "Sở Tài nguyên - Môi trường (TN-MT) TPHCM",
+    "UBND TP",
+    "Sở Xây dựng",
+    "Sở Khoa học - Công nghệ TPHCM",
+    "Công ty TNHH Bảo hiểm Quốc tế Mỹ - AIA (Việt Nam)",
+    "Báo Người Lao Động",
+    "Liên đoàn Bản đồ Địa chất miền Nam",
+    "Viện Vật lý Địa cầu",
+    "Công ty Pouyuen"
+  ],
+  "address": [
+    "Chung cư Nguyễn Thái Bình, quận 1- TPHCM",
+    "TPHCM",
+    "Vũng Tàu",
+    "TPHCM",
+  ]
+2025-11-24 02:22:46.984 | INFO     | src.utils:parse_response:202 - No JSON found in response: {
+  "person": [
+    "Trần Thế Ngọc",
+    "Nguyễn Văn Đua",
+    "Nguyễn Văn Chiến",
+    "Phan Minh Tâ
+2025-11-24 02:22:46.984 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 33.50s
+2025-11-24 02:22:46.984 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Chiến', 'Đoàn Phú', 'Ngọc', 'Nguyễn Văn Đua', 'Phan Minh Tân', 'N. Hữu', 'Trần Thế Ngọc', 'T.Thắng', 'N.Triều', 'Ngọc Mai', 'Nguyễn Văn Chiến', 'Roderich Haire'], 'organizations': ['Sở Tài nguyên - Môi trường (TN-MT) TPHCM', 'Công an TP', 'Sở TN-MT', 'Viện Vật lý Địa cầu', 'Báo Người Lao Động', 'công ty Pouyuen', 'Công ty TNHH Bảo hiểm Quốc tế Mỹ - AIA (Việt Nam)', 'UBND TP', 'Sở Xây dựng', 'Sở Khoa học Công nghệ TPHCM', 'Công ty Pouyuen', 'Liên đoàn Bản đồ Địa chất miền Nam', 'Sở Tài nguyên - Môi trường', 'UBND TPHCM', 'Sở Y tế', 'AIA', 'Sở Khoa học - Công nghệ'], 'address': ['TP', 'Vũng Tàu', 'TPHCM', 'quận 1', 'Nhật', 'Đông Nam Bộ', 'hầm vượt sông Sài Gòn', 'hầm Thủ Thiêm', 'Chung cư Nguyễn Thái Bình', 'Nhật Bản']}
+2025-11-24 02:22:46.984 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': [], 'organizations': [], 'address': []}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 371.93it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:03<00:00,  3.67s/it, est. speed input: 131.80 toks/s, output: 31.32 toks/s]
+2025-11-24 02:22:50.660 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.32 toks/s]
+  "person": [
+    "Trần Phạm Gia Khánh",
+    "Phạm Thị Hòa",
+    "Bác Nguyễn Thế Bình"
+  ],
+  "organizations": [
+    "Hợp tác xã Phúc Tân",
+    "UBND quận Hoàn Kiếm"
+  ],
+  "address": [
+    "khu dân cư ngõ 2 phố Cầu Đất (ngoài đê sông Hồng)",
+    "phường Chương Dương, quận Hoàn Kiếm, Hà Nội",
+    "ngõ 2"
+  ]
+}
+2025-11-24 02:22:50.660 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 3.68s
+2025-11-24 02:22:50.660 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Trần Phạm Gia Khánh', 'Phạm Thị Hòa', 'Nguyễn Thế Bình'], 'organizations': ['Hợp tác xã Phúc Tân', 'UBND quận Hoàn Kiếm'], 'address': ['quận Hoàn Kiếm', 'Hà Nội', 'khu dân cư ngõ 2 phố Cầu Đất', 'sông Hồng', 'phường Chương Dương']}
+2025-11-24 02:22:50.660 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Trần Phạm Gia Khánh', 'Phạm Thị Hòa', 'Bác Nguyễn Thế Bình'], 'organizations': ['Hợp tác xã Phúc Tân', 'UBND quận Hoàn Kiếm'], 'address': ['khu dân cư ngõ 2 phố Cầu Đất (ngoài đê sông Hồng)', 'phường Chương Dương, quận Hoàn Kiếm, Hà Nội', 'ngõ 2']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 399.38it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:03<00:00,  3.92s/it, est. speed input: 122.57 toks/s, output: 31.41 toks/s]
+2025-11-24 02:22:54.580 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.41 toks/s]
+  "person": [],
+  "organizations": ["Mitsubishi", "PTSC", "Vina Express", "Petro", "Dinh Độc lập", "Nhà thờ Đức Bà", "Bảo tàng lịch sử", "Địa đạo Củ Chi", "Bà Rịa", "Chân Mây", "Huế"],
+  "address": ["Vũng Tàu", "TP HCM", "Thái Lan", "Singapore", "Malaysia", "Australia", "Chân Mây", "Huế", "Bà Rịa"]
+}
+2025-11-24 02:22:54.580 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 3.92s
+2025-11-24 02:22:54.580 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': [], 'organizations': ['Mitsubishi', 'Vina Express', 'PTSC', 'Petro', 'Sapphire Princess'], 'address': ['Dinh Độc lập', 'Mỹ', 'Anh', 'Bảo tàng lịch sử', 'Vũng Tàu', 'Việt Nam', 'Australia', 'Malaysia', 'Canada', 'Bà Rịa', 'Nhà thờ Đức Bà', 'Thái Lan', 'châu Á', 'TP HCM', 'Địa đạo Củ Chi', 'Singapore', 'Huế', 'cảng Chân Mây']}
+2025-11-24 02:22:54.580 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': [], 'organizations': ['Mitsubishi', 'PTSC', 'Vina Express', 'Petro', 'Dinh Độc lập', 'Nhà thờ Đức Bà', 'Bảo tàng lịch sử', 'Địa đạo Củ Chi', 'Bà Rịa', 'Chân Mây', 'Huế'], 'address': ['Vũng Tàu', 'TP HCM', 'Thái Lan', 'Singapore', 'Malaysia', 'Australia', 'Chân Mây', 'Huế', 'Bà Rịa']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 283.46it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:03<00:00,  3.99s/it, est. speed input: 214.91 toks/s, output: 31.06 toks/s]
+2025-11-24 02:22:58.578 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.06 toks/s]
+  "person": ["Sue Kedgley", "Lao Động", "Hạ Long", "Quảng Ninh", "Hội Cựu chiến binh New Zealand", "Bộ Quốc phòng New Zealand", "Chính phủ New Zealand"],
+  "organizations": ["Ủy ban Y tế New Zealand", "APPF", "Hội Cựu chiến binh New Zealand", "Bộ Quốc phòng New Zealand", "Chính phủ New Zealand"],
+  "address": ["Hạ Long", "Quảng Ninh", "Làng Hữu nghị"]
+}
+2025-11-24 02:22:58.578 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 4.00s
+2025-11-24 02:22:58.578 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Sue Kedgley', 'Bộ trưởng Giao thông New Zealand'], 'organizations': ['APPF', 'làng Hữu nghị', 'Lao Động', 'Ủy ban Y tế New Zealand', 'Bộ Quốc phòng New Zealand', 'chính phủ New Zealand', 'quân đội Mỹ', 'Hội Cựu chiến binh New Zealand', 'Diễn đàn Nghị viện châu Á-Thái Bình Dương'], 'address': ['Hạ Long', 'Mỹ', 'Việt Nam', 'New Zealand', 'Quảng Ninh']}
+2025-11-24 02:22:58.578 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Sue Kedgley', 'Lao Động', 'Hạ Long', 'Quảng Ninh', 'Hội Cựu chiến binh New Zealand', 'Bộ Quốc phòng New Zealand', 'Chính phủ New Zealand'], 'organizations': ['Ủy ban Y tế New Zealand', 'APPF', 'Hội Cựu chiến binh New Zealand', 'Bộ Quốc phòng New Zealand', 'Chính phủ New Zealand'], 'address': ['Hạ Long', 'Quảng Ninh', 'Làng Hữu nghị']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 288.19it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:06<00:00,  6.52s/it, est. speed input: 143.42 toks/s, output: 30.98 toks/s]
+2025-11-24 02:23:05.102 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.98 toks/s]
+  "person": [
+    "Chị Đào Lệ Hương",
+    "Chồng chị Hương",
+    "anh Nguyễn Hoài Thanh",
+    "Chị Hương"
+  ],
+  "organizations": [
+    "Cửa hàng in thêu may cờ thi đua trên phố Hàng Bông, Hà Nội",
+    "Cửa hàng chuyên in, thêu may cờ, băng zôn quảng cáo Thanh",
+    "Tổng công ty đường sắt Việt Nam",
+    "Bộ Giao thông vận tải",
+    "Học viện hành chính quốc gia",
+    "Công ty FPT",
+    "Bộ Thương mại",
+    "Công ty Thuỷ sản"
+  ],
+  "address": [
+    "số 181 Hàng Bông",
+    "67 Phúc Xá, Ba Đình",
+    "số 75 Hàng Bông",
+    "Thường Tín, Hà Tây"
+  ]
+}
+2025-11-24 02:23:05.102 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 6.52s
+2025-11-24 02:23:05.102 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Thanh', 'Đào Lệ Hương', 'Hương', 'Nguyễn Hoài Thanh'], 'organizations': ['Tổng công ty đường sắt Việt Nam', 'Học viện hành chính quốc gia', 'Thuỷ sản', 'Bộ Giao thông vận tải', 'SEA Games', 'Công ty FPT', 'Chính phủ', 'Thanh', 'Hoàng Long', 'bộ Thương mại'], 'address': ['phố Hàng Bông', '11 lô N, 67 Phúc Xá, Ba Đình', 'Hà Nội', '75 Hàng Bông', '181 Hàng Bông', 'Thường Tín', 'Hà Tây']}
+2025-11-24 02:23:05.102 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Chị Đào Lệ Hương', 'Chồng chị Hương', 'anh Nguyễn Hoài Thanh', 'Chị Hương'], 'organizations': ['Cửa hàng in thêu may cờ thi đua trên phố Hàng Bông, Hà Nội', 'Cửa hàng chuyên in, thêu may cờ, băng zôn quảng cáo Thanh', 'Tổng công ty đường sắt Việt Nam', 'Bộ Giao thông vận tải', 'Học viện hành chính quốc gia', 'Công ty FPT', 'Bộ Thương mại', 'Công ty Thuỷ sản'], 'address': ['số 181 Hàng Bông', '67 Phúc Xá, Ba Đình', 'số 75 Hàng Bông', 'Thường Tín, Hà Tây']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 245.57it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:04<00:00,  4.44s/it, est. speed input: 270.97 toks/s, output: 30.61 toks/s]
+2025-11-24 02:23:09.551 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.61 toks/s]
+  "person": [
+    "Chị Thu Hương",
+    "Chị Minh",
+    "Ông Hoàng Công Khôi"
+  ],
+  "organizations": [
+    "UBND các phường",
+    "UBND quận Hoàn Kiếm",
+    "công ty thoát nước",
+    "công an quận"
+  ],
+  "address": [
+    "Hà Nội",
+    "phố Khâm Thiên, Hà Nội",
+    "phố Hàng Đào - Hàng Ngang - Hàng Đường - Đồng Xuân",
+    "phố Hàng Bạc, Hàng Bồ, Tạ Hiền",
+    "phố cổ"
+  ]
+}
+2025-11-24 02:23:09.551 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 4.45s
+2025-11-24 02:23:09.551 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Minh', 'Thu Hương', 'Hoàng Công Khôi', 'Khôi'], 'organizations': ['UBND các phường', 'UBND quận Hoàn Kiếm', 'Công an quận', 'công ty thoát nước', 'công ty chiếu sáng'], 'address': ['Việt Nam', 'quận Hoàn Kiếm', 'Hà Nội', 'Khâm Thiên', 'Hàng Đào', 'Hàng Bạc', 'Trung Quốc', 'thành phố', 'Hàng Đường', 'Hàng Bồ', 'Hàng Ngang', 'Đồng Xuân', 'Tạ Hiền']}
+2025-11-24 02:23:09.551 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Chị Thu Hương', 'Chị Minh', 'Ông Hoàng Công Khôi'], 'organizations': ['UBND các phường', 'UBND quận Hoàn Kiếm', 'công ty thoát nước', 'công an quận'], 'address': ['Hà Nội', 'phố Khâm Thiên, Hà Nội', 'phố Hàng Đào - Hàng Ngang - Hàng Đường - Đồng Xuân', 'phố Hàng Bạc, Hàng Bồ, Tạ Hiền', 'phố cổ']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 354.85it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.66s/it, est. speed input: 203.17 toks/s, output: 31.23 toks/s]
+2025-11-24 02:23:12.213 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.23 toks/s]
+  "person": ["Lương Thị Thuận", "Bộ trưởng chủ nhiệm Uỷ ban Dân số Gia đình và Trẻ em Việt Nam"],
+  "organizations": ["Uỷ ban Dân số Gia đình và Trẻ em", "UBND thành phố", "HĐND thành phố", "Bộ Tài chính"],
+  "address": ["TP HCM"]
+}
+2025-11-24 02:23:12.213 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.66s
+2025-11-24 02:23:12.213 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Lương Thị Thuận'], 'organizations': ['HĐND', 'Uỷ ban Dân số Gia đình và Trẻ em TP HCM', 'Uỷ ban Dân số Gia đình và Trẻ em thành phố', 'UBND thành phố', 'Bộ Tài chính', 'Uỷ ban Dân số Gia đình và Trẻ em', 'Uỷ ban Dân số Gia đình và Trẻ em Việt Nam'], 'address': ['TP HCM']}
+2025-11-24 02:23:12.213 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Lương Thị Thuận', 'Bộ trưởng chủ nhiệm Uỷ ban Dân số Gia đình và Trẻ em Việt Nam'], 'organizations': ['Uỷ ban Dân số Gia đình và Trẻ em', 'UBND thành phố', 'HĐND thành phố', 'Bộ Tài chính'], 'address': ['TP HCM']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 336.78it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:01<00:00,  1.66s/it, est. speed input: 359.83 toks/s, output: 30.74 toks/s]
+2025-11-24 02:23:13.877 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.74 toks/s]
+  "person": ["Bành Tiến Long"],
+  "organizations": ["Bộ GDĐT", "Cục Khảo thí", "Ban chỉ đạo thi các tỉnh, thành", "Sở GDĐT"],
+  "address": []
+}
+2025-11-24 02:23:13.877 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 1.66s
+2025-11-24 02:23:13.877 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Bành Tiến Long'], 'organizations': ['Cục Khảo thí', 'Bộ GDĐT', 'Ban chỉ đạo thi', 'Sở GDĐT'], 'address': ['Hà Nội']}
+2025-11-24 02:23:13.877 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Bành Tiến Long'], 'organizations': ['Bộ GDĐT', 'Cục Khảo thí', 'Ban chỉ đạo thi các tỉnh, thành', 'Sở GDĐT'], 'address': []}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 403.53it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.94s/it, est. speed input: 146.71 toks/s, output: 31.66 toks/s]
+2025-11-24 02:23:16.818 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.66 toks/s]
+  "person": ["Jordan D. Ryan"],
+  "organizations": ["UNDP", "Liên Hợp Quốc", "tổ chức gìn giữ hòa bình của Liên Hợp Quốc", "Đại học Colombia", "Đại học George Washington", "Đại học Yale", "trường Quản lý Nhà nước Kenedy", "Đại học Harvard"],
+  "address": ["VN", "Liberia"]
+}
+2025-11-24 02:23:16.818 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.94s
+2025-11-24 02:23:16.818 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Jordan D. Ryan'], 'organizations': ['UNDP', 'Đại học Harvard', 'Liên Hợp Quốc', 'Đại học Colombia', 'Chương trình phát triển Liên Hợp Quốc', 'Chính phủ VN', 'Liên hợp quốc', 'Đại học George Washington', 'Đại học Yale', 'trường Quản lý Nhà nước Kenedy', 'UN'], 'address': ['Liberia', 'VN']}
+2025-11-24 02:23:16.818 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Jordan D. Ryan'], 'organizations': ['UNDP', 'Liên Hợp Quốc', 'tổ chức gìn giữ hòa bình của Liên Hợp Quốc', 'Đại học Colombia', 'Đại học George Washington', 'Đại học Yale', 'trường Quản lý Nhà nước Kenedy', 'Đại học Harvard'], 'address': ['VN', 'Liberia']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 291.29it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:03<00:00,  3.74s/it, est. speed input: 218.92 toks/s, output: 30.78 toks/s]
+2025-11-24 02:23:20.560 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.78 toks/s]
+  "person": ["Trần Cảnh Đào"],
+  "organizations": ["Sở Văn hoá Thông tin Đà Lạt", "Ban tổ chức Festival", "Khách sạn Công Đoàn", "Nhà hàng Thuỷ Tạ"],
+  "address": ["Đà Lạt", "Hồ Xuân Hương", "Đường Yersin", "Khu Hoà Bình", "trước cổng chợ Đà Lạt", "đầu đường Đinh Tiên Hoàng", "phía sau Sân vận động", "Sân khấu chính"]
+}
+2025-11-24 02:23:20.560 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 3.74s
+2025-11-24 02:23:20.560 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Lạc Long Quân', 'Trần Cảnh Đào', 'Âu', 'Cảnh Đào'], 'organizations': ['Festival hoa', 'Nhà hàng Thuỷ Tạ', 'Khách sạn Công Đoàn', 'Sở Văn hoá Thông tin Đà Lạt', 'Ban tổ chức Festival'], 'address': ['Đà Lạt', 'Hồ Xuân Hương', 'Sân vận động', 'Trần Phú', 'Việt Nam', 'Trần Hưng Đạo', 'Sân vận động Đà Lạt', 'Hồ Than Thở', 'Hoàng Văn Thụ', 'Yersin', 'Đinh Tiên Hoàng', 'Khu Hoà Bình', 'chợ Đà Lạt']}
+2025-11-24 02:23:20.560 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Trần Cảnh Đào'], 'organizations': ['Sở Văn hoá Thông tin Đà Lạt', 'Ban tổ chức Festival', 'Khách sạn Công Đoàn', 'Nhà hàng Thuỷ Tạ'], 'address': ['Đà Lạt', 'Hồ Xuân Hương', 'Đường Yersin', 'Khu Hoà Bình', 'trước cổng chợ Đà Lạt', 'đầu đường Đinh Tiên Hoàng', 'phía sau Sân vận động', 'Sân khấu chính']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 342.50it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:01<00:00,  1.89s/it, est. speed input: 315.24 toks/s, output: 31.15 toks/s]
+2025-11-24 02:23:22.458 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.15 toks/s]
+  "person": ["ông Nguyễn Văn Chiến", "ông Chiến"],
+  "organizations": ["Ban Quản lý dự án cải thiện môi trường TP HCM", "Công ty Tư vấn cấp thoát nước và môi trường Việt Nam"],
+  "address": ["TP HCM"]
+}
+2025-11-24 02:23:22.458 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 1.90s
+2025-11-24 02:23:22.458 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Nguyễn Văn Chiến'], 'organizations': ['Hội đồng thẩm định', 'Công ty Tư vấn cấp thoát nước và môi trường Việt Nam', 'Ban Quản lý dự án cải thiện môi trường TP HCM'], 'address': ['TP HCM']}
+2025-11-24 02:23:22.458 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['ông Nguyễn Văn Chiến', 'ông Chiến'], 'organizations': ['Ban Quản lý dự án cải thiện môi trường TP HCM', 'Công ty Tư vấn cấp thoát nước và môi trường Việt Nam'], 'address': ['TP HCM']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 264.46it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:04<00:00,  4.97s/it, est. speed input: 205.16 toks/s, output: 30.77 toks/s]
+2025-11-24 02:23:27.435 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.77 toks/s]
+  "person": [
+    "Nguyễn Chánh Khê",
+    "Trần Đức Lương",
+    "Lê Tiến Ba",
+    "Nguyễn Huy Hoàng",
+    "Lê Trọng Văn",
+    "Nguyễn Việt Dũng",
+    "Nguyễn Dy Niên"
+  ],
+  "organizations": [
+    "Câu lạc bộ doanh nhân",
+    "Uỷ ban Người Việt Nam ở nước ngoài",
+    "Bộ Ngoại giao"
+  ],
+  "address": [
+    "Hà Nội",
+    "TP HCM",
+    "Liên bang Nga",
+    "California",
+    "Đức",
+    "Hà Nội",
+    "Sài Gòn"
+  ]
+}
+2025-11-24 02:23:27.435 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 4.98s
+2025-11-24 02:23:27.435 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Nguyễn Huy Hoàng', 'Nguyễn Chánh Khê', 'Nguyễn Việt Dũng', 'Trần Đức Lương', 'Lê Trọng Văn', 'Nguyễn Dy Niên', 'Lê Tiến Ba'], 'organizations': ['Câu lạc bộ doanh nhân', 'VnExpress', 'Uỷ ban về Người Việt ở nước ngoài', 'Uỷ ban Người Việt Nam ở nước ngoài', 'Quỹ hỗ trợ kiều bào'], 'address': ['Nga', 'Mỹ', 'Việt Nam', 'Hà Nội', 'Liên bang Nga', 'VN', 'Sài Gòn', 'Việt', 'Văn Miếu', 'Đức', 'California', 'TP HCM']}
+2025-11-24 02:23:27.435 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Nguyễn Chánh Khê', 'Trần Đức Lương', 'Lê Tiến Ba', 'Nguyễn Huy Hoàng', 'Lê Trọng Văn', 'Nguyễn Việt Dũng', 'Nguyễn Dy Niên'], 'organizations': ['Câu lạc bộ doanh nhân', 'Uỷ ban Người Việt Nam ở nước ngoài', 'Bộ Ngoại giao'], 'address': ['Hà Nội', 'TP HCM', 'Liên bang Nga', 'California', 'Đức', 'Hà Nội', 'Sài Gòn']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 371.44it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.70s/it, est. speed input: 174.75 toks/s, output: 31.10 toks/s]
+2025-11-24 02:23:30.140 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.10 toks/s]
+  "person": ["Nguyễn Văn Đua"],
+  "organizations": ["UBND TP HCM", "Sở xây dụng TP HCM", "UBND quận 10"],
+  "address": ["quận 10", "chung cư Ngô Gia Tự", "chung cư Nguyễn Kim", "khu trung tâm thương mại quận 10"]
+}
+2025-11-24 02:23:30.140 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.70s
+2025-11-24 02:23:30.140 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Nguyễn Văn Đua'], 'organizations': ['UBND quận 10', 'UBND TP HCM', 'Sở xây dụng TP HCM'], 'address': ['chung cư Ngô Gia Tự', 'khu trung tâm thương mại quận 10', 'chung cư Nguyễn Kim', 'TP HCM', 'quận 10']}
+2025-11-24 02:23:30.140 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Nguyễn Văn Đua'], 'organizations': ['UBND TP HCM', 'Sở xây dụng TP HCM', 'UBND quận 10'], 'address': ['quận 10', 'chung cư Ngô Gia Tự', 'chung cư Nguyễn Kim', 'khu trung tâm thương mại quận 10']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 185.47it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:03<00:00,  3.18s/it, est. speed input: 466.70 toks/s, output: 30.19 toks/s]
+2025-11-24 02:23:33.326 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.19 toks/s]
+  "person": ["Y.", "Nguyễn Hoài Chương", "Huỳnh Minh Trí"],
+  "organizations": ["CCI", "ISE", "YFU", "AYUSA", "EF", "ASPECT Foundation", "Sở GD-ĐT TP.HCM", "Sở GD-ĐT TP.HCM"],
+  "address": ["Virginia, Mỹ", "bang Indiana", "California", "Kansas", "TP.HCM"]
+}
+2025-11-24 02:23:33.327 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 3.19s
+2025-11-24 02:23:33.327 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Y.', 'Huỳnh Minh Trí', 'Nguyễn Hoài Chương'], 'organizations': ['ISE', 'CCI', 'EF', 'SLEP', 'TOEFL', 'Sở GD-ĐT TP.HCM', 'SAT', 'AYUSA', 'ASPECT Foundation', 'YFU'], 'address': ['Mỹ', 'VN', 'Indiana', 'Hoa Kỳ', 'Hàn Quốc', 'Thái Lan', 'Đức', 'Virginia', 'California', 'Kansas', 'TP.HCM']}
+2025-11-24 02:23:33.327 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Y.', 'Nguyễn Hoài Chương', 'Huỳnh Minh Trí'], 'organizations': ['CCI', 'ISE', 'YFU', 'AYUSA', 'EF', 'ASPECT Foundation', 'Sở GD-ĐT TP.HCM', 'Sở GD-ĐT TP.HCM'], 'address': ['Virginia, Mỹ', 'bang Indiana', 'California', 'Kansas', 'TP.HCM']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 158.65it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:06<00:00,  6.48s/it, est. speed input: 296.36 toks/s, output: 30.24 toks/s]
+2025-11-24 02:23:39.816 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.24 toks/s]
+  "person": [
+    "Bùi Duy Cam",
+    "Phạm Đức Vọng",
+    "Phan Huy Phú",
+    "Dương Thị Mai Phương",
+    "Nguyễn Hồng Đào"
+  ],
+  "organizations": [
+    "ĐH Khoa học tự nhiên Hà Nội",
+    "Đại học Mở Hà Nội",
+    "ĐH dân lập Thăng Long",
+    "ĐH dân lập Phương Đông",
+    "Trường Lao động - Xã hội",
+    "ĐH dân lập Văn Lang",
+    "ĐH Dân lập Hồng Bàng",
+    "ĐH Mở bán công TP HCM",
+    "ĐH dân lập Văn Hiến",
+    "ĐH Luật TP HCM",
+    "ĐH Xã hội và nhân văn TP HCM"
+  ],
+  "address": [
+    "Hà Nội",
+    "TP HCM"
+  ]
+}
+2025-11-24 02:23:39.816 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 6.49s
+2025-11-24 02:23:39.816 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Bùi Duy Cam', 'Phạm Đức Vọng', 'Phan Huy Phú', 'Dương Thị Mai Phương', 'Nguyễn Hồng Đào'], 'organizations': ['ĐH dân lập Văn Lang', 'Đại học Mở Hà Nội', 'VnExpress', 'ĐH Xã hội và nhân văn TP HCM', 'ĐH Văn Lang', 'ĐH Luật TP HCM', 'Bộ GDĐT', 'ĐH dân lập Văn Hiến', 'ĐH dân lập Bình Dương', 'ĐH dân lập Phương Đông', 'trường Lao động - Xã hội', 'Viện ĐH Mở Hà Nội', 'ĐH Dân lập Hồng Bàng', 'ĐH Mở bán công TP HCM', 'ĐH dân lập Thăng Long', 'ĐH Khoa học tự nhiên Hà Nội'], 'address': ['phía Nam', 'miền Bắc', 'Nam', 'Bắc', 'phía Bắc', 'miền Nam']}
+2025-11-24 02:23:39.816 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Bùi Duy Cam', 'Phạm Đức Vọng', 'Phan Huy Phú', 'Dương Thị Mai Phương', 'Nguyễn Hồng Đào'], 'organizations': ['ĐH Khoa học tự nhiên Hà Nội', 'Đại học Mở Hà Nội', 'ĐH dân lập Thăng Long', 'ĐH dân lập Phương Đông', 'Trường Lao động - Xã hội', 'ĐH dân lập Văn Lang', 'ĐH Dân lập Hồng Bàng', 'ĐH Mở bán công TP HCM', 'ĐH dân lập Văn Hiến', 'ĐH Luật TP HCM', 'ĐH Xã hội và nhân văn TP HCM'], 'address': ['Hà Nội', 'TP HCM']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 418.13it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.35s/it, est. speed input: 178.34 toks/s, output: 31.50 toks/s]
+2025-11-24 02:23:42.169 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.50 toks/s]
+  "person": ["Việt Nam"],
+  "organizations": ["Trung ương Đoàn", "Festival thanh niên sinh viên thế giới", "Liên hoan", "Tòa án quốc tế chống chủ nghĩa đế quốc", "Câu lạc bộ khu vực"],
+  "address": ["thành phố Caracas, Venezuela"]
+}
+2025-11-24 02:23:42.170 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.35s
+2025-11-24 02:23:42.170 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': [], 'organizations': ['Festival thanh niên sinh viên thế giới', 'Trung ương Đoàn'], 'address': ['châu Á', 'Venezuela', 'Việt Nam', 'Caracas']}
+2025-11-24 02:23:42.170 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Việt Nam'], 'organizations': ['Trung ương Đoàn', 'Festival thanh niên sinh viên thế giới', 'Liên hoan', 'Tòa án quốc tế chống chủ nghĩa đế quốc', 'Câu lạc bộ khu vực'], 'address': ['thành phố Caracas, Venezuela']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 402.99it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.06s/it, est. speed input: 224.37 toks/s, output: 31.08 toks/s]
+2025-11-24 02:23:44.232 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.08 toks/s]
+  "person": ["Nguyễn Chơn Trung"],
+  "organizations": ["UBND thành phố", "Ủy ban người Việt Nam ở nước ngoài", "Chính phủ"],
+  "address": ["TP HCM", "sân bay Tân Sơn Nhất", "Việt Nam"]
+}
+2025-11-24 02:23:44.232 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.06s
+2025-11-24 02:23:44.232 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Nguyễn Chơn Trung'], 'organizations': ['Ủy ban người Việt Nam ở nước ngoài', 'Chính phủ', 'UBND thành phố', 'Ủy ban người Việt Nam ở nước ngoài tại TP HCM'], 'address': ['TP HCM', 'Việt Nam', 'sân bay Tân Sơn Nhất']}
+2025-11-24 02:23:44.232 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Nguyễn Chơn Trung'], 'organizations': ['UBND thành phố', 'Ủy ban người Việt Nam ở nước ngoài', 'Chính phủ'], 'address': ['TP HCM', 'sân bay Tân Sơn Nhất', 'Việt Nam']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 414.83it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:01<00:00,  1.71s/it, est. speed input: 236.88 toks/s, output: 31.08 toks/s]
+2025-11-24 02:23:45.941 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.08 toks/s]
+  "person": [],
+  "organizations": ["Công ty TNHH Textion Plastic Lighter", "Công ty Textion Plastic Lighter"],
+  "address": ["tỉnh Bình Dương", "thị xã Thủ Dầu Một"]
+}
+2025-11-24 02:23:45.941 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 1.71s
+2025-11-24 02:23:45.942 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': [], 'organizations': ['Công ty Textion Plastic Lighter', 'công ty TNHH Textion Plastic Lighter'], 'address': ['Bình Dương', 'Thủ Dầu Một']}
+2025-11-24 02:23:45.942 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': [], 'organizations': ['Công ty TNHH Textion Plastic Lighter', 'Công ty Textion Plastic Lighter'], 'address': ['tỉnh Bình Dương', 'thị xã Thủ Dầu Một']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 347.67it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.08s/it, est. speed input: 315.93 toks/s, output: 31.26 toks/s]
+2025-11-24 02:23:48.025 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.26 toks/s]
+  "person": ["Ông Vũ Mạnh Cường", "Thủ tướng Chính phủ"],
+  "organizations": ["Bộ Xây dựng", "Cục quản lý nhà", "Ủy ban Thường vụ Quốc hội", "Chính phủ", "Việt Nam"],
+  "address": []
+}
+2025-11-24 02:23:48.025 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.08s
+2025-11-24 02:23:48.025 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Vũ Mạnh Cường'], 'organizations': ['UBND cấp huyện', 'Thủ tướng Chính phủ', 'Chính phủ', 'Bộ Xây dựng', 'Cục quản lý nhà', 'Ủy ban Thường vụ Quốc hội'], 'address': ['Việt Nam']}
+2025-11-24 02:23:48.025 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Ông Vũ Mạnh Cường', 'Thủ tướng Chính phủ'], 'organizations': ['Bộ Xây dựng', 'Cục quản lý nhà', 'Ủy ban Thường vụ Quốc hội', 'Chính phủ', 'Việt Nam'], 'address': []}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 479.35it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.17s/it, est. speed input: 143.66 toks/s, output: 31.31 toks/s]
+2025-11-24 02:23:50.200 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.31 toks/s]
+  "person": ["Nguyễn Văn Đua"],
+  "organizations": ["Ngân hàng Thế giới (WB)", "UBND TP HCM", "Sở Giao thông công chính TP HCM", "Sở Y tế"],
+  "address": ["Nhiêu Lộc - Thị Nghè"]
+}
+2025-11-24 02:23:50.200 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.17s
+2025-11-24 02:23:50.200 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Nguyễn Văn Đua'], 'organizations': ['Ngân hàng Thế giới (WB)', 'Sở Giao thông công chính TP HCM', 'WB', 'UBND TP HCM', 'Sở Y tế'], 'address': ['Nhiêu Lộc - Thị Nghè']}
+2025-11-24 02:23:50.200 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Nguyễn Văn Đua'], 'organizations': ['Ngân hàng Thế giới (WB)', 'UBND TP HCM', 'Sở Giao thông công chính TP HCM', 'Sở Y tế'], 'address': ['Nhiêu Lộc - Thị Nghè']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 330.21it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:04<00:00,  4.15s/it, est. speed input: 172.63 toks/s, output: 31.54 toks/s]
+2025-11-24 02:23:54.358 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.54 toks/s]
+  "person": [
+    "Bùi Quang Anh",
+    "Tôn Thất Hàn",
+    "Bùi Quang Anh"
+  ],
+  "organizations": [
+    "Cục trưởng Thú y",
+    "UBND tỉnh Bình Dương",
+    "Chi cục trưởng Thú y Tây Ninh",
+    "UBND tỉnh Long An"
+  ],
+  "address": [
+    "Hải Phòng",
+    "Đà Nẵng",
+    "Lâm Đồng",
+    "Bình Dương",
+    "Tây Ninh",
+    "Long An",
+    "TP HCM"
+  ]
+}
+2025-11-24 02:23:54.358 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 4.16s
+2025-11-24 02:23:54.358 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Bùi Quang Anh', 'Tôn Thất Hàn'], 'organizations': ['VnExpress', 'UBND tỉnh'], 'address': ['Đà Nẵng', 'Tây Ninh', 'Bình Dương', 'TP HCM', 'Hải Phòng', 'Long An', 'Lâm Đồng']}
+2025-11-24 02:23:54.358 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Bùi Quang Anh', 'Tôn Thất Hàn', 'Bùi Quang Anh'], 'organizations': ['Cục trưởng Thú y', 'UBND tỉnh Bình Dương', 'Chi cục trưởng Thú y Tây Ninh', 'UBND tỉnh Long An'], 'address': ['Hải Phòng', 'Đà Nẵng', 'Lâm Đồng', 'Bình Dương', 'Tây Ninh', 'Long An', 'TP HCM']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 455.41it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:01<00:00,  1.38s/it, est. speed input: 258.57 toks/s, output: 31.14 toks/s]
+2025-11-24 02:23:55.742 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.14 toks/s]
+  "person": [],
+  "organizations": ["Trung tâm Xúc tiến Thương mại và Đầu tư TPHCM", "tập đoàn nước ngoài"],
+  "address": ["TPHM"]
+}
+2025-11-24 02:23:55.742 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 1.38s
+2025-11-24 02:23:55.742 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': [], 'organizations': ['WTO', 'NLĐ', 'Trung tâm Xúc tiến Thương mại và Đầu tư TPHCM'], 'address': ['VN', 'TPHCM']}
+2025-11-24 02:23:55.742 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': [], 'organizations': ['Trung tâm Xúc tiến Thương mại và Đầu tư TPHCM', 'tập đoàn nước ngoài'], 'address': ['TPHM']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 341.61it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:01<00:00,  1.28s/it, est. speed input: 520.17 toks/s, output: 30.46 toks/s]
+2025-11-24 02:23:57.026 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.46 toks/s]
+  "person": ["các vị sư", "chú tiểu", "hai vị sư già", "chú tiểu"],
+  "organizations": [],
+  "address": []
+}
+2025-11-24 02:23:57.027 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 1.28s
+2025-11-24 02:23:57.027 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': [], 'organizations': [], 'address': []}
+2025-11-24 02:23:57.027 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['các vị sư', 'chú tiểu', 'hai vị sư già', 'chú tiểu'], 'organizations': [], 'address': []}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 388.07it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.04s/it, est. speed input: 237.89 toks/s, output: 31.33 toks/s]
+2025-11-24 02:23:59.073 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.33 toks/s]
+  "person": ["Blaise Compaore", "Nông Đức Mạnh", "Nguyễn Văn An"],
+  "organizations": ["Việt Nam", "Burkina Faso", "Đảng Cộng sản Việt Nam", "Quốc hội Việt Nam"],
+  "address": []
+}
+2025-11-24 02:23:59.073 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.05s
+2025-11-24 02:23:59.073 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Nông Đức Mạnh', 'Nguyễn Văn An', 'Blaise Compaore'], 'organizations': ['Nhà nước', 'Đảng Cộng sản Việt Nam', 'Đảng', 'Quốc hội'], 'address': ['Việt Nam', 'VN', 'Burkina Faso']}
+2025-11-24 02:23:59.073 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Blaise Compaore', 'Nông Đức Mạnh', 'Nguyễn Văn An'], 'organizations': ['Việt Nam', 'Burkina Faso', 'Đảng Cộng sản Việt Nam', 'Quốc hội Việt Nam'], 'address': []}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 227.40it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:01<00:00,  1.30s/it, est. speed input: 874.35 toks/s, output: 29.27 toks/s]
+2025-11-24 02:24:00.377 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 29.27 toks/s]
+  "person": ["Thầy Nguyễn Thanh Tâm", "Cô Hà Vân"],
+  "organizations": ["Trường Nguyễn Đình Chiểu"],
+  "address": []
+}
+2025-11-24 02:24:00.377 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 1.30s
+2025-11-24 02:24:00.377 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Hà Vân', 'Trần Thị Minh Tuyết', 'Nguyễn Hồng Vũ Minh', 'Vũ Thúy', 'Nguyễn Văn Long', 'Nguyễn Thanh Tâm'], 'organizations': ['Trường Nguyễn Đình Chiểu'], 'address': ['cả nước']}
+2025-11-24 02:24:00.377 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Thầy Nguyễn Thanh Tâm', 'Cô Hà Vân'], 'organizations': ['Trường Nguyễn Đình Chiểu'], 'address': []}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 297.07it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.15s/it, est. speed input: 401.93 toks/s, output: 30.74 toks/s]
+2025-11-24 02:24:02.529 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.74 toks/s]
+  "person": ["Tào Hữu Phùng", "Phạm Quang Dự"],
+  "organizations": ["OPEC", "Bộ Tài chính", "Bộ Kế hoạch - đầu tư", "Ủy ban Kinh tế - ngân sách", "Chính phủ"],
+  "address": []
+}
+2025-11-24 02:24:02.529 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.15s
+2025-11-24 02:24:02.529 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Dự', 'Thủ tướng Chính phủ', 'Tào Hữu Phùng', 'Phạm Quang Dự'], 'organizations': ['Tổ chức OPEC', 'OPEC', 'Ủy ban Kinh tế - ngân sách', 'Ủy ban Kinh tế ngân sách', 'Chính phủ', 'Bộ Kế hoạch - đầu tư', 'QH', 'Bộ Tài chính', 'Ủy ban Kinh tế - ngân sách của QH'], 'address': []}
+2025-11-24 02:24:02.529 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Tào Hữu Phùng', 'Phạm Quang Dự'], 'organizations': ['OPEC', 'Bộ Tài chính', 'Bộ Kế hoạch - đầu tư', 'Ủy ban Kinh tế - ngân sách', 'Chính phủ'], 'address': []}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 351.93it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.67s/it, est. speed input: 189.30 toks/s, output: 31.05 toks/s]
+2025-11-24 02:24:05.206 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.05 toks/s]
+  "person": ["bà Ngà"],
+  "organizations": ["Trung tâm dự báo khí tượng thủy văn trung ương"],
+  "address": ["Nghệ An", "Thừa Thiên - Huế", "Hà Nội", "vùng núi phía phía Bắc", "Đà Nẵng", "Bình Thuận", "Nam Bộ", "Tây Nguyên"]
+}
+2025-11-24 02:24:05.206 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.68s
+2025-11-24 02:24:05.206 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Ngà'], 'organizations': ['Trung tâm dự báo khí tượng thủy văn trung ương', 'Phòng dự báo hạn ngắn'], 'address': ['Tây Nguyên', 'Đà Nẵng', 'Nam Bộ', 'Hà Nội', 'Bình Thuận', 'Bắc Bộ', 'Bắc Trung Bộ', 'Nghệ An', 'Thừa Thiên - Huế']}
+2025-11-24 02:24:05.206 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['bà Ngà'], 'organizations': ['Trung tâm dự báo khí tượng thủy văn trung ương'], 'address': ['Nghệ An', 'Thừa Thiên - Huế', 'Hà Nội', 'vùng núi phía phía Bắc', 'Đà Nẵng', 'Bình Thuận', 'Nam Bộ', 'Tây Nguyên']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 361.86it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.98s/it, est. speed input: 175.21 toks/s, output: 31.22 toks/s]
+2025-11-24 02:24:08.190 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.22 toks/s]
+  "person": ["Nguyễn Cao Váng"],
+  "organizations": ["Công ty Xăng dầu khu vực I", "UBND thành phố", "Công ty Xăng dầu khu vực I"],
+  "address": ["Hà Nội", "xã Phú Thị, Gia Lâm", "Đức Giang", "Hà Nội", "xã Phú Thị, Gia Lâm", "Hà Nội"]
+}
+2025-11-24 02:24:08.190 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.98s
+2025-11-24 02:24:08.190 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Nguyễn Cao Váng'], 'organizations': ['Công ty Xăng dầu khu vực I', 'UBND thành phố'], 'address': ['Hà Nội', 'Gia Lâm', 'Đức Giang', 'Phú Thị', 'Bắc']}
+2025-11-24 02:24:08.190 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Nguyễn Cao Váng'], 'organizations': ['Công ty Xăng dầu khu vực I', 'UBND thành phố', 'Công ty Xăng dầu khu vực I'], 'address': ['Hà Nội', 'xã Phú Thị, Gia Lâm', 'Đức Giang', 'Hà Nội', 'xã Phú Thị, Gia Lâm', 'Hà Nội']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 177.24it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:05<00:00,  5.34s/it, est. speed input: 305.34 toks/s, output: 30.37 toks/s]
+2025-11-24 02:24:13.532 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.37 toks/s]
+  "person": [
+    "Nguyễn Văn Thọ",
+    "Nguyễn Thị Hải Vân"
+  ],
+  "organizations": [
+    "Chính phủ",
+    "Công ty cổ phần dịch vụ thương mại Thái Sơn",
+    "Công ty Đầu tư và Dịch vụ Thương mại Văn Thụ",
+    "Công ty TNHH Nguồn việc làm",
+    "Bộ Lao động Thương binh và Xã hội",
+    "Sở Kế hoạch và Đầu tư"
+  ],
+  "address": [
+    "đường Láng, quận Đống Đa, Hà Nội",
+    "74 đường Láng",
+    "số 970 đường Láng",
+    "232 đường Láng"
+  ]
+}
+2025-11-24 02:24:13.532 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 5.34s
+2025-11-24 02:24:13.532 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Nguyễn Thị Hải Vân', 'Nguyễn Văn Thọ', 'Vân', 'Như Trang'], 'organizations': ['Vụ Lao động Việc làm', 'Công ty cổ phần dịch vụ thương mại Thái Sơn', 'VnExpress', 'Bộ Lao động Thương binh và Xã hội', 'Công ty TNHH Nguồn việc làm', 'Chính phủ', 'Sở Kế hoạch và Đầu tư', 'Cao đẳng Sư phạm Hà Nội', 'Công ty Đầu tư và Dịch vụ Thương mại Văn Thụ'], 'address': ['64 tỉnh thành', 'quận Đống Đa', 'Hà Nội', '232 đường Láng', 'đường Láng', 'Cả nước']}
+2025-11-24 02:24:13.532 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Nguyễn Văn Thọ', 'Nguyễn Thị Hải Vân'], 'organizations': ['Chính phủ', 'Công ty cổ phần dịch vụ thương mại Thái Sơn', 'Công ty Đầu tư và Dịch vụ Thương mại Văn Thụ', 'Công ty TNHH Nguồn việc làm', 'Bộ Lao động Thương binh và Xã hội', 'Sở Kế hoạch và Đầu tư'], 'address': ['đường Láng, quận Đống Đa, Hà Nội', '74 đường Láng', 'số 970 đường Láng', '232 đường Láng']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 378.51it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.96s/it, est. speed input: 180.46 toks/s, output: 31.03 toks/s]
+2025-11-24 02:24:16.501 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.03 toks/s]
+  "person": ["C.D", "T.N", "Nguyễn Trung Kiên", "Lê Tất Vinh"],
+  "organizations": ["Sở Văn hóa - Thông tin Hải Phòng", "PA25"],
+  "address": ["đường Minh Khai, quận Hồng Bàng", "đường Chùa Hàng, Lê Chân, Hải Phòng", "Hải Phòng", "Hải Phòng"]
+}
+2025-11-24 02:24:16.501 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.97s
+2025-11-24 02:24:16.501 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['T.N', 'Lê Tất Vinh', 'Nguyễn Trung Kiên', 'C.D'], 'organizations': ['Sở Văn hóa - Thông tin Hải Phòng', 'Phòng Bảo vệ an ninh văn hóa - tư tưởng', 'Sở', 'PA25'], 'address': ['Anh Quốc', 'Lào', 'Lê Chân', 'đường Minh Khai', 'quận Hồng Bàng', 'hồ Tam Bạc', 'đường Chùa Hàng', 'Hải Phòng']}
+2025-11-24 02:24:16.501 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['C.D', 'T.N', 'Nguyễn Trung Kiên', 'Lê Tất Vinh'], 'organizations': ['Sở Văn hóa - Thông tin Hải Phòng', 'PA25'], 'address': ['đường Minh Khai, quận Hồng Bàng', 'đường Chùa Hàng, Lê Chân, Hải Phòng', 'Hải Phòng', 'Hải Phòng']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 286.57it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:04<00:00,  4.48s/it, est. speed input: 174.77 toks/s, output: 31.02 toks/s]
+2025-11-24 02:24:20.986 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.02 toks/s]
+  "person": [
+    "ông Lê Hoàng Bình",
+    "ông Nguyễn Quốc Hợp",
+    "ông Đỗ Quốc Anh",
+    "Thứ trưởng Bành Tiến Long"
+  ],
+  "organizations": [
+    "Bộ Giáo dục và Đào tạo",
+    "ĐH Dân lập Kỹ thuật Công nghệ Sài Gòn",
+    "ĐH Dân lập Văn Hiến",
+    "ĐH dân lập Ngoại ngữ Tin học",
+    "VnExpress",
+    "Bộ Giáo dục và đào tạo",
+    "Văn phòng đại diện Bộ Giáo dục và đào tạo tại TP HCM"
+  ],
+  "address": []
+}
+2025-11-24 02:24:20.986 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 4.49s
+2025-11-24 02:24:20.986 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Bành Tiến Long', 'Nguyễn Quốc Hợp', 'Lê Hoàng Bình', 'Đỗ Quốc Anh'], 'organizations': ['ĐH Dân lập Kỹ thuật Công nghệ Sài Gòn', 'ĐH Dân lập Kỹ thuật công nghệ', 'Bộ Giáo dục và Đào tạo', 'VnExpress', 'ĐH dân lập', 'ĐH dân lập Ngoại ngữ Tin học', 'ĐH Văn Hiến', 'ĐH dân lập Văn Hiến', 'Văn Hiến', 'Bộ', 'Công nghệ Sài gòn', 'Bộ Giáo dục và đào tạo', 'Đoàn công tác của Bộ'], 'address': ['phía Nam', 'TP HCM', 'Huế']}
+2025-11-24 02:24:20.986 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['ông Lê Hoàng Bình', 'ông Nguyễn Quốc Hợp', 'ông Đỗ Quốc Anh', 'Thứ trưởng Bành Tiến Long'], 'organizations': ['Bộ Giáo dục và Đào tạo', 'ĐH Dân lập Kỹ thuật Công nghệ Sài Gòn', 'ĐH Dân lập Văn Hiến', 'ĐH dân lập Ngoại ngữ Tin học', 'VnExpress', 'Bộ Giáo dục và đào tạo', 'Văn phòng đại diện Bộ Giáo dục và đào tạo tại TP HCM'], 'address': []}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 352.85it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:03<00:00,  3.62s/it, est. speed input: 181.75 toks/s, output: 31.21 toks/s]
+2025-11-24 02:24:24.611 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.21 toks/s]
+  "person": [
+    "Nguyễn Văn Chiến"
+  ],
+  "organizations": [
+    "Công ty TNHH Thương Tuyến",
+    "Emma (Mỹ)",
+    "Lemma (Mỹ)",
+    "Bộ Kế hoạch và Đầu tư",
+    "UBND thành phố"
+  ],
+  "address": [
+    "TP HCM",
+    "khu xử lý chất thải rắn Tây Bắc - Phước Hiệp - Củ Chi",
+    "Phước Hiệp, Củ Chi"
+  ]
+}
+2025-11-24 02:24:24.611 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 3.62s
+2025-11-24 02:24:24.611 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Nguyễn Văn Chiến', 'Thủ tướng'], 'organizations': ['Bộ Kế hoạch và Đầu tư', 'Emma', 'Sở Tài nguyên và Môi trường', 'UBND thành phố', 'Công ty TNHH Thương Tuyến', 'Lemma'], 'address': ['Mỹ', 'Việt Nam', 'Tây Bắc - Phước Hiệp - Củ Chi', 'Phước Hiệp, Củ Chi', 'Pháp', 'Đông Thạnh', 'TP HCM']}
+2025-11-24 02:24:24.611 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Nguyễn Văn Chiến'], 'organizations': ['Công ty TNHH Thương Tuyến', 'Emma (Mỹ)', 'Lemma (Mỹ)', 'Bộ Kế hoạch và Đầu tư', 'UBND thành phố'], 'address': ['TP HCM', 'khu xử lý chất thải rắn Tây Bắc - Phước Hiệp - Củ Chi', 'Phước Hiệp, Củ Chi']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 195.42it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:04<00:00,  4.85s/it, est. speed input: 285.07 toks/s, output: 30.53 toks/s]
+2025-11-24 02:24:29.466 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.53 toks/s]
+  "person": [
+    "Lê Thanh Hải",
+    "Lê Trường Giang",
+    "Nguyễn Phước Thảo",
+    "Phạm Văn Bự"
+  ],
+  "organizations": [
+    "TP HCM",
+    "Sở Y tế",
+    "Sở Thương mại",
+    "Sở Nông nghiệp và Phát triển nông thôn (NNPTNT)",
+    "Công ty chế biến Gia Cầm CP (Đồng Nai)",
+    "Công ty Liên doanh KFC VN",
+    "Tổng công ty Nông nghiệp Sài Gòn"
+  ],
+  "address": [
+    "TP HCM",
+    "Long Thành"
+  ]
+}
+2025-11-24 02:24:29.466 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 4.85s
+2025-11-24 02:24:29.466 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Nguyễn Phước Thảo', 'Phạm Văn Bự', 'ông Hải', 'ông Thảo', 'Lê Thanh Hải', 'Lê Trường Giang'], 'organizations': ['CP', 'Sở NNPTNT', 'Sở Nông nghiệp và Phát triển nông thôn (NNPTNT)', 'Sở Thương mại', 'Công ty Liên doanh KFC VN', 'Công ty chế biến Gia Cầm CP', 'Tổng công ty Nông nghiệp Sài Gòn', 'Sở Y tế', 'KFC', 'Bộ NNPTNT', 'Bộ Nông nghiệp và Phát triển nông thôn', 'Công ty KFC'], 'address': ['miền Tây', 'Đồng Nai', 'TP HCM', 'Long Thành', 'miền Đông']}
+2025-11-24 02:24:29.466 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Lê Thanh Hải', 'Lê Trường Giang', 'Nguyễn Phước Thảo', 'Phạm Văn Bự'], 'organizations': ['TP HCM', 'Sở Y tế', 'Sở Thương mại', 'Sở Nông nghiệp và Phát triển nông thôn (NNPTNT)', 'Công ty chế biến Gia Cầm CP (Đồng Nai)', 'Công ty Liên doanh KFC VN', 'Tổng công ty Nông nghiệp Sài Gòn'], 'address': ['TP HCM', 'Long Thành']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 283.97it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:03<00:00,  3.19s/it, est. speed input: 266.81 toks/s, output: 31.04 toks/s]
+2025-11-24 02:24:32.661 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.04 toks/s]
+  "person": ["Phạm Thanh Tòng", "Tetsuo Watabe", "ông Tetsuo Watabe", "ông"],
+  "organizations": ["New World", "TP Hồ Chí Minh", "Brother", "Công ty Thiết bị văn phòng Sao Nam", "Hội Chữ thập đỏ TP Hồ Chí Minh", "Thanh Niên", "Chính phủ Việt Nam"],
+  "address": ["TP Hồ Chí Minh"]
+}
+2025-11-24 02:24:32.661 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 3.19s
+2025-11-24 02:24:32.661 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Phạm Thanh Tòng', 'Tetsuo Watabe'], 'organizations': ['KS New World', 'Chính phủ Việt Nam', 'hãng Brother Nhật Bản', 'Thanh Niên', 'Công ty Thiết bị văn phòng Sao Nam', 'Hội Chữ thập đỏ TP Hồ Chí Minh'], 'address': ['TP Hồ Chí Minh', 'Mỹ', 'Việt Nam', 'châu Á Thái Bình Dương', 'Nhật', 'Hiroshima', 'Nhật Bản', 'Singapore', 'Nagasaki']}
+2025-11-24 02:24:32.661 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Phạm Thanh Tòng', 'Tetsuo Watabe', 'ông Tetsuo Watabe', 'ông'], 'organizations': ['New World', 'TP Hồ Chí Minh', 'Brother', 'Công ty Thiết bị văn phòng Sao Nam', 'Hội Chữ thập đỏ TP Hồ Chí Minh', 'Thanh Niên', 'Chính phủ Việt Nam'], 'address': ['TP Hồ Chí Minh']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 351.90it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:04<00:00,  4.72s/it, est. speed input: 146.98 toks/s, output: 31.18 toks/s]
+2025-11-24 02:24:37.380 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.18 toks/s]
+  "person": [
+    "Nguyễn Thị Quy",
+    "Nguyễn Hữu Phúc",
+    "Trần Đắc Sử",
+    "Trần Văn Tú",
+    "Bành Tiến Long"
+  ],
+  "organizations": [
+    "ĐH Ngoại thương Hà Nội",
+    "Thủy sản",
+    "Sư phạm Đồng Tháp",
+    "ĐH Giao thông Vận tải Hà Nội",
+    "ĐH Dược Hà Nội",
+    "ĐH Kỹ thuật Công nghệ",
+    "Bộ GDĐT"
+  ],
+  "address": [
+    "Hà Nội",
+    "Đồng Tháp",
+    "Thanh Hóa"
+  ]
+}
+2025-11-24 02:24:37.380 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 4.72s
+2025-11-24 02:24:37.380 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Bành Tiến Long', 'Nguyễn Hữu Phúc', 'Trần Văn Tú', 'Nguyễn Thị Quy', 'Trần Đắc Sử'], 'organizations': ['Sư phạm Đồng Tháp', 'ĐH Ngoại thương (cơ sở 2)', 'ĐH Giao thông Vận tải Hà Nội', 'ĐH Dược Hà Nội', 'Bộ GDĐT', 'Thủy sản', 'ĐH Kỹ thuật Công nghệ', 'ĐH Ngoại thương Hà Nội'], 'address': ['khu vực phía Nam', 'Thanh Hóa']}
+2025-11-24 02:24:37.380 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Nguyễn Thị Quy', 'Nguyễn Hữu Phúc', 'Trần Đắc Sử', 'Trần Văn Tú', 'Bành Tiến Long'], 'organizations': ['ĐH Ngoại thương Hà Nội', 'Thủy sản', 'Sư phạm Đồng Tháp', 'ĐH Giao thông Vận tải Hà Nội', 'ĐH Dược Hà Nội', 'ĐH Kỹ thuật Công nghệ', 'Bộ GDĐT'], 'address': ['Hà Nội', 'Đồng Tháp', 'Thanh Hóa']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 366.54it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:03<00:00,  3.93s/it, est. speed input: 159.11 toks/s, output: 31.06 toks/s]
+2025-11-24 02:24:41.312 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.06 toks/s]
+  "person": [],
+  "organizations": ["Trung tâm Dự báo Khí tượng thủy văn trung ương"],
+  "address": ["Đồng Tháp Mười", "Tứ Giác Long Xuyên", "Tân Châu", "Châu Đốc", "Mỹ Thuận", "Mộc Hóa", "Long Xuyên", "Cần Thơ", "Nam Đàn", "Thanh Hóa", "Nghệ An", "Hà Tĩnh", "Thừa Thiên Huế", "Bình Thuận", "Tây Nguyên"]
+}
+2025-11-24 02:24:41.312 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 3.93s
+2025-11-24 02:24:41.312 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': [], 'organizations': ['Trung tâm Dự báo Khí tượng thủy văn trung ương'], 'address': ['Long Xuyên', 'Đồng Tháp Mười', 'sông Tiền', 'sông Cả', 'Nghệ An', 'sông Hậu', 'sông Cửu Long', 'Châu Đốc', 'Tứ Giác Long Xuyên', 'Hà Tĩnh', 'Tân Châu', 'Thanh Hóa', 'miền Trung', 'Mỹ Thuận', 'Cần Thơ', 'Bình Thuận', 'Thừa Thiên Huế', 'Nam Đàn', 'Tây Nguyên', 'Mộc Hóa']}
+2025-11-24 02:24:41.312 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': [], 'organizations': ['Trung tâm Dự báo Khí tượng thủy văn trung ương'], 'address': ['Đồng Tháp Mười', 'Tứ Giác Long Xuyên', 'Tân Châu', 'Châu Đốc', 'Mỹ Thuận', 'Mộc Hóa', 'Long Xuyên', 'Cần Thơ', 'Nam Đàn', 'Thanh Hóa', 'Nghệ An', 'Hà Tĩnh', 'Thừa Thiên Huế', 'Bình Thuận', 'Tây Nguyên']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 384.41it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:03<00:00,  3.58s/it, est. speed input: 150.72 toks/s, output: 31.26 toks/s]
+2025-11-24 02:24:44.899 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.26 toks/s]
+  "person": ["Ông David Liston"],
+  "organizations": ["Hội đồng Anh", "ĐH Liverpool John Moores", "Sofitel Plaza", "Trụ sở chính", "VP TP HCM"],
+  "address": ["40 Cát Linh, Hà Nội", "17 Lê Duẩn, quận 1", "230 Kim Mã, Ba Đình, Hà Nội", "502/472, Nguyễn Đình Chiểu, phường 4, quận 3"]
+}
+2025-11-24 02:24:44.899 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 3.59s
+2025-11-24 02:24:44.899 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['David Liston'], 'organizations': ['Hội đồng Anh', 'khách sạn Sofitel Plaza', 'ĐH Liverpool John Moores'], 'address': ['Anh Quốc', 'Liverpool', '502/472, Nguyễn Đình Chiểu, phường 4, quận 3', '40 Cát Linh, Hà Nội', '230 Kim Mã, Ba Đình, Hà Nội', 'TP HCM', '17 Lê Duẩn, quận 1']}
+2025-11-24 02:24:44.899 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Ông David Liston'], 'organizations': ['Hội đồng Anh', 'ĐH Liverpool John Moores', 'Sofitel Plaza', 'Trụ sở chính', 'VP TP HCM'], 'address': ['40 Cát Linh, Hà Nội', '17 Lê Duẩn, quận 1', '230 Kim Mã, Ba Đình, Hà Nội', '502/472, Nguyễn Đình Chiểu, phường 4, quận 3']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 369.28it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:01<00:00,  1.56s/it, est. speed input: 343.19 toks/s, output: 30.79 toks/s]
+2025-11-24 02:24:46.462 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.79 toks/s]
+  "person": ["Chuck Searcy"],
+  "organizations": ["Quỹ tưởng niệm cựu chiến binh Mỹ tại Việt Nam", "Quỹ hòa giải và phát triển Mỹ"],
+  "address": []
+}
+2025-11-24 02:24:46.462 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 1.56s
+2025-11-24 02:24:46.462 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Chuck Searcy'], 'organizations': ['Quỹ tưởng niệm cựu chiến binh Mỹ tại Việt Nam', 'Internet', 'Quỹ hòa giải và phát triển Mỹ'], 'address': ['Pháp', 'Mỹ', 'Việt Nam']}
+2025-11-24 02:24:46.462 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Chuck Searcy'], 'organizations': ['Quỹ tưởng niệm cựu chiến binh Mỹ tại Việt Nam', 'Quỹ hòa giải và phát triển Mỹ'], 'address': []}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 237.70it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:06<00:00,  6.02s/it, est. speed input: 172.43 toks/s, output: 31.06 toks/s]
+2025-11-24 02:24:52.487 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.06 toks/s]
+  "person": [
+    "Anh Thanh",
+    "Anh Lập",
+    "Chị Tô Thị Hạnh",
+    "Chị Nguyễn Thị Sang",
+    "Ông Trần Phước Hưởng"
+  ],
+  "organizations": [
+    "Singer"
+  ],
+  "address": [
+    "Hậu Giang",
+    "thị xã Vị Thanh",
+    "đường 30-4",
+    "đường Nguyễn Việt Hồng",
+    "đường Trần Hưng Đạo",
+    "đường 30-4",
+    "đường Đoàn Thị Điểm",
+    "đường Nguyễn Thái Học",
+    "đường Ngô Quốc Trị",
+    "phường 5, thị xã Vị Thanh",
+    "đường Đồ Chiểu, phường 1",
+    "Trường tiểu học phường 1"
+  ]
+}
+2025-11-24 02:24:52.488 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 6.03s
+2025-11-24 02:24:52.488 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Anh Lập', 'Nguyễn Thị Sang', 'Anh Thanh', 'Tô Thị Hạnh', 'Trần Phước Hưởng'], 'organizations': ['Phòng Quản lý đô thị thị xã Vị Thanh', 'Singer', 'Trường tiểu học phường 1'], 'address': ['phường 5', 'Trần Hưng Đạo', 'Hậu Giang', 'đường 30-4', 'Nguyễn Thái Học', 'Đường Nguyễn Việt Hồng', 'đường Đồ Chiểu', 'đường Trưng Trắc', 'thị xã Vị Thanh', 'phường 1', 'Đoàn Thị Điểm', 'đường Ngô Quốc Trị', '30-4']}
+2025-11-24 02:24:52.488 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Anh Thanh', 'Anh Lập', 'Chị Tô Thị Hạnh', 'Chị Nguyễn Thị Sang', 'Ông Trần Phước Hưởng'], 'organizations': ['Singer'], 'address': ['Hậu Giang', 'thị xã Vị Thanh', 'đường 30-4', 'đường Nguyễn Việt Hồng', 'đường Trần Hưng Đạo', 'đường 30-4', 'đường Đoàn Thị Điểm', 'đường Nguyễn Thái Học', 'đường Ngô Quốc Trị', 'phường 5, thị xã Vị Thanh', 'đường Đồ Chiểu, phường 1', 'Trường tiểu học phường 1']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 203.71it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:06<00:00,  6.83s/it, est. speed input: 230.05 toks/s, output: 30.46 toks/s]
+2025-11-24 02:24:59.323 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.46 toks/s]
+  "person": [
+    "Năm Quyết",
+    "Tân",
+    "Lâm Thị Lấm",
+    "Ba Hạnh",
+    "Tư Thương",
+    "Kim Thị Thùy Linh",
+    "Hồ Văn Sáu",
+    "Phạm Thành Thảo"
+  ],
+  "organizations": [
+    "Chi cục Kiểm lâm tỉnh Sóc Trăng",
+    "Cục Kiểm lâm",
+    "trạm y tế xã An Thạnh Nam"
+  ],
+  "address": [
+    "Sóc Trăng",
+    "xã Trung Bình, huyện Long Phú, Sóc Trăng",
+    "xã An Thạnh Nam",
+    "xã An Thạnh Ba, Cù Lao Dung",
+    "chợ Rạch Tráng (xã An Thạnh Ba, Cù Lao Dung)",
+    "xóm Đáy (xã Trung Bình, huyện Long Phú)"
+  ]
+}
+2025-11-24 02:24:59.323 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 6.84s
+2025-11-24 02:24:59.323 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Phạm Thành Thảo', 'Lâm Thị Lấm', 'Kim Thị Thùy Linh', 'bà Năm Quyết', 'Tư Thương', 'Tân', 'Ba Hạnh', 'Hồ Văn Sáu'], 'organizations': ['trạm y tế xã An Thạnh Nam', 'Chi cục Kiểm lâm tỉnh Sóc Trăng', 'Cục Kiểm lâm', 'Nông trường 30/4'], 'address': ['xã Trung Bình', 'Sóc Trăng', 'xã An Thạnh Nam', 'Xóm Đáy', 'Trung Bình', 'xã An Thạnh Ba', 'chợ Rạch Tráng', 'Mỏ Ó', 'Vàm Hồ', 'ấp Võ Thành Văn', 'huyện Long Phú', 'ngư cảng Trần Đề', 'Cù Lao Dung', 'Long Phú']}
+2025-11-24 02:24:59.323 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Năm Quyết', 'Tân', 'Lâm Thị Lấm', 'Ba Hạnh', 'Tư Thương', 'Kim Thị Thùy Linh', 'Hồ Văn Sáu', 'Phạm Thành Thảo'], 'organizations': ['Chi cục Kiểm lâm tỉnh Sóc Trăng', 'Cục Kiểm lâm', 'trạm y tế xã An Thạnh Nam'], 'address': ['Sóc Trăng', 'xã Trung Bình, huyện Long Phú, Sóc Trăng', 'xã An Thạnh Nam', 'xã An Thạnh Ba, Cù Lao Dung', 'chợ Rạch Tráng (xã An Thạnh Ba, Cù Lao Dung)', 'xóm Đáy (xã Trung Bình, huyện Long Phú)']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 405.25it/s]
+Processed prompts: 100%|██████████████████████| 1/1 [00:06<00:00,  6.78s/it, est. speed input: 74.98 toks/s, output: 31.44 toks/s]
+2025-11-24 02:25:06.102 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.44 toks/s]
+  "person": [
+    "Ông Bùi Đặng Dũng",
+    "GS-VS Nguyễn Văn Hiệu",
+    "Nguyễn Quang Đạt",
+    "Nguyễn Quốc Hùng",
+    "Nguyễn Hoài Bắc",
+    "Đào Việt Dũng",
+    "Phạm Quang Minh",
+    "Nguyễn Hiền Tùng",
+    "Lê Đức Hạnh",
+    "Hà Minh Tiến"
+  ],
+  "organizations": [
+    "Trung ương Đoàn TNCS Hồ Chí Minh",
+    "Viện Khoa học và Công nghệ Việt Nam",
+    "Công ty Kim khí Thăng Long, Hà Nội",
+    "Phòng Thí nghiệm Khí động - Động lực Viện Tên lửa (Trung tâm KHKT Công nghiệp quân sự, Bộ Quốc phòng)",
+    "Nhà máy Z121 Tổng cục Công nghiệp Quốc phòng (Bộ Quốc phòng)"
+  ],
+  "address": [
+    "Hà Nội"
+  ]
+}
+2025-11-24 02:25:06.102 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 6.78s
+2025-11-24 02:25:06.102 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Nguyễn Văn Hiệu', 'Phạm Quang Minh', 'Hà Minh Tiến', 'Đào Việt Dũng', 'Nguyễn Hiền Tùng', 'Nguyễn Hoài Bắc', 'Lê Đức Hạnh', 'Nguyễn Quốc Hùng', 'Bùi Đặng Dũng', 'Nguyễn Quang Đạt'], 'organizations': ['Trung ương Đoàn TNCS Hồ Chí Minh', 'Công ty Kim khí Thăng Long', 'Bộ Quốc phòng', 'Viện Khoa học và Công nghệ Việt Nam', 'Nhà máy Z121 Tổng cục Công nghiệp Quốc phòng', 'TTXVN', 'Phòng Thí nghiệm Khí động - Động lực Viện Tên lửa', 'Trung tâm KHKT Công nghiệp quân sự'], 'address': ['Hà Nội']}
+2025-11-24 02:25:06.102 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Ông Bùi Đặng Dũng', 'GS-VS Nguyễn Văn Hiệu', 'Nguyễn Quang Đạt', 'Nguyễn Quốc Hùng', 'Nguyễn Hoài Bắc', 'Đào Việt Dũng', 'Phạm Quang Minh', 'Nguyễn Hiền Tùng', 'Lê Đức Hạnh', 'Hà Minh Tiến'], 'organizations': ['Trung ương Đoàn TNCS Hồ Chí Minh', 'Viện Khoa học và Công nghệ Việt Nam', 'Công ty Kim khí Thăng Long, Hà Nội', 'Phòng Thí nghiệm Khí động - Động lực Viện Tên lửa (Trung tâm KHKT Công nghiệp quân sự, Bộ Quốc phòng)', 'Nhà máy Z121 Tổng cục Công nghiệp Quốc phòng (Bộ Quốc phòng)'], 'address': ['Hà Nội']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 338.47it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:06<00:00,  6.31s/it, est. speed input: 113.53 toks/s, output: 31.24 toks/s]
+2025-11-24 02:25:12.413 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.24 toks/s]
+  "person": [
+    "Cao Thị Ngọc Lan"
+  ],
+  "organizations": [
+    "Hà Nội",
+    "Sở Quy hoạch kiến trúc",
+    "Tổng cục Du lịch",
+    "UBND Hà Nội",
+    "Hội nghị cấp cao APEC 2006"
+  ],
+  "address": [
+    "Khu đô thị mới Tây Hồ Tây, phường Xuân La, quận Tây Hồ",
+    "phía Đông bán đảo Linh Đàm, gần Trung tâm văn hóa thể dục thể thao và Trung tâm Y tế quận Hoàng Mai",
+    "đường Trần Duy Hưng, gần Trung tâm Hội nghị quốc gia",
+    "phía Bắc sông Hồng, nằm trên tuyến Bắc Thăng Long Nội Bài, trên địa bàn 2 xã Xuân Nộn và Nam Hồng có diện tích 15 ha, giáp đầm Vân Trì"
+  ]
+}
+2025-11-24 02:25:12.413 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 6.31s
+2025-11-24 02:25:12.413 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Cao Thị Ngọc Lan'], 'organizations': ['APEC 2006', 'Sở Du lịch', 'UBND Hà Nội', 'HĐND Hà Nội', 'Sở Quy hoạch Kiến trúc', 'Sở Quy hoạch kiến trúc', 'Trung tâm Hội nghị quốc gia', 'UBND thành phố', 'Tổng cục Du lịch', 'Trung tâm văn hóa thể dục thể thao'], 'address': ['Vân Trì', 'Trần Duy Hưng', 'Xuân Nộn', 'Hà Nội', 'Tây Hồ Tây', 'Xuân La', 'Ngoại giao đoàn', 'Nam Hồng', 'Bắc Thăng Long Nội Bài', 'sông Hồng', 'Hoàng Mai', 'Linh Đàm', 'Tây Hồ']}
+2025-11-24 02:25:12.413 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Cao Thị Ngọc Lan'], 'organizations': ['Hà Nội', 'Sở Quy hoạch kiến trúc', 'Tổng cục Du lịch', 'UBND Hà Nội', 'Hội nghị cấp cao APEC 2006'], 'address': ['Khu đô thị mới Tây Hồ Tây, phường Xuân La, quận Tây Hồ', 'phía Đông bán đảo Linh Đàm, gần Trung tâm văn hóa thể dục thể thao và Trung tâm Y tế quận Hoàng Mai', 'đường Trần Duy Hưng, gần Trung tâm Hội nghị quốc gia', 'phía Bắc sông Hồng, nằm trên tuyến Bắc Thăng Long Nội Bài, trên địa bàn 2 xã Xuân Nộn và Nam Hồng có diện tích 15 ha, giáp đầm Vân Trì']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 261.57it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:04<00:00,  4.43s/it, est. speed input: 247.25 toks/s, output: 30.71 toks/s]
+2025-11-24 02:25:16.847 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.71 toks/s]
+  "person": [
+    "ông Đỗ Quang Văn",
+    "ông Văn",
+    "ông Hoàng Mạnh Chính",
+    "ông Trương Quang Mông",
+    "Thứ trưởng Bộ Giao thông vận tải Phạm Thế Minh",
+    "Phương",
+    "Linh"
+  ],
+  "organizations": [
+    "ga Sài Gòn",
+    "Sở Giao thông công chính TP HCM",
+    "Bộ Giao thông vận tải"
+  ],
+  "address": [
+    "ga Sài Gòn",
+    "quận 3",
+    "phường 9",
+    "TP HCM"
+  ]
+}
+2025-11-24 02:25:16.847 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 4.43s
+2025-11-24 02:25:16.847 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Phương', 'Đỗ Quang Văn', 'Linh', 'Minh', 'Mông', 'Trương Quang Mông', 'Phạm Thế Minh', 'Hoàng Mạnh Chính'], 'organizations': ['cảnh sát hình sự', 'Công an quận 3', 'Sở Giao thông công chính TP HCM', 'VnExpress', 'Công an quận', 'Bộ Giao thông vận tải', 'ga Sài Gòn', 'công an phường 9', 'ngành đường sắt', 'Ga Sài Gòn'], 'address': ['Hà Nội', 'ga phía Bắc', 'ga Sài Gòn']}
+2025-11-24 02:25:16.847 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['ông Đỗ Quang Văn', 'ông Văn', 'ông Hoàng Mạnh Chính', 'ông Trương Quang Mông', 'Thứ trưởng Bộ Giao thông vận tải Phạm Thế Minh', 'Phương', 'Linh'], 'organizations': ['ga Sài Gòn', 'Sở Giao thông công chính TP HCM', 'Bộ Giao thông vận tải'], 'address': ['ga Sài Gòn', 'quận 3', 'phường 9', 'TP HCM']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 470.74it/s]
+Processed prompts: 100%|██████████████████████| 1/1 [00:06<00:00,  6.00s/it, est. speed input: 58.49 toks/s, output: 31.50 toks/s]
+2025-11-24 02:25:22.851 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.50 toks/s]
+  "person": ["Phan Văn Khải", "Ôn Gia Bảo", "Bộ trưởng Kế hoạch và Đầu tư", "Thứ trưởng Ngoại giao", "Thứ trưởng Giao thông vận tải", "Thứ trưởng Công nghiệp", "Thứ trưởng Nông nghiệp và Phát triển nông thôn", "Đại sứ Việt Nam tại Trung Quốc", "Chủ tịch UBND tỉnh Lào Cai", "Phó Chủ tịch Phòng Thương mại và Công nghiệp Việt Nam"],
+  "organizations": ["Hội nghị cấp cao GMS", "Hợp tác các nước Tiểu vùng sông Mê Công mở rộng (GMS)", "Quốc vụ viện nước CHND Trung Hoa", "Phòng Thương mại và Công nghiệp Việt Nam"],
+  "address": ["Trung Quốc", "Hà Nội", "Côn Minh", "Lào Cai"]
+}
+2025-11-24 02:25:22.851 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 6.00s
+2025-11-24 02:25:22.851 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Ôn Gia Bảo', 'Phan Văn Khải'], 'organizations': ['Hội nghị cấp cao Hợp tác các nước Tiểu vùng sông Mê Công mở rộng (GMS)', 'UBND tỉnh Lào Cai', 'Phòng Thương mại và Công nghiệp Việt Nam', 'Quốc vụ viện nước CHND Trung Hoa'], 'address': ['Việt Nam', 'Hà Nội', 'Trung Quốc', 'vùng sông Mê Công', 'tiểu vùng sông Mê Công', 'Đông - Nam Á', 'Côn Minh']}
+2025-11-24 02:25:22.851 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Phan Văn Khải', 'Ôn Gia Bảo', 'Bộ trưởng Kế hoạch và Đầu tư', 'Thứ trưởng Ngoại giao', 'Thứ trưởng Giao thông vận tải', 'Thứ trưởng Công nghiệp', 'Thứ trưởng Nông nghiệp và Phát triển nông thôn', 'Đại sứ Việt Nam tại Trung Quốc', 'Chủ tịch UBND tỉnh Lào Cai', 'Phó Chủ tịch Phòng Thương mại và Công nghiệp Việt Nam'], 'organizations': ['Hội nghị cấp cao GMS', 'Hợp tác các nước Tiểu vùng sông Mê Công mở rộng (GMS)', 'Quốc vụ viện nước CHND Trung Hoa', 'Phòng Thương mại và Công nghiệp Việt Nam'], 'address': ['Trung Quốc', 'Hà Nội', 'Côn Minh', 'Lào Cai']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 159.69it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:06<00:00,  6.93s/it, est. speed input: 279.99 toks/s, output: 30.31 toks/s]
+2025-11-24 02:25:29.788 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.31 toks/s]
+  "person": ["Lân", "Hoàng Văn Biên", "Vũ Gia Khánh", "Trần Văn Bon", "Nguyệt", "Kế", "Huỳnh Văn Nhỏ", "Hải", "Khánh"],
+  "organizations": ["cảng Sài Gòn", "cảng Nhà Rồng", "cảng Khánh Hội", "cảng Kho 5", "đội bảo vệ cảng Nhà Rồng", "đội điều tra thụ lý", "phòng bảo vệ quân sự cảng Sài Gòn"],
+  "address": ["cảng Sài Gòn (cổng Bến Súc, Kho 5, Nhà Rồng, Khánh Hội tại đường Nguyễn Tất Thành, quận 4, TP HCM)", "quận 4, TP HCM", "đường Nguyễn Tất Thành", "cổng Bến Súc", "cổng Kho 5", "cổng Nhà Rồng", "cảng Khánh Hội"]
+}
+2025-11-24 02:25:29.788 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 6.94s
+2025-11-24 02:25:29.788 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Hải', 'Vũ Gia Khánh', 'Hoàng', 'Lân', 'Nguyệt', 'Nhỏ', 'Hoàng Văn Biên', 'Khánh', 'Trần Văn Bon', 'Kế', 'Thanh', 'Huỳnh Văn Nhỏ'], 'organizations': ['đội điều tra thụ lý', 'phòng bảo vệ quân sự cảng Sài Gòn', 'đội bảo vệ cảng Nhà Rồng', 'cảng Sài Gòn'], 'address': ['cổng Nhà Rồng', 'cổng Bến Súc', 'Bình Dương', 'quận 4', 'cảng Khánh Hội', 'Khánh Hội', 'Nhà Rồng', 'TP HCM', 'đường Nguyễn Tất Thành', 'cổng Kho 5', 'Kho 5']}
+2025-11-24 02:25:29.788 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Lân', 'Hoàng Văn Biên', 'Vũ Gia Khánh', 'Trần Văn Bon', 'Nguyệt', 'Kế', 'Huỳnh Văn Nhỏ', 'Hải', 'Khánh'], 'organizations': ['cảng Sài Gòn', 'cảng Nhà Rồng', 'cảng Khánh Hội', 'cảng Kho 5', 'đội bảo vệ cảng Nhà Rồng', 'đội điều tra thụ lý', 'phòng bảo vệ quân sự cảng Sài Gòn'], 'address': ['cảng Sài Gòn (cổng Bến Súc, Kho 5, Nhà Rồng, Khánh Hội tại đường Nguyễn Tất Thành, quận 4, TP HCM)', 'quận 4, TP HCM', 'đường Nguyễn Tất Thành', 'cổng Bến Súc', 'cổng Kho 5', 'cổng Nhà Rồng', 'cảng Khánh Hội']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 246.51it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:04<00:00,  4.30s/it, est. speed input: 271.24 toks/s, output: 30.45 toks/s]
+2025-11-24 02:25:34.096 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.45 toks/s]
+  "person": [
+    "Phạm Thị Ánh Nguyệt",
+    "Nguyễn Bình An",
+    "Trần Quốc Huân",
+    "Lê Trường Giang",
+    "Nguyễn Thiện Nhân"
+  ],
+  "organizations": [
+    "UBND TP HCM",
+    "Sở Giáo dục và Đào tạo",
+    "Vinamilk",
+    "Dutch Lady Việt Nam",
+    "Liksin"
+  ],
+  "address": [
+    "Củ Chi",
+    "Hóc Môn",
+    "Cần Giờ",
+    "TP HCM"
+  ]
+}
+2025-11-24 02:25:34.096 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 4.31s
+2025-11-24 02:25:34.096 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Huân', 'Nguyễn Thiện Nhân', 'Nguyễn Bình An', 'Lê Trường Giang', 'Phạm Thị Ánh Nguyệt', 'Trần Quốc Huân'], 'organizations': ['Dutch Lady Việt Nam', 'công ty bao bì Liksin', 'Sở Giáo dục và Đào tạo', 'UBND TP HCM', 'Vinamilk'], 'address': ['Cần Giờ', 'Hóc Môn', 'TP HCM', 'Củ Chi', 'Thành phố']}
+2025-11-24 02:25:34.096 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Phạm Thị Ánh Nguyệt', 'Nguyễn Bình An', 'Trần Quốc Huân', 'Lê Trường Giang', 'Nguyễn Thiện Nhân'], 'organizations': ['UBND TP HCM', 'Sở Giáo dục và Đào tạo', 'Vinamilk', 'Dutch Lady Việt Nam', 'Liksin'], 'address': ['Củ Chi', 'Hóc Môn', 'Cần Giờ', 'TP HCM']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 282.05it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:01<00:00,  1.72s/it, est. speed input: 438.76 toks/s, output: 30.84 toks/s]
+2025-11-24 02:25:35.819 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.84 toks/s]
+  "person": ["Nguyễn Đức Kiên", "Trần Thị Trung Chiến"],
+  "organizations": ["Chính phủ", "Ủy ban Kinh tế và Ngân sách", "Quốc hội"],
+  "address": []
+}
+2025-11-24 02:25:35.819 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 1.72s
+2025-11-24 02:25:35.819 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Nguyễn Đức Kiên', 'Bộ trưởng Y tế', 'Trần Thị Trung Chiến'], 'organizations': ['Quốc hội', 'Ủy ban Kinh tế Ngân sách', 'Chính phủ', 'Bộ Y tế', 'Ủy ban Kinh tế và Ngân sách'], 'address': []}
+2025-11-24 02:25:35.819 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Nguyễn Đức Kiên', 'Trần Thị Trung Chiến'], 'organizations': ['Chính phủ', 'Ủy ban Kinh tế và Ngân sách', 'Quốc hội'], 'address': []}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 312.87it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:03<00:00,  3.86s/it, est. speed input: 200.12 toks/s, output: 31.07 toks/s]
+2025-11-24 02:25:39.686 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.07 toks/s]
+  "person": ["Tiến sĩ Eric Kuan", "Hiệu trưởng MDIS"],
+  "organizations": ["MDIS", "Học viện Phát triển Quản lý Singapore MDIS", "Công ty tư vấn du học VINECO"],
+  "address": ["khách sạn Duxton, 63 Nguyễn Huệ, quận 1, TP HCM", "khách sạn Daewoo, 360 Kim Mã, Hà Nội", "9/22 Phạm Văn Hai, P1, Q. Tân Bình, TP HCM"]
+}
+2025-11-24 02:25:39.686 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 3.87s
+2025-11-24 02:25:39.686 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Eric Kuan'], 'organizations': ['Oklahoma City University', 'Học viện Phát triển Quản lý Singapore MDIS', 'khách sạn Duxton', 'University of Wales', 'chính phủ Singapore', 'UniCampus', 'Công ty tư vấn du học VINECO', 'Edith Cowan University', 'University of Westminster', 'Macquarie University', 'khách sạn Daewoo', 'Southern Cross University', 'MDIS', 'University of Bradford'], 'address': ['Mỹ', 'Việt Nam', 'Australia', 'Anh quốc', '63 Nguyễn Huệ, quận 1, TP HCM', '9/22 Phạm Văn Hai, P1, Q. Tân Bình, TP HCM', 'TP HCM', '360 Kim Mã, Hà Nội', 'Singapore']}
+2025-11-24 02:25:39.686 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Tiến sĩ Eric Kuan', 'Hiệu trưởng MDIS'], 'organizations': ['MDIS', 'Học viện Phát triển Quản lý Singapore MDIS', 'Công ty tư vấn du học VINECO'], 'address': ['khách sạn Duxton, 63 Nguyễn Huệ, quận 1, TP HCM', 'khách sạn Daewoo, 360 Kim Mã, Hà Nội', '9/22 Phạm Văn Hai, P1, Q. Tân Bình, TP HCM']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 358.24it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:05<00:00,  5.74s/it, est. speed input: 116.14 toks/s, output: 31.17 toks/s]
+2025-11-24 02:25:45.434 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.17 toks/s]
+  "person": ["Thủ tướng", "Chủ tịch UBND tỉnh", "Thanh tra Chính phủ", "UBND tỉnh Quảng Nam", "Sở VHTT tỉnh Quảng Nam", "UBND thị xã Hội An"],
+  "organizations": ["Văn phòng Chính phủ", "Công ty Xây dựng Hội An", "Xí nghiệp xây dựng Kim An", "Sở VHTT tỉnh Quảng Nam", "UBND thị xã Hội An", "Thanh tra Chính phủ", "UBND tỉnh Quảng Nam"],
+  "address": ["phố cổ Hội An", "Quảng Nam", "thị xã Hội An", "Nguyễn Thái Học", "Hoàng Văn Thụ", "Nguyễn Thái Học", "Nguyễn Thái Học", "Nguyễn Thái Học", "Nguyễn Thái Học"]
+}
+2025-11-24 02:25:45.434 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 5.75s
+2025-11-24 02:25:45.434 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Chủ tịch UBND tỉnh', 'Thủ tướng'], 'organizations': ['UBND thị xã Hội An', 'Sở VHTT Quảng Nam', 'Công ty Xây dựng Hội An', 'Xí nghiệp xây dựng Kim An', 'Văn phòng Chính phủ', 'UBND tỉnh Quảng Nam', 'Thanh tra Chính phủ', 'Sở VHTT tỉnh Quảng Nam'], 'address': ['Hội An', 'Quảng Nam']}
+2025-11-24 02:25:45.434 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Thủ tướng', 'Chủ tịch UBND tỉnh', 'Thanh tra Chính phủ', 'UBND tỉnh Quảng Nam', 'Sở VHTT tỉnh Quảng Nam', 'UBND thị xã Hội An'], 'organizations': ['Văn phòng Chính phủ', 'Công ty Xây dựng Hội An', 'Xí nghiệp xây dựng Kim An', 'Sở VHTT tỉnh Quảng Nam', 'UBND thị xã Hội An', 'Thanh tra Chính phủ', 'UBND tỉnh Quảng Nam'], 'address': ['phố cổ Hội An', 'Quảng Nam', 'thị xã Hội An', 'Nguyễn Thái Học', 'Hoàng Văn Thụ', 'Nguyễn Thái Học', 'Nguyễn Thái Học', 'Nguyễn Thái Học', 'Nguyễn Thái Học']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 217.51it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:05<00:00,  5.50s/it, est. speed input: 225.66 toks/s, output: 30.75 toks/s]
+2025-11-24 02:25:50.935 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.75 toks/s]
+  "person": [
+    "ông Lê Minh Triết",
+    "ông Nguyễn Văn Hiệp",
+    "ông Đào Văn Lượng",
+    "thạc sĩ Cát Nguyên Hùng",
+    "Phó giáo sư Nguyễn Ngọc Thủy"
+  ],
+  "organizations": [
+    "Viện khoa học và công nghệ",
+    "Sở KHCN TP HCM",
+    "Sở Xây dựng TP HCM",
+    "Liên đoàn bản đồ địa chất Miền Nam",
+    "Viện Vật lý địa cầu",
+    "Sở Khoa học công nghệ"
+  ],
+  "address": [
+    "TP HCM",
+    "Bệnh viện Bệnh nhiệt đới và Bệnh viện chấn thương chỉnh hình TP HCM",
+    "Hà Nội"
+  ]
+}
+2025-11-24 02:25:50.935 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 5.50s
+2025-11-24 02:25:50.935 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Cát Nguyên Hùng', 'Hiệp', 'Đào Văn Lượng', 'Nguyễn Ngọc Thủy', 'Lê Minh Triết', 'Nguyễn Văn Hiệp'], 'organizations': ['Nhà nước', 'Sở KHCN TP HCM', 'Viện khoa học và công nghệ', 'Bệnh viện chấn thương chỉnh hình', 'Bệnh viện Bệnh nhiệt đới', 'UBND', 'Viện Vật lý địa cầu', 'UBND TP HCM', 'Liên đoàn bản đồ địa chất Miền Nam', 'Viện khoa học công nghệ', 'Sở Khoa học công nghệ', 'Sở Xây dựng TP HCM'], 'address': ['TP HCM', 'Hà Nội', 'Việt Nam', 'sông Hồng']}
+2025-11-24 02:25:50.935 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['ông Lê Minh Triết', 'ông Nguyễn Văn Hiệp', 'ông Đào Văn Lượng', 'thạc sĩ Cát Nguyên Hùng', 'Phó giáo sư Nguyễn Ngọc Thủy'], 'organizations': ['Viện khoa học và công nghệ', 'Sở KHCN TP HCM', 'Sở Xây dựng TP HCM', 'Liên đoàn bản đồ địa chất Miền Nam', 'Viện Vật lý địa cầu', 'Sở Khoa học công nghệ'], 'address': ['TP HCM', 'Bệnh viện Bệnh nhiệt đới và Bệnh viện chấn thương chỉnh hình TP HCM', 'Hà Nội']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 357.85it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:01<00:00,  1.97s/it, est. speed input: 250.43 toks/s, output: 30.99 toks/s]
+2025-11-24 02:25:52.908 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.99 toks/s]
+  "person": ["Lê Trường Giang", "UBND TP HCM"],
+  "organizations": ["Sở Y tế", "TP HCM", "UBND TP HCM"],
+  "address": ["quận 3", "quận Phú Nhuận"]
+}
+2025-11-24 02:25:52.908 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 1.97s
+2025-11-24 02:25:52.908 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Lê Trường Giang'], 'organizations': ['UBND TP HCM', 'Sở Y tế'], 'address': ['TP HCM', 'quận 3', 'quận Phú Nhuận']}
+2025-11-24 02:25:52.908 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Lê Trường Giang', 'UBND TP HCM'], 'organizations': ['Sở Y tế', 'TP HCM', 'UBND TP HCM'], 'address': ['quận 3', 'quận Phú Nhuận']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 371.24it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:05<00:00,  5.40s/it, est. speed input: 101.04 toks/s, output: 31.28 toks/s]
+2025-11-24 02:25:58.315 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.28 toks/s]
+  "person": [],
+  "organizations": [
+    "Tổng công ty Cao su VN",
+    "Công ty Cao su Quảng Trị",
+    "Công ty TNHH Việt Mỹ (ATI)",
+    "Sở Tài nguyên - môi trường",
+    "UBND tỉnh",
+    "UBND huyện Phong Điền",
+    "UBND huyện Hải Lăng",
+    "Bộ Tài nguyên - môi trường"
+  ],
+  "address": [
+    "vùng Gio Linh",
+    "xã Hải An",
+    "xã Vĩnh Sơn",
+    "thị xã Đông Hà",
+    "huyện Phong Điền",
+    "huyện Hải Lăng",
+    "thôn Câu Nhi, xã Hải Chánh, huyện Hải Lăng"
+  ]
+}
+2025-11-24 02:25:58.316 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 5.41s
+2025-11-24 02:25:58.316 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': [], 'organizations': ['Công ty Cao su Quảng Trị', 'Tổng công ty Cao su VN', 'UBND tỉnh Quảng Trị', 'UBND tỉnh Thừa Thiên - Huế', 'UBND tỉnh', 'Công ty TNHH Việt Mỹ (ATI)', 'Công ty ATI', 'Bộ Tài nguyên - môi trường', 'Sở Tài nguyên - môi trường'], 'address': ['huyện Hải Lăng', 'xã Vĩnh Sơn', 'xã Hải Chánh', 'thị xã Đông Hà', 'huyện Phong Điền', 'tỉnh Thừa Thiên - Huế', 'xã Hải An', 'thôn Câu Nhi', 'sông Bến Hải', 'Gio Linh', 'Quảng Trị']}
+2025-11-24 02:25:58.316 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': [], 'organizations': ['Tổng công ty Cao su VN', 'Công ty Cao su Quảng Trị', 'Công ty TNHH Việt Mỹ (ATI)', 'Sở Tài nguyên - môi trường', 'UBND tỉnh', 'UBND huyện Phong Điền', 'UBND huyện Hải Lăng', 'Bộ Tài nguyên - môi trường'], 'address': ['vùng Gio Linh', 'xã Hải An', 'xã Vĩnh Sơn', 'thị xã Đông Hà', 'huyện Phong Điền', 'huyện Hải Lăng', 'thôn Câu Nhi, xã Hải Chánh, huyện Hải Lăng']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 429.17it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.44s/it, est. speed input: 148.26 toks/s, output: 31.54 toks/s]
+2025-11-24 02:26:00.761 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.54 toks/s]
+  "person": ["Hoà thượng Thích Nhất Hạnh", "Làng Mai"],
+  "organizations": ["chùa Pháp Vân", "Làng Mai", "Hiểu và Thương"],
+  "address": ["TP HCM", "quận Tân Phú", "TP HCM", "TP HCM", "các tỉnh lân cận"]
+}
+2025-11-24 02:26:00.761 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.45s
+2025-11-24 02:26:00.761 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Hoà thượng Thích Nhất Hạnh'], 'organizations': ['Làng Mai'], 'address': ['Việt Nam', 'Pháp', 'chùa Pháp Vân', 'quận Tân Phú', 'TP HCM']}
+2025-11-24 02:26:00.761 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Hoà thượng Thích Nhất Hạnh', 'Làng Mai'], 'organizations': ['chùa Pháp Vân', 'Làng Mai', 'Hiểu và Thương'], 'address': ['TP HCM', 'quận Tân Phú', 'TP HCM', 'TP HCM', 'các tỉnh lân cận']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 261.08it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:05<00:00,  5.20s/it, est. speed input: 208.02 toks/s, output: 30.76 toks/s]
+2025-11-24 02:26:05.968 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.76 toks/s]
+  "person": ["Nguyễn Thiện Nhân", "Nguyễn Phước Thảo"],
+  "organizations": ["UBND thành phố", "Ban chỉ đạo phòng chống dịch cúm gia cầm, thủy cầm TP HCM", "Công ty Huỳnh Gia", "Công ty Phú An Sinh", "Sở Nông nghiệp", "Sở Tài chính"],
+  "address": ["TP HCM", "Long An", "Củ Chi", "Nhà Bè", "Cần Giờ", "Quận 2", "Quận 8", "Quận 9", "Quận 10", "Bình Chánh", "Bình Tân", "Hóc Môn", "Tân Bình"]
+}
+2025-11-24 02:26:05.968 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 5.21s
+2025-11-24 02:26:05.968 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Nguyễn Phước Thảo', 'Thảo', 'Nhân', 'Nguyễn Thiện Nhân'], 'organizations': ['Công ty Phú An Sinh', 'Công ty Huỳnh Gia', 'Sở Nông nghiệp', 'UBND thành phố', 'Sở Tài chính', 'Ban chỉ đạo phòng chống dịch cúm gia cầm, thủy cầm TP HCM'], 'address': ['Cần Giờ', 'Bình Tân', '10', '8', '9', 'Tân Bình', 'Hóc Môn', 'Nhà Bè', 'quận 2', 'TP HCM', 'Bình Chánh', 'Củ Chi', 'Long An', 'quận 10']}
+2025-11-24 02:26:05.968 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Nguyễn Thiện Nhân', 'Nguyễn Phước Thảo'], 'organizations': ['UBND thành phố', 'Ban chỉ đạo phòng chống dịch cúm gia cầm, thủy cầm TP HCM', 'Công ty Huỳnh Gia', 'Công ty Phú An Sinh', 'Sở Nông nghiệp', 'Sở Tài chính'], 'address': ['TP HCM', 'Long An', 'Củ Chi', 'Nhà Bè', 'Cần Giờ', 'Quận 2', 'Quận 8', 'Quận 9', 'Quận 10', 'Bình Chánh', 'Bình Tân', 'Hóc Môn', 'Tân Bình']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 311.01it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:03<00:00,  3.65s/it, est. speed input: 224.13 toks/s, output: 30.73 toks/s]
+2025-11-24 02:26:09.617 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 30.73 toks/s]
+  "person": ["Vũ Kim Tiến", "Nguyễn Thái Bình", "Ông Trần Tấn Bảo", "Bản thân giám đốc xí nghiệp đầu máy Hà Lào"],
+  "organizations": ["Xí nghiệp Đầu máy Hà Nội", "Xí nghiệp đầu máy Hà Lào", "Phân đoạn Yên Viên"],
+  "address": ["ga Lan Mẫu", "Bảo Sơn", "tỉnh Bắc Giang", "ga Bảo Sơn", "ga Kép", "Lăng Cô"]
+}
+2025-11-24 02:26:09.617 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 3.65s
+2025-11-24 02:26:09.618 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Tiến "Xanh"', 'Trần Tấn Bảo', 'Vũ Kim Tiến', 'Nguyễn Thái Bình'], 'organizations': ['Phân đoạn Yên Viên', 'Xí nghiệp đầu máy Hà Lào', 'xí nghiệp đầu máy Hà Lào', 'Xí nghiệp Đầu máy Hà Nội'], 'address': ['Bắc Giang', 'Lăng Cô', 'Lan Mẫu', 'Yên Viên', 'Bảo Sơn', 'Kép']}
+2025-11-24 02:26:09.618 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Vũ Kim Tiến', 'Nguyễn Thái Bình', 'Ông Trần Tấn Bảo', 'Bản thân giám đốc xí nghiệp đầu máy Hà Lào'], 'organizations': ['Xí nghiệp Đầu máy Hà Nội', 'Xí nghiệp đầu máy Hà Lào', 'Phân đoạn Yên Viên'], 'address': ['ga Lan Mẫu', 'Bảo Sơn', 'tỉnh Bắc Giang', 'ga Bảo Sơn', 'ga Kép', 'Lăng Cô']}
+Adding requests: 100%|█████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 375.90it/s]
+Processed prompts: 100%|█████████████████████| 1/1 [00:02<00:00,  2.02s/it, est. speed input: 265.66 toks/s, output: 31.66 toks/s]
+2025-11-24 02:26:11.643 | DEBUG    | src.prompt_engineering:_query_vllm_model:194 - vLLM response: { toks/s, output: 31.66 toks/s]
+  "person": ["Huỳnh Đông Tuấn", "Đinh Văn Tốt"],
+  "organizations": ["Khu du lịch Suối Tiên", "Thảo Cầm Viên TP HCM", "Sở thú", "Đầm Sen"],
+  "address": ["TP HCM"]
+}
+2025-11-24 02:26:11.643 | INFO     | src.prompt_engineering:extract_entities:144 - Extraction completed in 2.03s
+2025-11-24 02:26:11.643 | DEBUG    | __main__:run_evaluation:93 - Ground truth: {'person': ['Huỳnh Đông Tuấn', 'Đinh Văn Tốt'], 'organizations': ['Khu du lịch Đầm Sen', 'Suối Tiên', 'Sở thú', 'Văn Thánh', 'Đầm sen', 'khu du lịch Suối Tiên', 'Thảo Cầm Viên TP HCM'], 'address': ['TP HCM']}
+2025-11-24 02:26:11.643 | DEBUG    | __main__:run_evaluation:94 - Prediction  : {'person': ['Huỳnh Đông Tuấn', 'Đinh Văn Tốt'], 'organizations': ['Khu du lịch Suối Tiên', 'Thảo Cầm Viên TP HCM', 'Sở thú', 'Đầm Sen'], 'address': ['TP HCM']}
+Extracting entities: 100%|██████████████████████████████████████████████████████████████████████| 100/100 [06:07<00:00,  3.67s/it]
+2025-11-24 02:26:11.643 | INFO     | __main__:run_evaluation:99 - Calculating metrics...
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:126 - ================================================================================
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:127 - EVALUATION RESULTS
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:128 - ================================================================================
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:129 - Total samples: 100
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:130 - Total time: 367.24s
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:131 - Throughput: 0.27 samples/s
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:132 - Avg time per sample: 3.67s
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:133 - 
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:134 - OVERALL METRICS:
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:135 -   Precision: 0.6744
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:136 -   Recall   : 0.4690
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:137 -   F1 Score : 0.5532
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:138 - 
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:139 - PER-ENTITY METRICS:
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:142 -   PERSON:
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:143 -     Precision: 0.6142
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:144 -     Recall   : 0.5843
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:145 -     F1 Score : 0.5988
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:142 -   ORGANIZATIONS:
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:143 -     Precision: 0.7128
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:144 -     Recall   : 0.5322
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:145 -     F1 Score : 0.6094
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:142 -   ADDRESS:
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:143 -     Precision: 0.6762
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:144 -     Recall   : 0.3699
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:145 -     F1 Score : 0.4782
+2025-11-24 02:26:11.644 | INFO     | __main__:run_evaluation:146 - ================================================================================
+2025-11-24 02:26:11.645 | SUCCESS  | __main__:run_evaluation:152 - Results saved to /data2/samdv/test/results/prompt_engineering_eval/evaluation_results.json
+2025-11-24 02:26:11.645 | INFO     | src.prompt_engineering:cleanup:55 - Cleaning up models and freeing memory
+2025-11-24 02:26:12.301 | SUCCESS  | src.prompt_engineering:cleanup:77 - Memory cleanup completed
+2025-11-24 02:26:12.302 | SUCCESS  | __main__:run_evaluation:156 - Evaluation complete!
+2025-11-24 02:26:12.302 | INFO     | src.prompt_engineering:cleanup:55 - Cleaning up models and freeing memory
+2025-11-24 02:26:12.589 | SUCCESS  | src.prompt_engineering:cleanup:77 - Memory cleanup completed

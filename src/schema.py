@@ -1,5 +1,3 @@
-"""Schema definitions for NER extraction."""
-
 import json
 from enum import Enum
 from typing import Dict, List
@@ -10,8 +8,7 @@ from pydantic import BaseModel, Field
 class ExtractionMode(Enum):
     """Extraction mode for NER."""
     RAW = "raw"  # Standard generation without structured output
-    STRUCTURED_OUTPUT = "structured_output"  # vLLM structured output
-    OUTLINES = "outlines"  # Outlines structured generation
+    STRUCTURED_OUTPUT = "structured_output"  # structured output
 
 
 class NEREntities(BaseModel):

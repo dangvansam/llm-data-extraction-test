@@ -1,19 +1,22 @@
-"""RAG-based approach for NER extraction."""
-
+import gc
 import json
-import re
+import time
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List
 
 import faiss
-import numpy as np
 import torch
-from sentence_transformers import SentenceTransformer
-from tqdm import tqdm
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from loguru import logger
+from sentence_transformers import CrossEncoder, SentenceTransformer
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+from vllm import LLM, SamplingParams
+from vllm.config import StructuredOutputsConfig
+from vllm.sampling_params import StructuredOutputsParams
 
 from .config import NERRagConfig
-from .data_loader import NERDataLoader
+from .data_processor import DataProcessor
+from .schema import NEREntities
+from .utils import parse_response
 
 
 class RAGNERExtractor:
@@ -31,13 +34,33 @@ class RAGNERExtractor:
         self.corpus = corpus or []
 
         # Load embedding model
-        print(f"Loading embedding model: {self.config.embedding_model}")
+        logger.info(f"Loading embedding model: {self.config.embedding_model}")
         self.embedding_model = SentenceTransformer(self.config.embedding_model)
 
-        # Load LLM
+        # Load reranker model if configured
+        self.reranker = None
+        self.reranker_tokenizer = None
+        if hasattr(self.config, 'rerank_model') and self.config.rerank_model:
+            logger.info(f"Loading reranker model: {self.config.rerank_model}")
+
+            if "Vietnamese_Reranker" in self.config.rerank_model:
+                self.reranker_tokenizer = AutoTokenizer.from_pretrained(self.config.rerank_model)
+                self.reranker = AutoModelForSequenceClassification.from_pretrained(self.config.rerank_model)
+                self.reranker.eval()
+                logger.success("Reranker loaded as transformer model")
+            else:
+                try:
+                    self.reranker = CrossEncoder(self.config.rerank_model, max_length=512)
+                    logger.success("Reranker loaded as CrossEncoder")
+                except Exception as e:
+                    logger.warning(f"Failed to load as CrossEncoder, trying transformer model: {e}")
+                    self.reranker_tokenizer = AutoTokenizer.from_pretrained(self.config.rerank_model)
+                    self.reranker = AutoModelForSequenceClassification.from_pretrained(self.config.rerank_model)
+                    self.reranker.eval()
+                    logger.success("Reranker loaded as transformer model")
+
         self._load_llm()
 
-        # Initialize vector store
         self.index = None
         self.corpus_texts = []
 
@@ -45,20 +68,23 @@ class RAGNERExtractor:
             self.build_index(self.corpus)
 
     def _load_llm(self):
-        """Load language model for generation."""
-        print(f"Loading LLM: {self.config.model_name}")
+        """Load language model for generation using vLLM."""
+        logger.info(f"Loading LLM with vLLM: {self.config.model_name}")
 
         self.tokenizer = AutoTokenizer.from_pretrained(self.config.model_name)
-        self.tokenizer.pad_token = self.tokenizer.eos_token
+        if self.tokenizer.pad_token is None:
+            self.tokenizer.pad_token = self.tokenizer.eos_token
 
-        self.model = AutoModelForCausalLM.from_pretrained(
-            self.config.model_name,
-            torch_dtype=torch.float16,
-            device_map="auto",
-            low_cpu_mem_usage=True,
+        self.vllm_model = LLM(
+            model=self.config.model_name,
+            max_model_len=self.config.max_length,
+            gpu_memory_utilization=self.config.vllm_gpu_memory_utilization,
+            kv_cache_memory_bytes=1024 * 1024 * 1024,
+            structured_outputs_config=StructuredOutputsConfig(
+                backend=self.config.vllm_structured_outputs_backend
+            )
         )
-
-        print("LLM loaded successfully")
+        logger.success("LLM loaded successfully with vLLM")
 
     def build_index(self, corpus: List[Dict]):
         """
@@ -67,7 +93,7 @@ class RAGNERExtractor:
         Args:
             corpus: List of documents with 'text' and 'entities' keys
         """
-        print("Building FAISS index...")
+        logger.info("Building FAISS index...")
 
         self.corpus = corpus
         self.corpus_texts = [doc["text"] for doc in corpus]
@@ -82,7 +108,7 @@ class RAGNERExtractor:
         self.index = faiss.IndexFlatIP(dimension)  # Inner product (cosine similarity with normalized vectors)
         self.index.add(embeddings.astype("float32"))
 
-        print(f"Index built with {len(self.corpus_texts)} documents")
+        logger.success(f"Index built with {len(self.corpus_texts)} documents")
 
     def save_index(self, index_path: Path):
         """Save FAISS index to disk."""
@@ -103,7 +129,7 @@ class RAGNERExtractor:
 
     def retrieve(self, query: str, top_k: int = None) -> List[Dict]:
         """
-        Retrieve relevant documents.
+        Retrieve relevant documents with optional reranking.
 
         Args:
             query: Query text
@@ -117,15 +143,16 @@ class RAGNERExtractor:
 
         top_k = top_k or self.config.top_k_retrieval
 
-        # Encode query
+        initial_k = top_k * 3 if self.reranker else top_k
+
         query_embedding = self.embedding_model.encode(
-            [query], convert_to_numpy=True, normalize_embeddings=True
+            sentences=[query],
+            convert_to_numpy=True,
+            normalize_embeddings=True
         ).astype("float32")
 
-        # Search
-        scores, indices = self.index.search(query_embedding, top_k)
+        scores, indices = self.index.search(query_embedding, initial_k)
 
-        # Return retrieved documents
         retrieved = []
         for idx, score in zip(indices[0], scores[0]):
             if idx < len(self.corpus):
@@ -133,7 +160,49 @@ class RAGNERExtractor:
                 doc["retrieval_score"] = float(score)
                 retrieved.append(doc)
 
-        return retrieved
+        if self.reranker and retrieved:
+            logger.debug(f"Reranking {len(retrieved)} documents")
+            retrieved = self.rerank(query, retrieved, top_k)
+
+        return retrieved[:top_k]
+
+    def rerank(self, query: str, documents: List[Dict], top_k: int) -> List[Dict]:
+        """
+        Rerank documents using cross-encoder or transformer model.
+
+        Args:
+            query: Query text
+            documents: List of retrieved documents
+            top_k: Number of top documents to keep
+
+        Returns:
+            Reranked list of documents
+        """
+        pairs = [[query, doc["text"]] for doc in documents]
+
+        if isinstance(self.reranker, CrossEncoder):
+            rerank_scores = self.reranker.predict(pairs)
+        else:
+            with torch.no_grad():
+                inputs = self.reranker_tokenizer(
+                    pairs,
+                    padding=True,
+                    truncation=True,
+                    return_tensors='pt',
+                    max_length=2304
+                )
+                inputs = {k: v.to(self.reranker.device) for k, v in inputs.items()}
+                rerank_scores = self.reranker(**inputs, return_dict=True).logits.view(-1, ).float()
+                rerank_scores = rerank_scores.cpu().numpy()
+
+        for doc, score in zip(documents, rerank_scores):
+            doc["rerank_score"] = float(score)
+
+        reranked = sorted(documents, key=lambda x: x["rerank_score"], reverse=True)
+
+        logger.debug(f"Top rerank scores: {[doc['rerank_score'] for doc in reranked[:3]]}")
+
+        return reranked[:top_k]
 
     def create_rag_prompt(self, text: str, retrieved_docs: List[Dict]) -> str:
         """
@@ -185,8 +254,11 @@ JSON output:"""
         Returns:
             Dictionary with extracted entities
         """
+        start_time = time.time()
+        logger.info("Starting RAG-based entity extraction")
+
         # Preprocess text
-        text = NERDataLoader.preprocess_text(text)
+        text = DataProcessor.preprocess_text(text)
 
         # Retrieve relevant documents
         retrieved_docs = self.retrieve(text)
@@ -195,88 +267,73 @@ JSON output:"""
         prompt = self.create_rag_prompt(text, retrieved_docs)
 
         # Generate response
-        response = self._query_model(prompt)
+        response = self._query_vllm_model(prompt)
 
         # Parse response
-        entities = self._parse_response(response)
+        entities = parse_response(response, self.config.entity_types)
+
+        elapsed_time = time.time() - start_time
+        logger.info(f"RAG extraction completed in {elapsed_time:.2f}s")
 
         return entities
 
-    def _query_model(self, prompt: str) -> str:
-        """Query LLM with prompt."""
-        inputs = self.tokenizer(prompt, return_tensors="pt", truncation=True, max_length=self.config.max_length)
-        inputs = {k: v.to(self.model.device) for k, v in inputs.items()}
+    def _query_vllm_model(self, prompt: str) -> str:
+        """Query vLLM model with structured output."""
+        json_schema = NEREntities.get_json_schema()
+        structured_outputs_params = StructuredOutputsParams(json=json_schema)
+        sampling_params = SamplingParams(
+            max_tokens=self.config.max_new_tokens,
+            temperature=self.config.temperature,
+            top_p=self.config.top_p,
+            structured_outputs=structured_outputs_params,
+        )
 
-        with torch.no_grad():
-            outputs = self.model.generate(
-                **inputs,
-                max_new_tokens=512,
-                temperature=self.config.temperature,
-                top_p=self.config.top_p,
-                do_sample=True,
-                pad_token_id=self.tokenizer.eos_token_id,
-            )
+        outputs = self.vllm_model.generate(
+            prompts=[prompt],
+            sampling_params=sampling_params,
+        )
 
-        response = self.tokenizer.decode(outputs[0][inputs["input_ids"].shape[1] :], skip_special_tokens=True)
+        response = outputs[0].outputs[0].text
+        logger.debug(f"vLLM response: {response}")
         return response
 
-    def _parse_response(self, response: str) -> Dict[str, List[str]]:
-        """Parse JSON response from model."""
-        entities = {"person": [], "organizations": [], "address": []}
-
+    def cleanup(self):
+        """Clean up resources and free GPU memory."""
         try:
-            json_match = re.search(r"\{.*\}", response, re.DOTALL)
-            if json_match:
-                parsed = json.loads(json_match.group())
+            logger.info("Cleaning up RAG extractor resources...")
 
-                for key in self.config.entity_types:
-                    if key in parsed:
-                        value = parsed[key]
-                        if isinstance(value, list):
-                            entities[key] = value
-                        elif isinstance(value, str):
-                            entities[key] = [value] if value else []
-            else:
-                print(f"Warning: No JSON found in response: {response[:100]}")
+            if hasattr(self, 'vllm_model') and self.vllm_model is not None:
+                self.vllm_model.llm_engine.engine_core.shutdown()
+                if hasattr(self.vllm_model, 'llm_engine') and hasattr(self.vllm_model.llm_engine, 'model_executor'):
+                    if hasattr(self.vllm_model.llm_engine.model_executor, 'driver_worker'):
+                        del self.vllm_model.llm_engine.model_executor.driver_worker
+                del self.vllm_model
+                self.vllm_model = None
 
-        except json.JSONDecodeError as e:
-            print(f"Warning: Failed to parse JSON: {e}")
+            if hasattr(self, 'reranker') and self.reranker is not None:
+                del self.reranker
+                self.reranker = None
 
-        return entities
+            if hasattr(self, 'reranker_tokenizer') and self.reranker_tokenizer is not None:
+                del self.reranker_tokenizer
+                self.reranker_tokenizer = None
 
-    def batch_extract(self, texts: List[str], show_progress: bool = True) -> List[Dict[str, List[str]]]:
-        """
-        Extract entities from multiple texts.
+            if hasattr(self, 'embedding_model') and self.embedding_model is not None:
+                del self.embedding_model
+                self.embedding_model = None
 
-        Args:
-            texts: List of input texts
-            show_progress: Whether to show progress bar
+            if hasattr(self, 'tokenizer') and self.tokenizer is not None:
+                del self.tokenizer
+                self.tokenizer = None
 
-        Returns:
-            List of entity dictionaries
-        """
-        results = []
+            gc.collect()
+            torch.cuda.empty_cache()
 
-        iterator = tqdm(texts, desc="Extracting entities (RAG)") if show_progress else texts
+            logger.success("RAG extractor cleanup completed")
 
-        for text in iterator:
-            entities = self.extract_entities(text)
-            results.append(entities)
+        except Exception as e:
+            logger.error(f"Error during cleanup: {e}")
 
-        return results
-
-    def evaluate_on_dataset(self, dataset: List[Dict]) -> tuple:
-        """
-        Run extraction on a dataset.
-
-        Args:
-            dataset: List of samples with 'text' and 'entities' keys
-
-        Returns:
-            Tuple of (predictions, ground_truth)
-        """
-        texts = [sample["text"] for sample in dataset]
-        predictions = self.batch_extract(texts)
-        ground_truth = [sample["entities"] for sample in dataset]
-
-        return predictions, ground_truth
+    def __del__(self):
+        """Destructor to ensure cleanup when object is destroyed."""
+        self.cleanup()

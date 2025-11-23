@@ -1,1 +1,0 @@
-export HF_HUB_CACHE=/data2/samdv/.cache/huggingface/

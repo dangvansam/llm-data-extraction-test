@@ -40,7 +40,6 @@ ENV/
 
 # Data
 data/raw/*
-data/processed/*
 !data/raw/.gitkeep
 !data/processed/.gitkeep
 
@@ -54,10 +53,6 @@ models/outputs/*
 results/*.json
 results/*.csv
 !results/.gitkeep
-
-# Logs
-logs/
-*.log
 
 # Environment variables
 .env
@@ -76,3 +71,7 @@ logs/
 *.gguf
 
 tmp/
+wandb/
+results/
+data/processed/train
+data/processed/test

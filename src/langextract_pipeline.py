@@ -1,5 +1,3 @@
-"""LangExtract-based approach for NER extraction from news articles."""
-
 import sys
 import textwrap
 from typing import Dict, List
@@ -9,7 +7,7 @@ from tqdm import tqdm
 
 sys.path.append(".")
 from src.config import NERLangExtractConfig
-from src.data_loader import NERDataLoader
+from src.data_processor import DataProcessor
 
 
 class LangExtractNERExtractor:
@@ -148,7 +146,7 @@ class LangExtractNERExtractor:
         Returns:
             Dictionary with extracted entities
         """
-        text = NERDataLoader.preprocess_text(text)
+        text = DataProcessor.preprocess_text(text)
 
         result = lx.extract(
             model_id=self.model_id,
@@ -211,7 +209,7 @@ class LangExtractNERExtractor:
             Dictionary with detailed extraction results
         """
         # Preprocess text
-        text = NERDataLoader.preprocess_text(text)
+        text = DataProcessor.preprocess_text(text)
 
         # Run LangExtract
         result = lx.extract(
