@@ -24,8 +24,9 @@ python scripts/run_rag_pipeline.py
 from src.config import NERRagConfig
 
 config = NERRagConfig(
-    model_name="Qwen/Qwen3-4B",
-    embedding_model="intfloat/multilingual-e5-large-instruct",
+    model_name="Qwen/Qwen3-4B-Instruct-2507",
+    embedding_model="AITeamVN/Vietnamese_Embedding_v2",
+    rerank_model="AITeamVN/Vietnamese_Reranker",
     top_k_retrieval=3
 )
 ```
@@ -33,6 +34,7 @@ config = NERRagConfig(
 **Parameters:**
 - `top_k_retrieval`: Number of similar examples to retrieve (default: 3)
 - `embedding_model`: Model for semantic search
+- `rerank_model`: Model for retrieval reranking
 
 ---
 

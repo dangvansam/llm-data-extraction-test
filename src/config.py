@@ -32,8 +32,8 @@ class BaseNERConfig:
     # Entity types
     entity_types: List[str] = field(default_factory=lambda: ["person", "organizations", "address"])
 
-    temperature: float = 0.1
-    top_p: float = 0.9
+    temperature: float = 0.3
+    top_p: float = 0.95
     max_length: int = 2048
     max_new_tokens: int = 1024
     do_sample: bool = True
@@ -50,7 +50,7 @@ class NERPromptEngineeringConfig(BaseNERConfig):
 
     # Model settings
     model_name: str = "Qwen/Qwen3-4B-Instruct-2507"
-    tokenizer_name: str = "Qwen/Qwen3-4B"
+    tokenizer_name: str = "Qwen/Qwen3-4B-Instruct-2507"
 
     # Extraction mode
     extraction_mode: ExtractionMode = ExtractionMode.RAW

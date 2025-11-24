@@ -1070,20 +1070,24 @@ Extracting entities: 100%|██████████████████
 2025-11-24 03:33:14.535 | INFO     | __main__:<module>:95 - Avg time per sample: 15.89s
 2025-11-24 03:33:14.535 | INFO     | __main__:<module>:96 - 
 2025-11-24 03:33:14.535 | INFO     | __main__:<module>:97 - OVERALL METRICS:
+2025-11-24 03:33:14.535 | INFO     | __main__:<module>:98 -   Accuracy: 0.6877
 2025-11-24 03:33:14.535 | INFO     | __main__:<module>:98 -   Precision: 0.8166
 2025-11-24 03:33:14.535 | INFO     | __main__:<module>:99 -   Recall   : 0.8068
 2025-11-24 03:33:14.535 | INFO     | __main__:<module>:100 -   F1 Score : 0.8116
 2025-11-24 03:33:14.535 | INFO     | __main__:<module>:101 - 
 2025-11-24 03:33:14.535 | INFO     | __main__:<module>:102 - PER-ENTITY METRICS:
 2025-11-24 03:33:14.535 | INFO     | __main__:<module>:105 -   PERSON:
+2025-11-24 03:33:14.535 | INFO     | __main__:<module>:106 -     Accuracy: 0.7420
 2025-11-24 03:33:14.535 | INFO     | __main__:<module>:106 -     Precision: 0.8516
 2025-11-24 03:33:14.535 | INFO     | __main__:<module>:107 -     Recall   : 0.8165
 2025-11-24 03:33:14.535 | INFO     | __main__:<module>:108 -     F1 Score : 0.8337
 2025-11-24 03:33:14.535 | INFO     | __main__:<module>:105 -   ORGANIZATIONS:
+2025-11-24 03:33:14.535 | INFO     | __main__:<module>:106 -     Accuracy: 0.7101
 2025-11-24 03:33:14.535 | INFO     | __main__:<module>:106 -     Precision: 0.8569
 2025-11-24 03:33:14.535 | INFO     | __main__:<module>:107 -     Recall   : 0.8168
 2025-11-24 03:33:14.535 | INFO     | __main__:<module>:108 -     F1 Score : 0.8363
 2025-11-24 03:33:14.535 | INFO     | __main__:<module>:105 -   ADDRESS:
+2025-11-24 03:33:14.535 | INFO     | __main__:<module>:106 -     Accuracy: 0.6492
 2025-11-24 03:33:14.535 | INFO     | __main__:<module>:106 -     Precision: 0.7729
 2025-11-24 03:33:14.535 | INFO     | __main__:<module>:107 -     Recall   : 0.7947
 2025-11-24 03:33:14.535 | INFO     | __main__:<module>:108 -     F1 Score : 0.7836

@@ -116,26 +116,44 @@ python scripts/run_finetuning_pipeline.py
 **[Full Documentation](docs/run_finetuning_pipeline.md)**
 
 ---
-<!-- 
+
 ## Benchmark Results
 
 ### Performance Comparison
 
-| Method | F1 Score | Precision | Recall | Speed (samples/s) |
-|--------|----------|-----------|--------|-------------------|
-| **Prompt Engineering** | 0.57 | 0.67 | 0.50 | 0.26 |
-| **RAG** | ~0.86* | ~0.88* | ~0.85* | ~1.9* |
-| **Fine-Tuning** | ~0.92* | ~0.94* | ~0.90* | ~2.5* |
+| Method | F1 Score | Precision | Recall | Accuracy | Speed (samples/s) |
+|--------|----------|-----------|--------|----------|-------------------|
+| **Prompt Engineering (Base Model)** | 0.5702 | 0.6682 | 0.4972 | 0.4065 | 0.26 |
+| **Prompt Engineering (Fine-tuned)** | 0.6724 | 0.7533 | 0.6072 | 0.5128 | 0.21 |
+| **RAG** | 0.8116 | 0.8166 | 0.8068 | 0.6877 | 0.06 |
 
-<sub>* Estimated based on typical performance - run evaluation for exact metrics</sub>
+### Per-Entity Performance
 
-### Per-Entity Performance (Prompt Engineering - Baseline)
+#### Prompt Engineering (Model: Qwen3-4B-Instruct-2507)
 
-| Entity Type | Precision | Recall | F1 Score |
-|-------------|-----------|--------|----------|
-| Person | 0.74 | 0.66 | 0.69 |
-| Organizations | 0.67 | 0.55 | 0.61 |
-| Address | 0.62 | 0.39 | 0.48 | -->
+| Entity Type | Precision | Recall | F1 Score | Accuracy |
+|-------------|-----------|--------|----------|----------|
+| Person | 0.7384 | 0.6554 | 0.6944 | 0.5510 |
+| Organizations | 0.6730 | 0.5536 | 0.6075 | 0.4388 |
+| Address | 0.6212 | 0.3856 | 0.4758 | 0.3174 |
+
+#### Prompt Engineering (Fine-tuned Model: Qwen3-4B-Instruct-2507)
+
+| Entity Type | Precision | Recall | F1 Score | Accuracy |
+|-------------|-----------|--------|----------|----------|
+| Person | 0.8008 | 0.7228 | 0.7598 | 0.6292 |
+| Organizations | 0.7220 | 0.6023 | 0.6567 | 0.4913 |
+| Address | 0.7574 | 0.5627 | 0.6457 | 0.4802 |
+
+#### RAG Pipeline
+
+| Entity Type | Precision | Recall | F1 Score | Accuracy |
+|-------------|-----------|--------|----------|----------|
+| Person | 0.8516 | 0.8165 | 0.8337 | 0.7420 |
+| Organizations | 0.8569 | 0.8168 | 0.8363 | 0.7101 |
+| Address | 0.7729 | 0.7947 | 0.7836 | 0.6492 |
+
+---
 
 ### Configuration Used
 
@@ -178,14 +196,15 @@ python scripts/run_finetuning_pipeline.py
 All pipelines use `Qwen/Qwen3-4B-Instruct-2507` by default. Configure in `src/config.py`:
 
 ```python
-# Prompt Engineering
+# 1. Prompt Engineering
 config = NERPromptEngineeringConfig(
     model_name="Qwen/Qwen3-4B-Instruct-2507",
     extraction_mode=ExtractionMode.STRUCTURED_OUTPUT,
     enable_thinking=True
 )
 
-# RAG
+
+# 2. RAG
 config = NERRagConfig(
     model_name="Qwen/Qwen3-4B-Instruct-2507",
     embedding_model="AITeamVN/Vietnamese_Embedding_v2",
@@ -193,12 +212,16 @@ config = NERRagConfig(
     top_k_retrieval=3
 )
 
-# Fine-Tuning
+
+# 3. Fine-Tuning
 config = NERFineTuningConfig(
-    model_name="Qwen/Qwen3-4B-Instruct-2507",
-    load_in_4bit=True,
-    lora_r=16,
-    learning_rate=1e-4
+   model_name="Qwen/Qwen3-4B-Instruct-2507",
+   output_dir="models/checkpoints/finetuned",
+)
+# Testing fine-tuning with Prompt Engineering
+config = NERPromptEngineeringConfig(
+    model_name="models/checkpoints/finetuned",
+    extraction_mode=ExtractionMode.RAW,
 )
 ```
 

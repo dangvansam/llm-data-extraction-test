@@ -27,12 +27,11 @@ The data preparation pipeline uses the following default settings:
 ```python
 from src.config import PROCESSED_DATA_DIR, RAW_DATA_DIR
 
-# Default paths
 RAW_DATA_DIR = "data/raw"          # Input: Raw article data
 PROCESSED_DATA_DIR = "data/processed"  # Output: Processed datasets
 
 # Categories to process
-categories = ["Chinh tri Xa hoi"]  # Customize as needed
+categories = ["Chinh tri Xa hoi"]
 ```
 
 ---
@@ -102,13 +101,6 @@ This log file contains:
 - Dataset statistics
 - Error messages (if any)
 - Performance metrics
-
-### Tail Logs in Real-time
-
-```bash
-# Monitor logs while processing
-tail -f logs/data_preparation.log
-```
 
 ---
 

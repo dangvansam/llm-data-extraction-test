@@ -29,7 +29,7 @@ from src.config import NERPromptEngineeringConfig, ExtractionMode
 
 config = NERPromptEngineeringConfig(
     # Model settings
-    model_name="Qwen/Qwen3-4B",
+    model_name="Qwen/Qwen3-4B-Instruct-2507",
 
     # Extraction mode
     extraction_mode=ExtractionMode.RAW,
@@ -51,7 +51,7 @@ config = NERPromptEngineeringConfig(
 
 ```python
 config = NERPromptEngineeringConfig(
-    model_name="Qwen/Qwen3-4B",
+    model_name="Qwen/Qwen3-4B-Instruct-2507",
     extraction_mode=ExtractionMode.RAW,
     enable_thinking=False,
 )
@@ -64,7 +64,7 @@ config = NERPromptEngineeringConfig(
 
 ```python
 config = NERPromptEngineeringConfig(
-    model_name="Qwen/Qwen3-4B",
+    model_name="Qwen/Qwen3-4B-Instruct-2507",
     extraction_mode=ExtractionMode.RAW,
     enable_thinking=True,
 )
@@ -77,7 +77,7 @@ config = NERPromptEngineeringConfig(
 
 ```python
 config = NERPromptEngineeringConfig(
-    model_name="Qwen/Qwen3-4B",
+    model_name="Qwen/Qwen3-4B-Instruct-2507",
     extraction_mode=ExtractionMode.STRUCTURED_OUTPUT,
     enable_thinking=False,
 )
@@ -90,7 +90,7 @@ config = NERPromptEngineeringConfig(
 
 ```python
 config = NERPromptEngineeringConfig(
-    model_name="Qwen/Qwen3-4B",
+    model_name="Qwen/Qwen3-4B-Instruct-2507",
     extraction_mode=ExtractionMode.STRUCTURED_OUTPUT,
     enable_thinking=True,
 )
@@ -122,9 +122,6 @@ Before starting evaluation, ensure these files exist:
   }
 }
 ```
-
-> 💡 **Tip**: Run [data preparation](run_data_preparation.md) first to generate these files.
-
 ---
 
 ## 📝 Logs and Monitoring
@@ -190,7 +187,7 @@ RuntimeError: CUDA out of memory
 ```
 
 **Solutions:**
-1. Use smaller model: `model_name="Qwen/Qwen3-4B"` instead of larger models
+1. Use smaller model: `model_name="Qwen/Qwen3-4B-Instruct-2507"` instead of larger models
 2. Reduce max tokens: `max_new_tokens=256`
 3. Enable quantization in model loading
 4. Process samples in smaller batches
